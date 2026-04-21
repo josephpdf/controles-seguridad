@@ -93,3 +93,17 @@
 [15:51:11] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"02","area":"Caja Grill","detalle":"Caja Grill","id":1690000000002}
 [15:51:52] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"09","area":"Gerencia","detalle":"Sala Juntas","id":1690000000009}
 [15:52:46] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"18","area":"Vestidores","detalle":"Baños Timer","id":1690000000018}
+[16:30:09] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Computo","serie":"PENDIENTE","area":"Computo","detalle":"Radio de Jefatura Computo","id":1700000000005}
+[16:30:17] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Computo","serie":"PENDIENTE","area":"Computo","detalle":"Radio de Josué Conejo","id":1700000000004}
+[16:32:31] Usuario 'superadmin' ELIMINÓ registro ID 1700000000002 de '1700000000002'.
+[16:32:39] Usuario 'superadmin' ELIMINÓ registro ID 1700000000001 de '1700000000001'.
+[16:32:45] Usuario 'superadmin' ELIMINÓ registro ID 1700000000003 de '1700000000003'.
+[16:39:50] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Josué Conejo","area":"Computo","id":1776811190237}
+[16:43:17] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Computo","serie":"PENDIENTE","area":"Computo","colaborador":"1776811190237","detalle":"Radio de Josué Conejo","id":1700000000004}
+[16:43:30] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Computo","serie":"PENDIENTE","area":"Computo","colaborador":"1776811190237","detalle":"Radio de Computo","id":1700000000004}
+[16:43:41] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Computo","serie":"PENDIENTE","area":"Computo","colaborador":"1776799106218","detalle":"Radio de Jefatura Computo","id":1700000000005}
+[16:43:53] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Eventos","serie":"PENDIENTE","area":"Eventos","colaborador":"1776794902132","detalle":"Radio para Franchesky","id":1700000000010}
+[16:44:08] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Computo","serie":"PENDIENTE","area":"Computo","colaborador":"","detalle":"Radio de Jefatura Computo","id":1700000000005}
+[16:44:27] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Computo","serie":"PENDIENTE","area":"Computo","colaborador":"1776799106218","detalle":"Radio de Jefatura Computo","id":1700000000005}
+[16:44:50] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Julio Mora","serie":"PENDIENTE","area":"Servicios Generales","colaborador":"1776796270234","detalle":"Radio de Julio Mora (Disponible)","id":1700000000009}
+[16:45:02] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Julio Mora","serie":"PENDIENTE","area":"Servicios Generales","colaborador":"","detalle":"Radio de Julio Mora (Disponible)","id":1700000000009}

@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "id": 1700000000004,
+    "numero": "Computo",
+    "serie": "PENDIENTE",
+    "area": "Computo",
+    "detalle": "Radio de Computo",
+    "colaborador": "1776811190237"
+  },
+  {
+    "id": 1700000000005,
+    "numero": "Computo",
+    "serie": "PENDIENTE",
+    "area": "Computo",
+    "detalle": "Radio de Jefatura Computo",
+    "colaborador": "1776799106218"
+  },
+  {
+    "id": 1700000000006,
+    "numero": "Servicios Generales 1",
+    "serie": "PENDIENTE",
+    "area": "Servicios Generales",
+    "detalle": "Radio disponible 1"
+  },
+  {
+    "id": 1700000000007,
+    "numero": "Servicios Generales 2",
+    "serie": "PENDIENTE",
+    "area": "Servicios Generales",
+    "detalle": "Radio disponible 2"
+  },
+  {
+    "id": 1700000000008,
+    "numero": "Servicios Generales 3",
+    "serie": "PENDIENTE",
+    "area": "Servicios Generales",
+    "detalle": "Radio disponible 3"
+  },
+  {
+    "id": 1700000000009,
+    "numero": "Julio Mora",
+    "serie": "PENDIENTE",
+    "area": "Servicios Generales",
+    "detalle": "Radio de Julio Mora (Disponible)",
+    "colaborador": ""
+  },
+  {
+    "id": 1700000000010,
+    "numero": "Eventos",
+    "serie": "PENDIENTE",
+    "area": "Eventos",
+    "detalle": "Radio para Franchesky",
+    "colaborador": "1776794902132"
+  },
+  {
+    "id": 1700000000011,
+    "numero": "Biomecánico",
+    "serie": "PENDIENTE",
+    "area": "Áreas deportivas",
+    "detalle": "Radio Biomecánico"
+  }
+]

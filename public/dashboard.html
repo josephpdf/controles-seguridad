@@ -73,9 +73,10 @@
                     <table id="radiosTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('radios', 'numero')" style="cursor:pointer">Número <span></span></th>
+                                <th onclick="toggleSort('radios', 'numero')" style="cursor:pointer">Etiqueta / Asignación <span></span></th>
                                 <th onclick="toggleSort('radios', 'area')" style="cursor:pointer">Área <span></span></th>
                                 <th onclick="toggleSort('radios', 'detalle')" style="cursor:pointer">Detalle <span></span></th>
+                                <th onclick="toggleSort('radios', 'colaborador')" style="cursor:pointer">Colaborador Asignado <span></span></th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -221,12 +222,22 @@
             <form id="radioForm">
                 <input type="hidden" id="radioId">
                 <div class="form-group">
-                    <label>Número/Identificador</label>
+                    <label>Etiqueta / Asignación</label>
                     <input type="text" id="radioNumero" required>
+                </div>
+                <div class="form-group">
+                    <label>Número de Serie</label>
+                    <input type="text" id="radioSerie" required>
                 </div>
                 <div class="form-group">
                     <label>Área</label>
                     <select id="radioArea" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Colaborador Asignado Fijo</label>
+                    <select id="radioColaborador">
+                        <option value="">-- Ninguno (Disponible) --</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Detalle (Marca/Modelo/Condición)</label>

@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('transactionForm').addEventListener('submit', handleTransactionSubmit);
     
     const forms = [
-        { id: 'radioForm', endpoint: 'radios', modal: 'radioModal', fields: ['radioNumero', 'radioArea', 'radioDetalle'], map: f => ({ numero: f[0], area: f[1], detalle: f[2] }) },
+        { id: 'radioForm', endpoint: 'radios', modal: 'radioModal', fields: ['radioNumero', 'radioSerie', 'radioArea', 'radioColaborador', 'radioDetalle'], map: f => ({ numero: f[0], serie: f[1], area: f[2], colaborador: f[3], detalle: f[4] }) },
         { id: 'keyForm', endpoint: 'keys', modal: 'keyModal', fields: ['keyNumero', 'keyDetalle'], map: f => ({ numero: f[0], detalle: f[1] }) },
         { id: 'collaboratorForm', endpoint: 'collaborators', modal: 'collaboratorModal', fields: ['collabName', 'collabArea'], map: f => ({ name: f[0], area: f[1] }) },
         { id: 'userForm', endpoint: 'users', modal: 'userModal', fields: ['userName', 'userUsername', 'userPassword', 'userRole'], map: f => ({ name: f[0], username: f[1], password: f[2], role: f[3] }) },
@@ -269,16 +269,33 @@ function renderRadios() {
     const tbody = document.querySelector('#radiosTable tbody');
     tbody.innerHTML = '';
     
-    let list = getFilteredAndSorted('radios', dataCache.radios, ['numero', 'area', 'detalle']);
+    let list = getFilteredAndSorted('radios', dataCache.radios, ['numero', 'area', 'detalle', 'colaborador']);
     
     list.forEach(r => {
         const inUse = dataCache.transactions.some(t => t.type === 'radio' && t.equipmentId == r.id && !t.dateIn);
+        
+        let statusBadge = '';
+        let statusText = '';
+        if (r.colaborador) {
+            statusBadge = 'en-uso'; // Maybe a different color could be used, but en-uso works (No Disponible)
+            statusText = 'No Disponible';
+        } else if (inUse) {
+            statusBadge = 'en-uso';
+            statusText = 'En Uso';
+        } else {
+            statusBadge = 'disponible';
+            statusText = 'Disponible';
+        }
+
+        const collabName = r.colaborador ? (dataCache.collaborators.find(c => c.id == r.colaborador)?.name || 'Desconocido') : '-';
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${r.numero}</td>
             <td>${r.area}</td>
             <td>${r.detalle}</td>
-            <td><span class="badge ${inUse ? 'en-uso' : 'disponible'}">${inUse ? 'En Uso' : 'Disponible'}</span></td>
+            <td>${collabName}</td>
+            <td><span class="badge ${statusBadge}">${statusText}</span></td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
                   `<button class="btn-secondary" onclick="editRadio(${r.id})">Editar</button>
@@ -387,15 +404,23 @@ function populateAreaSelects() {
     
     if (collabSelect) collabSelect.innerHTML = options;
     if (radioSelect) radioSelect.innerHTML = options;
+
+    const radioCollab = document.getElementById('radioColaborador');
+    if (radioCollab && Array.isArray(dataCache.collaborators)) {
+        const sortedCollabs = [...dataCache.collaborators].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+        radioCollab.innerHTML = '<option value="">-- Ninguno (Disponible) --</option>' + 
+            sortedCollabs.map(c => `<option value="${c.id}">${c.name} (${c.area})</option>`).join('');
+    }
 }
 
 // ---- LOGICA TRANSACCIONES ----
 function openTransactionModal() {
     loadEquipmentOptions();
     
-    // Cargar colaboradores
+    // Cargar colaboradores ordenados alfabéticamente
     const selectC = document.getElementById('transCollaborator');
-    selectC.innerHTML = dataCache.collaborators.map(c => `<option value="${c.id}">${c.name} (${c.area})</option>`).join('');
+    const sortedCollabs = [...dataCache.collaborators].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    selectC.innerHTML = sortedCollabs.map(c => `<option value="${c.id}">${c.name} (${c.area})</option>`).join('');
     
     openModal('transactionModal');
 }
@@ -405,9 +430,11 @@ function loadEquipmentOptions() {
     const selectE = document.getElementById('transEquipment');
     const catalog = type === 'radio' ? dataCache.radios : dataCache.keys;
     
-    // Filtrar los que no están en uso
+    // Filtrar los que no están en uso y no están asignados permanentemente
     const available = catalog.filter(item => {
-        return !dataCache.transactions.some(t => t.type === type && t.equipmentId == item.id && !t.dateIn);
+        const isPermanentlyAssigned = item.colaborador && item.colaborador !== '';
+        const hasActiveTransaction = dataCache.transactions.some(t => t.type === type && t.equipmentId == item.id && !t.dateIn);
+        return !isPermanentlyAssigned && !hasActiveTransaction;
     });
 
     if (available.length === 0) {
@@ -565,7 +592,9 @@ function editRadio(id) {
     if (!radio) return;
     document.getElementById('radioId').value = radio.id;
     document.getElementById('radioNumero').value = radio.numero;
+    document.getElementById('radioSerie').value = radio.serie || '';
     document.getElementById('radioArea').value = radio.area;
+    document.getElementById('radioColaborador').value = radio.colaborador || '';
     document.getElementById('radioDetalle').value = radio.detalle;
     document.getElementById('radioModalTitle').textContent = 'Editar Radio';
     openModal('radioModal');
