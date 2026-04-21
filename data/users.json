@@ -7,10 +7,10 @@
     "name": "Super Administrador"
   },
   {
-    "name": "Marvin Torres",
-    "username": "mtorres",
-    "password": "8734081ba7e6361579f187da1e4a03fdb530ccaf4561a66d302e60e9e0d31449",
-    "role": "admin",
-    "id": 1776812870108
+    "name": "Alejandro Mora",
+    "username": "amora",
+    "password": "ab2d3b8768f649a8d9aa97fe0840c1acbb117cf43587175d9b0bf27e634e444e",
+    "role": "user",
+    "id": 1776813741005
   }
 ]

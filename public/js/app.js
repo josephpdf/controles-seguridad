@@ -449,15 +449,23 @@ function populateAreaSelects() {
 
     const radioCollab = document.getElementById('radioColaborador');
     const keyCollab = document.getElementById('keyColaborador');
+    const userNameSelect = document.getElementById('userName');
     const allPeople = getAllPeople();
     
     if (allPeople.length > 0) {
         const sortedCollabs = allPeople.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-        const collabOptions = '<option value="">-- Ninguno (Disponible) --</option>' + 
+        
+        // Opciones por ID (para transacciones, radios, llaves)
+        const collabOptionsById = '<option value="">-- Ninguno (Disponible) --</option>' + 
             sortedCollabs.map(c => `<option value="${c.id}">${c.name} (${c.area})</option>`).join('');
             
-        if (radioCollab) radioCollab.innerHTML = collabOptions;
-        if (keyCollab) keyCollab.innerHTML = collabOptions;
+        // Opciones por Nombre (para crear usuarios, porque la base de datos guarda el nombre directo)
+        const collabOptionsByName = '<option value="">-- Seleccione un colaborador --</option>' + 
+            sortedCollabs.map(c => `<option value="${c.name}">${c.name} (${c.area})</option>`).join('');
+            
+        if (radioCollab) radioCollab.innerHTML = collabOptionsById;
+        if (keyCollab) keyCollab.innerHTML = collabOptionsById;
+        if (userNameSelect) userNameSelect.innerHTML = collabOptionsByName;
     }
 }
 

@@ -133,3 +133,5 @@
 [17:12:09] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Raúl Padilla","area":"Seguridad","id":1776813129102}
 [17:12:25] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Tammy Jiménez","area":"Seguridad","id":1776813145433}
 [17:12:39] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Wanda Granados","area":"Seguridad","id":1776813159927}
+[17:16:46] Usuario 'superadmin' ELIMINÓ registro ID 1776812870108 de '1776812870108'.
+[17:22:21] Usuario 'superadmin' realizó POST en 'users'. Datos: {"name":"Alejandro Mora","username":"amora","password":"ab2d3b8768f649a8d9aa97fe0840c1acbb117cf43587175d9b0bf27e634e444e","role":"user","id":1776813741005}
