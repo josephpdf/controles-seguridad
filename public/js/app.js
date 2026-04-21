@@ -192,6 +192,31 @@ function getFilteredAndSorted(endpoint, list, searchFields) {
     return result;
 }
 
+// Helper para obtener todas las personas (Usuarios + Colaboradores) unificados
+function getAllPeople() {
+    const peopleMap = new Map();
+    
+    // Primero agregamos los colaboradores
+    if (Array.isArray(dataCache.collaborators)) {
+        dataCache.collaborators.forEach(c => {
+            peopleMap.set(c.id, { id: c.id, name: c.name, area: c.area });
+        });
+    }
+    
+    // Luego agregamos los usuarios que no estén (evitando duplicados por nombre)
+    if (Array.isArray(dataCache.users)) {
+        dataCache.users.forEach(u => {
+            // Check si ya existe alguien con ese nombre
+            const exists = Array.from(peopleMap.values()).some(p => p.name.toLowerCase().trim() === u.name.toLowerCase().trim());
+            if (!exists) {
+                peopleMap.set(u.id, { id: u.id, name: u.name, area: 'Usuario del Sistema' });
+            }
+        });
+    }
+    
+    return Array.from(peopleMap.values());
+}
+
 async function loadAllData() {
     await Promise.all([
         fetchData('radios'),
@@ -234,7 +259,7 @@ function renderTransactions() {
         const eqInfo = t.type === 'radio' 
             ? dataCache.radios.find(r => r.id == t.equipmentId)?.numero || 'Desconocido'
             : dataCache.keys.find(k => k.id == t.equipmentId)?.numero || 'Desconocido';
-        const collab = dataCache.collaborators.find(c => c.id == t.collaboratorId)?.name || 'Desconocido';
+        const collab = getAllPeople().find(c => c.id == t.collaboratorId)?.name || 'Desconocido';
         return {
             ...t,
             eqInfo,
@@ -287,7 +312,7 @@ function renderRadios() {
             statusText = 'Disponible';
         }
 
-        const collabName = r.colaborador ? (dataCache.collaborators.find(c => c.id == r.colaborador)?.name || 'Desconocido') : '-';
+        const collabName = r.colaborador ? (getAllPeople().find(c => c.id == r.colaborador)?.name || 'Desconocido') : '-';
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -328,7 +353,7 @@ function renderKeys() {
             statusText = 'Disponible';
         }
 
-        const collabName = k.colaborador ? (dataCache.collaborators.find(c => c.id == k.colaborador)?.name || 'Desconocido') : '-';
+        const collabName = k.colaborador ? (getAllPeople().find(c => c.id == k.colaborador)?.name || 'Desconocido') : '-';
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -424,8 +449,10 @@ function populateAreaSelects() {
 
     const radioCollab = document.getElementById('radioColaborador');
     const keyCollab = document.getElementById('keyColaborador');
-    if (Array.isArray(dataCache.collaborators)) {
-        const sortedCollabs = [...dataCache.collaborators].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    const allPeople = getAllPeople();
+    
+    if (allPeople.length > 0) {
+        const sortedCollabs = allPeople.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
         const collabOptions = '<option value="">-- Ninguno (Disponible) --</option>' + 
             sortedCollabs.map(c => `<option value="${c.id}">${c.name} (${c.area})</option>`).join('');
             
@@ -438,9 +465,9 @@ function populateAreaSelects() {
 function openTransactionModal() {
     loadEquipmentOptions();
     
-    // Cargar colaboradores ordenados alfabéticamente
+    // Cargar colaboradores ordenados alfabéticamente unificados
     const selectC = document.getElementById('transCollaborator');
-    const sortedCollabs = [...dataCache.collaborators].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    const sortedCollabs = getAllPeople().sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
     selectC.innerHTML = sortedCollabs.map(c => `<option value="${c.id}">${c.name} (${c.area})</option>`).join('');
     
     openModal('transactionModal');

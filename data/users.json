@@ -9,36 +9,8 @@
   {
     "name": "Marvin Torres",
     "username": "mtorres",
-    "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "password": "8734081ba7e6361579f187da1e4a03fdb530ccaf4561a66d302e60e9e0d31449",
     "role": "admin",
-    "id": 1776783636224
-  },
-  {
-    "name": "Alejandro Mora",
-    "username": "amora",
-    "password": "ab2d3b8768f649a8d9aa97fe0840c1acbb117cf43587175d9b0bf27e634e444e",
-    "role": "user",
-    "id": 1776787268015
-  },
-  {
-    "name": "Tammy Jiménez",
-    "username": "tjimenez",
-    "password": "7ce53113860a189b12f63f802356667a16d8fdb9b7bbbc3ad9980bff8ea5d582",
-    "role": "user",
-    "id": 1776788336602
-  },
-  {
-    "name": "Majorie Edmoson",
-    "username": "medmonson",
-    "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
-    "role": "admin",
-    "id": 1776792610867
-  },
-  {
-    "name": "Josué Conejo",
-    "username": "jconejo",
-    "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
-    "role": "superadmin",
-    "id": 1776796244100
+    "id": 1776812870108
   }
 ]

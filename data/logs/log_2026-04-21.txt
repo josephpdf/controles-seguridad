@@ -109,3 +109,27 @@
 [16:45:02] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Julio Mora","serie":"PENDIENTE","area":"Servicios Generales","colaborador":"","detalle":"Radio de Julio Mora (Disponible)","id":1700000000009}
 [16:53:51] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"51","colaborador":"1776796294001","detalle":"Tanques Gas Hectárea","id":1690000000051}
 [16:54:01] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"51","colaborador":"","detalle":"Tanques Gas Hectárea","id":1690000000051}
+[16:57:09] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Seguridad","id":1776812229504}
+[16:57:16] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Areas deportivas","id":14}
+[17:02:47] Usuario 'superadmin' ELIMINÓ registro ID 1776787268015 de '1776787268015'.
+[17:02:53] Usuario 'superadmin' ELIMINÓ registro ID 1776788336602 de '1776788336602'.
+[17:03:03] Usuario 'superadmin' ELIMINÓ registro ID 1776783636224 de '1776783636224'.
+[17:03:05] Usuario 'superadmin' ELIMINÓ registro ID 1776792610867 de '1776792610867'.
+[17:03:09] Usuario 'superadmin' ELIMINÓ registro ID 1776796244100 de '1776796244100'.
+[17:06:14] Usuario 'superadmin' realizó POST en 'users'. Datos: {"name":"Marvin Torres","username":"mtorres","password":"72593e8e6285f58c32adb35fd6003b1b10bad076ea8ff13f01ba308f2762cc56","role":"admin","id":1776812774775}
+[17:07:32] Usuario 'superadmin' ELIMINÓ registro ID 1776812774775 de '1776812774775'.
+[17:07:50] Usuario 'superadmin' realizó POST en 'users'. Datos: {"name":"Marvin Torres","username":"mtorres","password":"8734081ba7e6361579f187da1e4a03fdb530ccaf4561a66d302e60e9e0d31449","role":"admin","id":1776812870108}
+[17:09:45] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Marvin Torres","area":"Seguridad","id":1776812985648}
+[17:10:05] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Alejandro Mora","area":"Seguridad","id":1776813005679}
+[17:10:17] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Andrey Arick","area":"Seguridad","id":1776813017853}
+[17:10:32] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Ariel Siles","area":"Seguridad","id":1776813032392}
+[17:10:45] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Gabriela González","area":"Seguridad","id":1776813045732}
+[17:10:59] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Greivin Jiménez","area":"Seguridad","id":1776813059756}
+[17:11:07] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Julio vargas","area":"Seguridad","id":1776813067492}
+[17:11:17] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Luis Antonio Cruz","area":"Seguridad","id":1776813077482}
+[17:11:26] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Luis Redondo","area":"Seguridad","id":1776813086798}
+[17:11:41] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Marjorie Edmonson","area":"Seguridad","id":1776813101652}
+[17:11:56] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Paula Soto","area":"Seguridad","id":1776813116865}
+[17:12:09] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Raúl Padilla","area":"Seguridad","id":1776813129102}
+[17:12:25] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Tammy Jiménez","area":"Seguridad","id":1776813145433}
+[17:12:39] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Wanda Granados","area":"Seguridad","id":1776813159927}
