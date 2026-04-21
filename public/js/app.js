@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const forms = [
         { id: 'radioForm', endpoint: 'radios', modal: 'radioModal', fields: ['radioNumero', 'radioArea', 'radioDetalle'], map: f => ({ numero: f[0], area: f[1], detalle: f[2] }) },
-        { id: 'keyForm', endpoint: 'keys', modal: 'keyModal', fields: ['keyNumero', 'keyArea', 'keyDetalle'], map: f => ({ numero: f[0], area: f[1], detalle: f[2] }) },
+        { id: 'keyForm', endpoint: 'keys', modal: 'keyModal', fields: ['keyNumero', 'keyDetalle'], map: f => ({ numero: f[0], detalle: f[1] }) },
         { id: 'collaboratorForm', endpoint: 'collaborators', modal: 'collaboratorModal', fields: ['collabName', 'collabArea'], map: f => ({ name: f[0], area: f[1] }) },
         { id: 'userForm', endpoint: 'users', modal: 'userModal', fields: ['userName', 'userUsername', 'userPassword', 'userRole'], map: f => ({ name: f[0], username: f[1], password: f[2], role: f[3] }) },
         { id: 'areaForm', endpoint: 'areas', modal: 'areaModal', fields: ['areaName'], map: f => ({ name: f[0] }) }
@@ -74,6 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cid = document.getElementById('collabId').value;
                     if (cid) payload.id = parseInt(cid);
                 }
+                if (f.id === 'radioForm') {
+                    const rid = document.getElementById('radioId').value;
+                    if (rid) payload.id = parseInt(rid);
+                }
+                if (f.id === 'keyForm') {
+                    const kid = document.getElementById('keyId').value;
+                    if (kid) payload.id = parseInt(kid);
+                }
 
                 await fetch(`/api/${f.endpoint}`, {
                     method: 'POST',
@@ -97,6 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (f.id === 'collaboratorForm') {
                     document.getElementById('collabId').value = '';
                     document.getElementById('collaboratorModalTitle').textContent = 'Nuevo Colaborador';
+                }
+                if (f.id === 'radioForm') {
+                    document.getElementById('radioId').value = '';
+                    document.getElementById('radioModalTitle').textContent = 'Nuevo Radio';
+                }
+                if (f.id === 'keyForm') {
+                    document.getElementById('keyId').value = '';
+                    document.getElementById('keyModalTitle').textContent = 'Nueva Llave';
                 }
                 closeModal(f.modal);
                 await loadAllData();
@@ -265,7 +281,8 @@ function renderRadios() {
             <td><span class="badge ${inUse ? 'en-uso' : 'disponible'}">${inUse ? 'En Uso' : 'Disponible'}</span></td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
-                  `<button class="btn-danger" onclick="deleteItem('radios', ${r.id})">Eliminar</button>` : '-'}
+                  `<button class="btn-secondary" onclick="editRadio(${r.id})">Editar</button>
+                   <button class="btn-danger" onclick="deleteItem('radios', ${r.id})">Eliminar</button>` : '-'}
             </td>
         `;
         tbody.appendChild(tr);
@@ -276,19 +293,19 @@ function renderKeys() {
     const tbody = document.querySelector('#keysTable tbody');
     tbody.innerHTML = '';
     
-    let list = getFilteredAndSorted('keys', dataCache.keys, ['numero', 'area', 'detalle']);
+    let list = getFilteredAndSorted('keys', dataCache.keys, ['numero', 'detalle']);
     
     list.forEach(k => {
         const inUse = dataCache.transactions.some(t => t.type === 'llave' && t.equipmentId == k.id && !t.dateIn);
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${k.numero}</td>
-            <td>${k.area}</td>
             <td>${k.detalle}</td>
             <td><span class="badge ${inUse ? 'en-uso' : 'disponible'}">${inUse ? 'En Uso' : 'Disponible'}</span></td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
-                  `<button class="btn-danger" onclick="deleteItem('keys', ${k.id})">Eliminar</button>` : '-'}
+                  `<button class="btn-secondary" onclick="editKey(${k.id})">Editar</button>
+                   <button class="btn-danger" onclick="deleteItem('keys', ${k.id})">Eliminar</button>` : '-'}
             </td>
         `;
         tbody.appendChild(tr);
@@ -367,11 +384,9 @@ function populateAreaSelects() {
     
     const collabSelect = document.getElementById('collabArea');
     const radioSelect = document.getElementById('radioArea');
-    const keySelect = document.getElementById('keyArea');
     
     if (collabSelect) collabSelect.innerHTML = options;
     if (radioSelect) radioSelect.innerHTML = options;
-    if (keySelect) keySelect.innerHTML = options;
 }
 
 // ---- LOGICA TRANSACCIONES ----
@@ -476,6 +491,18 @@ function openModal(id) {
             document.getElementById('collaboratorModalTitle').textContent = 'Nuevo Colaborador';
         }
     }
+    if (id === 'radioModal') {
+        const rid = document.getElementById('radioId').value;
+        if (!rid) {
+            document.getElementById('radioModalTitle').textContent = 'Nuevo Radio';
+        }
+    }
+    if (id === 'keyModal') {
+        const kid = document.getElementById('keyId').value;
+        if (!kid) {
+            document.getElementById('keyModalTitle').textContent = 'Nueva Llave';
+        }
+    }
 }
 function closeModal(id) { 
     document.getElementById(id).classList.remove('active'); 
@@ -490,6 +517,14 @@ function closeModal(id) {
     if (id === 'collaboratorModal') {
         document.getElementById('collaboratorForm').reset();
         document.getElementById('collabId').value = '';
+    }
+    if (id === 'radioModal') {
+        document.getElementById('radioForm').reset();
+        document.getElementById('radioId').value = '';
+    }
+    if (id === 'keyModal') {
+        document.getElementById('keyForm').reset();
+        document.getElementById('keyId').value = '';
     }
 }
 
@@ -523,6 +558,27 @@ function editCollaborator(id) {
     document.getElementById('collabArea').value = collab.area;
     document.getElementById('collaboratorModalTitle').textContent = 'Editar Colaborador';
     openModal('collaboratorModal');
+}
+
+function editRadio(id) {
+    const radio = dataCache.radios.find(r => r.id === id);
+    if (!radio) return;
+    document.getElementById('radioId').value = radio.id;
+    document.getElementById('radioNumero').value = radio.numero;
+    document.getElementById('radioArea').value = radio.area;
+    document.getElementById('radioDetalle').value = radio.detalle;
+    document.getElementById('radioModalTitle').textContent = 'Editar Radio';
+    openModal('radioModal');
+}
+
+function editKey(id) {
+    const key = dataCache.keys.find(k => k.id === id);
+    if (!key) return;
+    document.getElementById('keyId').value = key.id;
+    document.getElementById('keyNumero').value = key.numero;
+    document.getElementById('keyDetalle').value = key.detalle;
+    document.getElementById('keyModalTitle').textContent = 'Editar Llave';
+    openModal('keyModal');
 }
 
 async function deleteItem(endpoint, id) {

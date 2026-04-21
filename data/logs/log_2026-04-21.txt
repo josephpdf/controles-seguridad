@@ -90,3 +90,6 @@
 [14:03:32] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"William Calvo","area":"Áreas deportivas","id":1776801812317}
 [14:03:46] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Yajaira Montenegro","area":"Jefatura","id":1776801826116}
 [14:03:57] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Yuliana Vega","area":"Restaurante","id":1776801837294}
+[15:51:11] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"02","area":"Caja Grill","detalle":"Caja Grill","id":1690000000002}
+[15:51:52] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"09","area":"Gerencia","detalle":"Sala Juntas","id":1690000000009}
+[15:52:46] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"18","area":"Vestidores","detalle":"Baños Timer","id":1690000000018}
