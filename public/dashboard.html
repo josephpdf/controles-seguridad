@@ -252,10 +252,11 @@
     <div id="collaboratorModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Nuevo Colaborador</h3>
+                <h3 id="collaboratorModalTitle">Nuevo Colaborador</h3>
                 <button class="close-btn" onclick="closeModal('collaboratorModal')">&times;</button>
             </div>
             <form id="collaboratorForm">
+                <input type="hidden" id="collabId">
                 <div class="form-group">
                     <label>Nombre Completo</label>
                     <input type="text" id="collabName" required>

@@ -70,6 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const aid = document.getElementById('areaId').value;
                     if (aid) payload.id = parseInt(aid);
                 }
+                if (f.id === 'collaboratorForm') {
+                    const cid = document.getElementById('collabId').value;
+                    if (cid) payload.id = parseInt(cid);
+                }
 
                 await fetch(`/api/${f.endpoint}`, {
                     method: 'POST',
@@ -89,6 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (f.id === 'areaForm') {
                     document.getElementById('areaId').value = '';
                     document.getElementById('areaModalTitle').textContent = 'Nueva Área';
+                }
+                if (f.id === 'collaboratorForm') {
+                    document.getElementById('collabId').value = '';
+                    document.getElementById('collaboratorModalTitle').textContent = 'Nuevo Colaborador';
                 }
                 closeModal(f.modal);
                 await loadAllData();
@@ -216,6 +224,7 @@ function renderCollaborators() {
             <td>${c.name}</td>
             <td>${c.area}</td>
             <td>
+                <button class="btn-secondary" onclick="editCollaborator(${c.id})">Editar</button>
                 <button class="btn-danger" onclick="deleteItem('collaborators', ${c.id})">Eliminar</button>
             </td>
         `;
@@ -371,6 +380,12 @@ function openModal(id) {
             document.getElementById('areaModalTitle').textContent = 'Nueva Área';
         }
     }
+    if (id === 'collaboratorModal') {
+        const cid = document.getElementById('collabId').value;
+        if (!cid) {
+            document.getElementById('collaboratorModalTitle').textContent = 'Nuevo Colaborador';
+        }
+    }
 }
 function closeModal(id) { 
     document.getElementById(id).classList.remove('active'); 
@@ -381,6 +396,10 @@ function closeModal(id) {
     if (id === 'areaModal') {
         document.getElementById('areaForm').reset();
         document.getElementById('areaId').value = '';
+    }
+    if (id === 'collaboratorModal') {
+        document.getElementById('collaboratorForm').reset();
+        document.getElementById('collabId').value = '';
     }
 }
 
@@ -404,6 +423,16 @@ function editArea(id) {
     document.getElementById('areaName').value = area.name;
     document.getElementById('areaModalTitle').textContent = 'Editar Área';
     openModal('areaModal');
+}
+
+function editCollaborator(id) {
+    const collab = dataCache.collaborators.find(c => c.id === id);
+    if (!collab) return;
+    document.getElementById('collabId').value = collab.id;
+    document.getElementById('collabName').value = collab.name;
+    document.getElementById('collabArea').value = collab.area;
+    document.getElementById('collaboratorModalTitle').textContent = 'Editar Colaborador';
+    openModal('collaboratorModal');
 }
 
 async function deleteItem(endpoint, id) {
