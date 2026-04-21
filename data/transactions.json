@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "type": "radio",
+    "equipmentId": 1700000000008,
+    "collaboratorId": 1776794737160,
+    "officerOut": "Alejandro Mora",
+    "dateOut": "2026-04-21T23:25:00.254Z",
+    "dateIn": "2026-04-21T23:25:51.061Z",
+    "officerIn": "Super Administrador",
+    "id": 1776813900258
+  },
+  {
+    "type": "radio",
+    "equipmentId": 1700000000010,
+    "collaboratorId": 1776794902132,
+    "officerOut": "Alejandro Mora",
+    "dateOut": "2026-04-21T23:30:05.298Z",
+    "dateIn": "2026-04-21T23:32:01.230Z",
+    "officerIn": "Super Administrador",
+    "id": 1776814205297
+  },
+  {
+    "type": "radio",
+    "equipmentId": 1700000000010,
+    "collaboratorId": 1776794902132,
+    "officerOut": "Marjorie Edmonson",
+    "dateOut": "2026-04-21T23:34:21.017Z",
+    "dateIn": null,
+    "officerIn": null,
+    "id": 1776814461021
+  }
+]

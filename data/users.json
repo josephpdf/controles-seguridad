@@ -12,5 +12,12 @@
     "password": "ab2d3b8768f649a8d9aa97fe0840c1acbb117cf43587175d9b0bf27e634e444e",
     "role": "user",
     "id": 1776813741005
+  },
+  {
+    "name": "Marjorie Edmonson",
+    "username": "medmonson",
+    "password": "bffb44cea55fe8218718b6fd43f2fb8e96575168b62e675c5b0020f85213fb1a",
+    "role": "admin",
+    "id": 1776814393297
   }
 ]

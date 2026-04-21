@@ -38,6 +38,11 @@
                     <h2>Transacciones (Entregas y Recepciones)</h2>
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="search-transactions" placeholder="Buscar..." oninput="renderTransactions()" class="search-input">
+                        <select id="status-transactions" onchange="renderTransactions()" class="search-input" style="width: auto;">
+                            <option value="">Todos los estados</option>
+                            <option value="en-uso">En Uso (Pendiente)</option>
+                            <option value="devuelto">Devuelto</option>
+                        </select>
                         <button class="btn-primary" style="width: auto;" onclick="openTransactionModal()">Nueva Salida</button>
                     </div>
                 </div>
@@ -45,7 +50,8 @@
                     <table id="transactionsTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('transactions', 'dateOut')" style="cursor:pointer">Fecha/Hora <span></span></th>
+                                <th onclick="toggleSort('transactions', 'dateOut')" style="cursor:pointer">Fecha/Hora Entrega <span></span></th>
+                                <th onclick="toggleSort('transactions', 'dateIn')" style="cursor:pointer">Fecha/Hora Devolución <span></span></th>
                                 <th onclick="toggleSort('transactions', 'type')" style="cursor:pointer">Tipo <span></span></th>
                                 <th onclick="toggleSort('transactions', 'eqInfo')" style="cursor:pointer">Equipo <span></span></th>
                                 <th onclick="toggleSort('transactions', 'collab')" style="cursor:pointer">Colaborador <span></span></th>
@@ -66,6 +72,12 @@
                     <h2>Inventario de Radios</h2>
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="search-radios" placeholder="Buscar..." oninput="renderRadios()" class="search-input">
+                        <select id="status-radios" onchange="renderRadios()" class="search-input" style="width: auto;">
+                            <option value="">Todos los estados</option>
+                            <option value="disponible">Disponible</option>
+                            <option value="en-uso">En Uso</option>
+                            <option value="no-disponible">No Disponible</option>
+                        </select>
                         <button class="btn-primary" style="width: auto;" onclick="openModal('radioModal')">Nuevo Radio</button>
                     </div>
                 </div>
@@ -92,6 +104,12 @@
                     <h2>Inventario de Llaves</h2>
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="search-keys" placeholder="Buscar..." oninput="renderKeys()" class="search-input">
+                        <select id="status-keys" onchange="renderKeys()" class="search-input" style="width: auto;">
+                            <option value="">Todos los estados</option>
+                            <option value="disponible">Disponible</option>
+                            <option value="en-uso">En Uso</option>
+                            <option value="no-disponible">No Disponible</option>
+                        </select>
                         <button class="btn-primary" style="width: auto;" onclick="openModal('keyModal')">Nueva Llave</button>
                     </div>
                 </div>

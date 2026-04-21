@@ -255,6 +255,8 @@ function renderTransactions() {
     const tbody = document.querySelector('#transactionsTable tbody');
     tbody.innerHTML = '';
     
+    const statusFilter = document.getElementById('status-transactions')?.value || '';
+    
     let list = dataCache.transactions.map(t => {
         const eqInfo = t.type === 'radio' 
             ? dataCache.radios.find(r => r.id == t.equipmentId)?.numero || 'Desconocido'
@@ -269,13 +271,17 @@ function renderTransactions() {
         };
     });
 
-    list = getFilteredAndSorted('transactions', list, ['dateOutFormatted', 'type', 'eqInfo', 'collab', 'officerOut', 'officerIn']);
+    if (statusFilter === 'en-uso') list = list.filter(t => !t.dateIn);
+    if (statusFilter === 'devuelto') list = list.filter(t => t.dateIn);
+
+    list = getFilteredAndSorted('transactions', list, ['dateOutFormatted', 'dateInFormatted', 'type', 'eqInfo', 'collab', 'officerOut', 'officerIn']);
     
     list.forEach(t => {
         const isPending = !t.dateIn;
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${t.dateOutFormatted}</td>
+            <td>${t.dateInFormatted}</td>
             <td>${t.type.toUpperCase()}</td>
             <td>${t.eqInfo}</td>
             <td>${t.collab}</td>
@@ -294,33 +300,48 @@ function renderRadios() {
     const tbody = document.querySelector('#radiosTable tbody');
     tbody.innerHTML = '';
     
-    let list = getFilteredAndSorted('radios', dataCache.radios, ['numero', 'area', 'detalle', 'colaborador']);
+    const statusFilter = document.getElementById('status-radios')?.value || '';
     
-    list.forEach(r => {
-        const inUse = dataCache.transactions.some(t => t.type === 'radio' && t.equipmentId == r.id && !t.dateIn);
+    let list = dataCache.radios.map(r => {
+        const activeTx = dataCache.transactions.find(t => t.type === 'radio' && t.equipmentId == r.id && !t.dateIn);
+        const inUse = !!activeTx;
         
+        let statusVal = '';
         let statusBadge = '';
         let statusText = '';
+        let collabName = '-';
+
         if (r.colaborador) {
-            statusBadge = 'en-uso'; // Maybe a different color could be used, but en-uso works (No Disponible)
+            statusVal = 'no-disponible';
+            statusBadge = 'en-uso';
             statusText = 'No Disponible';
+            collabName = getAllPeople().find(c => c.id == r.colaborador)?.name || 'Desconocido';
         } else if (inUse) {
+            statusVal = 'en-uso';
             statusBadge = 'en-uso';
             statusText = 'En Uso';
+            collabName = getAllPeople().find(c => c.id == activeTx.collaboratorId)?.name || 'Desconocido';
         } else {
+            statusVal = 'disponible';
             statusBadge = 'disponible';
             statusText = 'Disponible';
         }
+        
+        return { ...r, statusVal, statusBadge, statusText, collabName };
+    });
 
-        const collabName = r.colaborador ? (getAllPeople().find(c => c.id == r.colaborador)?.name || 'Desconocido') : '-';
+    if (statusFilter) list = list.filter(r => r.statusVal === statusFilter);
 
+    list = getFilteredAndSorted('radios', list, ['numero', 'area', 'detalle', 'collabName', 'statusText']);
+    
+    list.forEach(r => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${r.numero}</td>
             <td>${r.area}</td>
             <td>${r.detalle}</td>
-            <td>${collabName}</td>
-            <td><span class="badge ${statusBadge}">${statusText}</span></td>
+            <td>${r.collabName}</td>
+            <td><span class="badge ${r.statusBadge}">${r.statusText}</span></td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
                   `<button class="btn-secondary" onclick="editRadio(${r.id})">Editar</button>
@@ -335,32 +356,47 @@ function renderKeys() {
     const tbody = document.querySelector('#keysTable tbody');
     tbody.innerHTML = '';
     
-    let list = getFilteredAndSorted('keys', dataCache.keys, ['numero', 'detalle', 'colaborador']);
+    const statusFilter = document.getElementById('status-keys')?.value || '';
     
-    list.forEach(k => {
-        const inUse = dataCache.transactions.some(t => t.type === 'llave' && t.equipmentId == k.id && !t.dateIn);
+    let list = dataCache.keys.map(k => {
+        const activeTx = dataCache.transactions.find(t => t.type === 'llave' && t.equipmentId == k.id && !t.dateIn);
+        const inUse = !!activeTx;
         
+        let statusVal = '';
         let statusBadge = '';
         let statusText = '';
+        let collabName = '-';
+
         if (k.colaborador) {
+            statusVal = 'no-disponible';
             statusBadge = 'en-uso';
             statusText = 'No Disponible';
+            collabName = getAllPeople().find(c => c.id == k.colaborador)?.name || 'Desconocido';
         } else if (inUse) {
+            statusVal = 'en-uso';
             statusBadge = 'en-uso';
             statusText = 'En Uso';
+            collabName = getAllPeople().find(c => c.id == activeTx.collaboratorId)?.name || 'Desconocido';
         } else {
+            statusVal = 'disponible';
             statusBadge = 'disponible';
             statusText = 'Disponible';
         }
+        
+        return { ...k, statusVal, statusBadge, statusText, collabName };
+    });
 
-        const collabName = k.colaborador ? (getAllPeople().find(c => c.id == k.colaborador)?.name || 'Desconocido') : '-';
+    if (statusFilter) list = list.filter(k => k.statusVal === statusFilter);
 
+    list = getFilteredAndSorted('keys', list, ['numero', 'detalle', 'collabName', 'statusText']);
+    
+    list.forEach(k => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${k.numero}</td>
             <td>${k.detalle}</td>
-            <td>${collabName}</td>
-            <td><span class="badge ${statusBadge}">${statusText}</span></td>
+            <td>${k.collabName}</td>
+            <td><span class="badge ${k.statusBadge}">${k.statusText}</span></td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
                   `<button class="btn-secondary" onclick="editKey(${k.id})">Editar</button>
