@@ -1,0 +1,17 @@
+[
+  { "id": 1, "name": "Servicios Generales" },
+  { "id": 2, "name": "Computo" },
+  { "id": 3, "name": "Mantenimiento" },
+  { "id": 4, "name": "Contabilidad" },
+  { "id": 5, "name": "Talento Humano" },
+  { "id": 6, "name": "Tesoreria" },
+  { "id": 7, "name": "Eventos" },
+  { "id": 8, "name": "Gerencia" },
+  { "id": 9, "name": "Restaurante" },
+  { "id": 10, "name": "Cafeteria" },
+  { "id": 11, "name": "Mirador" },
+  { "id": 12, "name": "Lobby" },
+  { "id": 13, "name": "Atención al Socio" },
+  { "id": 14, "name": "Areas deportivas" },
+  { "id": 15, "name": "Crédito y Cobro" }
+]
