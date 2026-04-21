@@ -107,3 +107,5 @@
 [16:44:27] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Computo","serie":"PENDIENTE","area":"Computo","colaborador":"1776799106218","detalle":"Radio de Jefatura Computo","id":1700000000005}
 [16:44:50] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Julio Mora","serie":"PENDIENTE","area":"Servicios Generales","colaborador":"1776796270234","detalle":"Radio de Julio Mora (Disponible)","id":1700000000009}
 [16:45:02] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Julio Mora","serie":"PENDIENTE","area":"Servicios Generales","colaborador":"","detalle":"Radio de Julio Mora (Disponible)","id":1700000000009}
+[16:53:51] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"51","colaborador":"1776796294001","detalle":"Tanques Gas Hectárea","id":1690000000051}
+[16:54:01] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"51","colaborador":"","detalle":"Tanques Gas Hectárea","id":1690000000051}

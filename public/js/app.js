@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const forms = [
         { id: 'radioForm', endpoint: 'radios', modal: 'radioModal', fields: ['radioNumero', 'radioSerie', 'radioArea', 'radioColaborador', 'radioDetalle'], map: f => ({ numero: f[0], serie: f[1], area: f[2], colaborador: f[3], detalle: f[4] }) },
-        { id: 'keyForm', endpoint: 'keys', modal: 'keyModal', fields: ['keyNumero', 'keyDetalle'], map: f => ({ numero: f[0], detalle: f[1] }) },
+        { id: 'keyForm', endpoint: 'keys', modal: 'keyModal', fields: ['keyNumero', 'keyColaborador', 'keyDetalle'], map: f => ({ numero: f[0], colaborador: f[1], detalle: f[2] }) },
         { id: 'collaboratorForm', endpoint: 'collaborators', modal: 'collaboratorModal', fields: ['collabName', 'collabArea'], map: f => ({ name: f[0], area: f[1] }) },
         { id: 'userForm', endpoint: 'users', modal: 'userModal', fields: ['userName', 'userUsername', 'userPassword', 'userRole'], map: f => ({ name: f[0], username: f[1], password: f[2], role: f[3] }) },
         { id: 'areaForm', endpoint: 'areas', modal: 'areaModal', fields: ['areaName'], map: f => ({ name: f[0] }) }
@@ -310,15 +310,32 @@ function renderKeys() {
     const tbody = document.querySelector('#keysTable tbody');
     tbody.innerHTML = '';
     
-    let list = getFilteredAndSorted('keys', dataCache.keys, ['numero', 'detalle']);
+    let list = getFilteredAndSorted('keys', dataCache.keys, ['numero', 'detalle', 'colaborador']);
     
     list.forEach(k => {
         const inUse = dataCache.transactions.some(t => t.type === 'llave' && t.equipmentId == k.id && !t.dateIn);
+        
+        let statusBadge = '';
+        let statusText = '';
+        if (k.colaborador) {
+            statusBadge = 'en-uso';
+            statusText = 'No Disponible';
+        } else if (inUse) {
+            statusBadge = 'en-uso';
+            statusText = 'En Uso';
+        } else {
+            statusBadge = 'disponible';
+            statusText = 'Disponible';
+        }
+
+        const collabName = k.colaborador ? (dataCache.collaborators.find(c => c.id == k.colaborador)?.name || 'Desconocido') : '-';
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${k.numero}</td>
             <td>${k.detalle}</td>
-            <td><span class="badge ${inUse ? 'en-uso' : 'disponible'}">${inUse ? 'En Uso' : 'Disponible'}</span></td>
+            <td>${collabName}</td>
+            <td><span class="badge ${statusBadge}">${statusText}</span></td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
                   `<button class="btn-secondary" onclick="editKey(${k.id})">Editar</button>
@@ -406,10 +423,14 @@ function populateAreaSelects() {
     if (radioSelect) radioSelect.innerHTML = options;
 
     const radioCollab = document.getElementById('radioColaborador');
-    if (radioCollab && Array.isArray(dataCache.collaborators)) {
+    const keyCollab = document.getElementById('keyColaborador');
+    if (Array.isArray(dataCache.collaborators)) {
         const sortedCollabs = [...dataCache.collaborators].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-        radioCollab.innerHTML = '<option value="">-- Ninguno (Disponible) --</option>' + 
+        const collabOptions = '<option value="">-- Ninguno (Disponible) --</option>' + 
             sortedCollabs.map(c => `<option value="${c.id}">${c.name} (${c.area})</option>`).join('');
+            
+        if (radioCollab) radioCollab.innerHTML = collabOptions;
+        if (keyCollab) keyCollab.innerHTML = collabOptions;
     }
 }
 
@@ -605,6 +626,7 @@ function editKey(id) {
     if (!key) return;
     document.getElementById('keyId').value = key.id;
     document.getElementById('keyNumero').value = key.numero;
+    document.getElementById('keyColaborador').value = key.colaborador || '';
     document.getElementById('keyDetalle').value = key.detalle;
     document.getElementById('keyModalTitle').textContent = 'Editar Llave';
     openModal('keyModal');

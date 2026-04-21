@@ -101,6 +101,7 @@
                             <tr>
                                 <th onclick="toggleSort('keys', 'numero')" style="cursor:pointer">Número/ID <span></span></th>
                                 <th onclick="toggleSort('keys', 'detalle')" style="cursor:pointer">Detalle <span></span></th>
+                                <th onclick="toggleSort('keys', 'colaborador')" style="cursor:pointer">Colaborador Asignado <span></span></th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -262,6 +263,12 @@
                 <div class="form-group">
                     <label>Número/Identificador</label>
                     <input type="text" id="keyNumero" required>
+                </div>
+                <div class="form-group">
+                    <label>Colaborador Asignado Fijo</label>
+                    <select id="keyColaborador">
+                        <option value="">-- Ninguno (Disponible) --</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Detalle/Copia</label>
