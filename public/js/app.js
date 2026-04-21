@@ -73,7 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 await fetch(`/api/${f.endpoint}`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-User': currentUser.username
+                    },
                     body: JSON.stringify(payload)
                 });
                 
@@ -320,7 +323,10 @@ async function handleTransactionSubmit(e) {
 
     await fetch('/api/transactions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-User': currentUser.username
+        },
         body: JSON.stringify(payload)
     });
 
@@ -339,7 +345,10 @@ async function receiveEquipment(transactionId) {
 
     await fetch('/api/transactions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-User': currentUser.username
+        },
         body: JSON.stringify(t) // Envía el objeto actualizado, el backend lo reemplazará por el ID
     });
 
@@ -399,6 +408,9 @@ function editArea(id) {
 
 async function deleteItem(endpoint, id) {
     if (!confirm('¿Está seguro de eliminar este registro?')) return;
-    await fetch(`/api/${endpoint}/${id}`, { method: 'DELETE' });
+    await fetch(`/api/${endpoint}/${id}`, { 
+        method: 'DELETE',
+        headers: { 'X-User': currentUser.username }
+    });
     await loadAllData();
 }

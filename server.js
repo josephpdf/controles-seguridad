@@ -5,7 +5,32 @@ const crypto = require('crypto');
 
 const PORT = 3000;
 const DATA_DIR = path.join(__dirname, 'data');
+const LOGS_DIR = path.join(DATA_DIR, 'logs');
 const PUBLIC_DIR = path.join(__dirname, 'public');
+
+// Función para registrar auditoría (Logs por día)
+const logAction = (user, method, url, details) => {
+    try {
+        const date = new Date();
+        const dateStr = date.toISOString().split('T')[0];
+        const timeStr = date.toTimeString().split(' ')[0];
+        const logFile = path.join(LOGS_DIR, `log_${dateStr}.txt`);
+        
+        let actionDesc = '';
+        const resource = url.split('/').pop() || url.split('/')[2];
+        
+        if (method === 'POST') {
+            actionDesc = details.id && details.id.toString().length > 10 ? 'CREÓ/EDITÓ' : 'EDITÓ/CREÓ'; 
+            // Better desc
+            actionDesc = details.numero || details.name || details.username || `Transaccion/Equipo ${details.equipmentId}`;
+            fs.appendFileSync(logFile, `[${timeStr}] Usuario '${user}' realizó POST en '${resource}'. Datos: ${JSON.stringify(details)}\n`, 'utf8');
+        } else if (method === 'DELETE') {
+            fs.appendFileSync(logFile, `[${timeStr}] Usuario '${user}' ELIMINÓ registro ID ${details} de '${resource}'.\n`, 'utf8');
+        }
+    } catch (e) {
+        console.error("Error guardando log:", e);
+    }
+};
 
 // Utilidades para archivos JSON
 const readData = (filename) => {
@@ -90,6 +115,8 @@ const server = http.createServer((req, res) => {
             // --- GENERIC CRUD ---
             const handleCRUD = (entityName, filename) => {
                 const data = readData(filename);
+                const reqUser = req.headers['x-user'] || 'Sistema';
+
                 if (req.method === 'GET') {
                     res.writeHead(200);
                     res.end(JSON.stringify(data));
@@ -115,12 +142,14 @@ const server = http.createServer((req, res) => {
                         data.push(parsedBody);
                     }
                     writeData(filename, data);
+                    logAction(reqUser, 'POST', req.url, parsedBody);
                     res.writeHead(200);
                     res.end(JSON.stringify({ success: true }));
                 } else if (req.method === 'DELETE') {
                     const id = parseInt(req.url.split('/').pop());
                     const newData = data.filter(item => item.id !== id);
                     writeData(filename, newData);
+                    logAction(reqUser, 'DELETE', req.url, id);
                     res.writeHead(200);
                     res.end(JSON.stringify({ success: true }));
                 }
