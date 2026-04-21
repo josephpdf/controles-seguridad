@@ -9,7 +9,7 @@
   {
     "name": "Marvin Torres",
     "username": "mtorres",
-    "password": "28200b243bea6093f2e194fc3887fcf1906ef821263644bf7caf38594e044ce9",
+    "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
     "role": "admin",
     "id": 1776783636224
   },
@@ -26,5 +26,12 @@
     "password": "7ce53113860a189b12f63f802356667a16d8fdb9b7bbbc3ad9980bff8ea5d582",
     "role": "user",
     "id": 1776788336602
+  },
+  {
+    "name": "Majorie Edmoson",
+    "username": "medmonson",
+    "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "role": "admin",
+    "id": 1776792610867
   }
 ]
