@@ -1,0 +1,92 @@
+[12:01:12] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Alexis González","area":"Mantenimiento","id":1776794472749}
+[12:02:05] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Angela Valencia","area":"Servicios Generales","id":1776794525273}
+[12:02:18] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Ariana Sandí","area":"Eventos","id":1776794538564}
+[12:02:44] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Armando Ulloa","area":"Mantenimiento","id":1776794564713}
+[12:02:59] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Belén Díaz","area":"Mirador","id":1776794579291}
+[12:03:40] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Betty López","area":"Servicios Generales","id":1776794620272}
+[12:04:05] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Casandra Lizano","area":"Contabilidad","id":1776794645468}
+[12:04:25] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Shelcy Acevedo","area":"Restaurante","id":1776794665759}
+[12:04:49] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Caja Grill","id":1776794689698}
+[12:04:57] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Cristian Sánchez","area":"Caja Grill","id":1776794697302}
+[12:05:12] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Cristobal Hernández","area":"Mantenimiento","id":1776794712800}
+[12:05:23] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Daniel Soto","area":"Servicios Generales","id":1776794723015}
+[12:05:37] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Daniela garcía","area":"Servicios Generales","id":1776794737160}
+[12:05:57] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Darwin Méndez","area":"Áreas deportivas","id":1776794757192}
+[12:06:21] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Bodega","id":1776794781296}
+[12:06:32] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"David Calderón","area":"Bodega","id":1776794792323}
+[12:06:43] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Dayana Chacón","area":"Lobby","id":1776794803098}
+[12:06:56] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Jefatura","id":1776794816991}
+[12:07:09] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Diego Salas","area":"Jefatura","id":1776794829097}
+[12:07:41] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Cocina","id":1776794861296}
+[12:07:56] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Eduardo Moya","area":"Servicios Generales","id":1776794876642}
+[12:08:05] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Fabián Barquero","area":"Servicios Generales","id":1776794885182}
+[12:08:22] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Franchesky Little","area":"Eventos","id":1776794902132}
+[12:08:51] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Franky Arias","area":"Eventos","id":1776794931525}
+[12:09:07] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Freddy Mailloux","area":"Servicios Generales","id":1776794947213}
+[12:09:19] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Gabriel Vargas","area":"Cocina","id":1776794959196}
+[12:09:37] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Gabriela Venegas","area":"Servicios Generales","id":1776794977157}
+[12:09:52] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Geovanny Álvarez","area":"Mantenimiento","id":1776794992354}
+[12:10:03] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Gipzy Cascante","area":"Talento Humano","id":1776795003138}
+[12:10:44] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Vestidores","id":1776795044081}
+[12:10:50] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Greivin Ulloa","area":"Vestidores","id":1776795050585}
+[12:11:04] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Guillermo Rojas","area":"Mantenimiento","id":1776795064075}
+[12:11:26] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Guisella Alcazar","area":"Áreas deportivas","id":1776795086493}
+[12:11:36] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Hugo Giraldo","area":"Eventos","id":1776795096291}
+[12:11:52] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Idania Arbizú","area":"Servicios Generales","id":1776795112503}
+[12:12:03] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Isabella Keith","area":"Servicios Generales","id":1776795123911}
+[12:12:21] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Ivannia Zamorán","area":"Servicios Generales","id":1776795141563}
+[12:12:47] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Ivonne Calderón","area":"Servicios Generales","id":1776795167006}
+[12:13:00] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Ivy Núñez","area":"Crédito y Cobro","id":1776795180303}
+[12:13:10] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Jaime Amador","area":"Áreas deportivas","id":1776795190814}
+[12:13:19] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Jason Chavarria","area":"Gerencia","id":1776795199527}
+[12:13:32] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Instructores","id":1776795212911}
+[12:13:43] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Javier Bonilla","area":"Instructores","id":1776795223023}
+[12:14:32] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Jeffry Cordero","area":"Servicios Generales","id":1776795272901}
+[12:14:55] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Jeffry Ramos","area":"Servicios Generales","id":1776795295140}
+[12:16:19] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Jimena Navarro","area":"Atención al Socio","id":1776795379399}
+[12:17:14] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Jocksan Chavarría","area":"Áreas deportivas","id":1776795434627}
+[12:17:23] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"José Brenes","area":"Áreas deportivas","id":1776795443180}
+[12:17:35] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Jose Pablo González","area":"Bodega","id":1776795455580}
+[12:30:44] Usuario 'superadmin' realizó POST en 'users'. Datos: {"name":"Josué Conejo","username":"jconejo","password":"240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9","role":"superadmin","id":1776796244100}
+[12:30:59] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Juan Sequeira","area":"Restaurante","id":1776796259969}
+[12:31:10] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Julio Mora","area":"Servicios Generales","id":1776796270234}
+[12:31:22] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Katherine Chanto","area":"Restaurante","id":1776796282467}
+[12:31:34] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Kendall Durán","area":"Contabilidad","id":1776796294001}
+[12:31:43] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Kenia Marín","area":"Vestidores","id":1776796303960}
+[12:32:03] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Kevin Rivas","area":"Restaurante","id":1776796323618}
+[12:32:51] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Kimberly Freer","area":"Restaurante","id":1776796371203}
+[13:13:45] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Laura Arguedas","area":"Jefatura","id":1776798825484}
+[13:14:02] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Laura Chacón","area":"Servicios Generales","id":1776798842459}
+[13:14:12] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Lorena Rodríguez","area":"Tesorería","id":1776798852540}
+[13:15:07] Usuario 'superadmin' realizó POST en 'areas'. Datos: {"name":"Procesos","id":1776798907394}
+[13:15:17] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Maibel Lamas","area":"Procesos","id":1776798917639}
+[13:15:24] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Manuel Salas","area":"Jefatura","id":1776798924349}
+[13:15:35] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Marco Chavarria","area":"Mirador","id":1776798935088}
+[13:15:49] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Marco Sánchez","area":"Jefatura","id":1776798949021}
+[13:16:04] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Maricela Narvaez","area":"Restaurante","id":1776798964125}
+[13:16:18] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Maritza Brizuela","area":"Vestidores","id":1776798978407}
+[13:16:38] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Maritza Lizano","area":"Vestidores","id":1776798998452}
+[13:16:50] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Maritza Trujillo","area":"Servicios Generales","id":1776799010525}
+[13:17:08] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Martha Rodríguez","area":"Servicios Generales","id":1776799028813}
+[13:17:21] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Michael Arguedas","area":"Jefatura","id":1776799041271}
+[13:17:36] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Michelle Berrocal","area":"Mirador","id":1776799056487}
+[13:17:44] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Mirna Coto","area":"Gerencia","id":1776799064500}
+[13:17:57] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Nicole Infante","area":"Talento Humano","id":1776799077871}
+[13:18:15] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Nohelia Murillo","area":"Cocina","id":1776799095586}
+[13:18:26] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Orlando Avendaño","area":"Jefatura","id":1776799106218}
+[13:18:38] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Pablo Castillo","area":"Jefatura","id":1776799118336}
+[13:18:56] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Pablo Flores","area":"Servicios Generales","id":1776799136464}
+[13:19:14] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Raquel Romero","area":"Áreas deportivas","id":1776799154805}
+[13:19:25] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Ricard Calderón","area":"Mantenimiento","id":1776799165945}
+[13:19:42] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Rocío Gamboa","area":"Servicios Generales","id":1776799182310}
+[13:19:56] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Rodrigo Garita","area":"Mantenimiento","id":1776799196507}
+[13:20:07] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Rosa Ramirez","area":"Caja Grill","id":1776799207069}
+[14:00:29] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Sergio Mora","area":"Cafetería","id":1776801629958}
+[14:00:42] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Sidar Cisneros","area":"Servicios Generales","id":1776801642285}
+[14:00:53] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Sofía Hernández","area":"Contabilidad","id":1776801653485}
+[14:01:33] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Sofía Meza","area":"Áreas deportivas","id":1776801693198}
+[14:01:45] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Tonny Rodríguez","area":"Mantenimiento","id":1776801705973}
+[14:02:05] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Vinicio Bermudez","area":"Servicios Generales","id":1776801725501}
+[14:03:32] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"William Calvo","area":"Áreas deportivas","id":1776801812317}
+[14:03:46] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Yajaira Montenegro","area":"Jefatura","id":1776801826116}
+[14:03:57] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Yuliana Vega","area":"Restaurante","id":1776801837294}

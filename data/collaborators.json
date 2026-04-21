@@ -1,1 +1,432 @@
-[]
+[
+  {
+    "name": "Alexander Calderón",
+    "area": "Áreas deportivas",
+    "id": 1776794078873
+  },
+  {
+    "name": "Alexandra Rojas",
+    "area": "Lobby",
+    "id": 1776794377507
+  },
+  {
+    "name": "Alexis González",
+    "area": "Mantenimiento",
+    "id": 1776794472749
+  },
+  {
+    "name": "Angela Valencia",
+    "area": "Servicios Generales",
+    "id": 1776794525273
+  },
+  {
+    "name": "Ariana Sandí",
+    "area": "Eventos",
+    "id": 1776794538564
+  },
+  {
+    "name": "Armando Ulloa",
+    "area": "Mantenimiento",
+    "id": 1776794564713
+  },
+  {
+    "name": "Belén Díaz",
+    "area": "Mirador",
+    "id": 1776794579291
+  },
+  {
+    "name": "Betty López",
+    "area": "Servicios Generales",
+    "id": 1776794620272
+  },
+  {
+    "name": "Casandra Lizano",
+    "area": "Contabilidad",
+    "id": 1776794645468
+  },
+  {
+    "name": "Shelcy Acevedo",
+    "area": "Restaurante",
+    "id": 1776794665759
+  },
+  {
+    "name": "Cristian Sánchez",
+    "area": "Caja Grill",
+    "id": 1776794697302
+  },
+  {
+    "name": "Cristobal Hernández",
+    "area": "Mantenimiento",
+    "id": 1776794712800
+  },
+  {
+    "name": "Daniel Soto",
+    "area": "Servicios Generales",
+    "id": 1776794723015
+  },
+  {
+    "name": "Daniela garcía",
+    "area": "Servicios Generales",
+    "id": 1776794737160
+  },
+  {
+    "name": "Darwin Méndez",
+    "area": "Áreas deportivas",
+    "id": 1776794757192
+  },
+  {
+    "name": "David Calderón",
+    "area": "Bodega",
+    "id": 1776794792323
+  },
+  {
+    "name": "Dayana Chacón",
+    "area": "Lobby",
+    "id": 1776794803098
+  },
+  {
+    "name": "Diego Salas",
+    "area": "Jefatura",
+    "id": 1776794829097
+  },
+  {
+    "name": "Eduardo Moya",
+    "area": "Servicios Generales",
+    "id": 1776794876642
+  },
+  {
+    "name": "Fabián Barquero",
+    "area": "Servicios Generales",
+    "id": 1776794885182
+  },
+  {
+    "name": "Franchesky Little",
+    "area": "Eventos",
+    "id": 1776794902132
+  },
+  {
+    "name": "Franky Arias",
+    "area": "Eventos",
+    "id": 1776794931525
+  },
+  {
+    "name": "Freddy Mailloux",
+    "area": "Servicios Generales",
+    "id": 1776794947213
+  },
+  {
+    "name": "Gabriel Vargas",
+    "area": "Cocina",
+    "id": 1776794959196
+  },
+  {
+    "name": "Gabriela Venegas",
+    "area": "Servicios Generales",
+    "id": 1776794977157
+  },
+  {
+    "name": "Geovanny Álvarez",
+    "area": "Mantenimiento",
+    "id": 1776794992354
+  },
+  {
+    "name": "Gipzy Cascante",
+    "area": "Talento Humano",
+    "id": 1776795003138
+  },
+  {
+    "name": "Greivin Ulloa",
+    "area": "Vestidores",
+    "id": 1776795050585
+  },
+  {
+    "name": "Guillermo Rojas",
+    "area": "Mantenimiento",
+    "id": 1776795064075
+  },
+  {
+    "name": "Guisella Alcazar",
+    "area": "Áreas deportivas",
+    "id": 1776795086493
+  },
+  {
+    "name": "Hugo Giraldo",
+    "area": "Eventos",
+    "id": 1776795096291
+  },
+  {
+    "name": "Idania Arbizú",
+    "area": "Servicios Generales",
+    "id": 1776795112503
+  },
+  {
+    "name": "Isabella Keith",
+    "area": "Servicios Generales",
+    "id": 1776795123911
+  },
+  {
+    "name": "Ivannia Zamorán",
+    "area": "Servicios Generales",
+    "id": 1776795141563
+  },
+  {
+    "name": "Ivonne Calderón",
+    "area": "Servicios Generales",
+    "id": 1776795167006
+  },
+  {
+    "name": "Ivy Núñez",
+    "area": "Crédito y Cobro",
+    "id": 1776795180303
+  },
+  {
+    "name": "Jaime Amador",
+    "area": "Áreas deportivas",
+    "id": 1776795190814
+  },
+  {
+    "name": "Jason Chavarria",
+    "area": "Gerencia",
+    "id": 1776795199527
+  },
+  {
+    "name": "Javier Bonilla",
+    "area": "Instructores",
+    "id": 1776795223023
+  },
+  {
+    "name": "Jeffry Cordero",
+    "area": "Servicios Generales",
+    "id": 1776795272901
+  },
+  {
+    "name": "Jeffry Ramos",
+    "area": "Servicios Generales",
+    "id": 1776795295140
+  },
+  {
+    "name": "Jimena Navarro",
+    "area": "Atención al Socio",
+    "id": 1776795379399
+  },
+  {
+    "name": "Jocksan Chavarría",
+    "area": "Áreas deportivas",
+    "id": 1776795434627
+  },
+  {
+    "name": "José Brenes",
+    "area": "Áreas deportivas",
+    "id": 1776795443180
+  },
+  {
+    "name": "Jose Pablo González",
+    "area": "Bodega",
+    "id": 1776795455580
+  },
+  {
+    "name": "Juan Sequeira",
+    "area": "Restaurante",
+    "id": 1776796259969
+  },
+  {
+    "name": "Julio Mora",
+    "area": "Servicios Generales",
+    "id": 1776796270234
+  },
+  {
+    "name": "Katherine Chanto",
+    "area": "Restaurante",
+    "id": 1776796282467
+  },
+  {
+    "name": "Kendall Durán",
+    "area": "Contabilidad",
+    "id": 1776796294001
+  },
+  {
+    "name": "Kenia Marín",
+    "area": "Vestidores",
+    "id": 1776796303960
+  },
+  {
+    "name": "Kevin Rivas",
+    "area": "Restaurante",
+    "id": 1776796323618
+  },
+  {
+    "name": "Kimberly Freer",
+    "area": "Restaurante",
+    "id": 1776796371203
+  },
+  {
+    "name": "Laura Arguedas",
+    "area": "Jefatura",
+    "id": 1776798825484
+  },
+  {
+    "name": "Laura Chacón",
+    "area": "Servicios Generales",
+    "id": 1776798842459
+  },
+  {
+    "name": "Lorena Rodríguez",
+    "area": "Tesorería",
+    "id": 1776798852540
+  },
+  {
+    "name": "Maibel Lamas",
+    "area": "Procesos",
+    "id": 1776798917639
+  },
+  {
+    "name": "Manuel Salas",
+    "area": "Jefatura",
+    "id": 1776798924349
+  },
+  {
+    "name": "Marco Chavarria",
+    "area": "Mirador",
+    "id": 1776798935088
+  },
+  {
+    "name": "Marco Sánchez",
+    "area": "Jefatura",
+    "id": 1776798949021
+  },
+  {
+    "name": "Maricela Narvaez",
+    "area": "Restaurante",
+    "id": 1776798964125
+  },
+  {
+    "name": "Maritza Brizuela",
+    "area": "Vestidores",
+    "id": 1776798978407
+  },
+  {
+    "name": "Maritza Lizano",
+    "area": "Vestidores",
+    "id": 1776798998452
+  },
+  {
+    "name": "Maritza Trujillo",
+    "area": "Servicios Generales",
+    "id": 1776799010525
+  },
+  {
+    "name": "Martha Rodríguez",
+    "area": "Servicios Generales",
+    "id": 1776799028813
+  },
+  {
+    "name": "Michael Arguedas",
+    "area": "Jefatura",
+    "id": 1776799041271
+  },
+  {
+    "name": "Michelle Berrocal",
+    "area": "Mirador",
+    "id": 1776799056487
+  },
+  {
+    "name": "Mirna Coto",
+    "area": "Gerencia",
+    "id": 1776799064500
+  },
+  {
+    "name": "Nicole Infante",
+    "area": "Talento Humano",
+    "id": 1776799077871
+  },
+  {
+    "name": "Nohelia Murillo",
+    "area": "Cocina",
+    "id": 1776799095586
+  },
+  {
+    "name": "Orlando Avendaño",
+    "area": "Jefatura",
+    "id": 1776799106218
+  },
+  {
+    "name": "Pablo Castillo",
+    "area": "Jefatura",
+    "id": 1776799118336
+  },
+  {
+    "name": "Pablo Flores",
+    "area": "Servicios Generales",
+    "id": 1776799136464
+  },
+  {
+    "name": "Raquel Romero",
+    "area": "Áreas deportivas",
+    "id": 1776799154805
+  },
+  {
+    "name": "Ricard Calderón",
+    "area": "Mantenimiento",
+    "id": 1776799165945
+  },
+  {
+    "name": "Rocío Gamboa",
+    "area": "Servicios Generales",
+    "id": 1776799182310
+  },
+  {
+    "name": "Rodrigo Garita",
+    "area": "Mantenimiento",
+    "id": 1776799196507
+  },
+  {
+    "name": "Rosa Ramirez",
+    "area": "Caja Grill",
+    "id": 1776799207069
+  },
+  {
+    "name": "Sergio Mora",
+    "area": "Cafetería",
+    "id": 1776801629958
+  },
+  {
+    "name": "Sidar Cisneros",
+    "area": "Servicios Generales",
+    "id": 1776801642285
+  },
+  {
+    "name": "Sofía Hernández",
+    "area": "Contabilidad",
+    "id": 1776801653485
+  },
+  {
+    "name": "Sofía Meza",
+    "area": "Áreas deportivas",
+    "id": 1776801693198
+  },
+  {
+    "name": "Tonny Rodríguez",
+    "area": "Mantenimiento",
+    "id": 1776801705973
+  },
+  {
+    "name": "Vinicio Bermudez",
+    "area": "Servicios Generales",
+    "id": 1776801725501
+  },
+  {
+    "name": "William Calvo",
+    "area": "Áreas deportivas",
+    "id": 1776801812317
+  },
+  {
+    "name": "Yajaira Montenegro",
+    "area": "Jefatura",
+    "id": 1776801826116
+  },
+  {
+    "name": "Yuliana Vega",
+    "area": "Restaurante",
+    "id": 1776801837294
+  }
+]

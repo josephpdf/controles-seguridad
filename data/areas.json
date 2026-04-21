@@ -1,17 +1,90 @@
 [
-  { "id": 1, "name": "Servicios Generales" },
-  { "id": 2, "name": "Computo" },
-  { "id": 3, "name": "Mantenimiento" },
-  { "id": 4, "name": "Contabilidad" },
-  { "id": 5, "name": "Talento Humano" },
-  { "id": 6, "name": "Tesoreria" },
-  { "id": 7, "name": "Eventos" },
-  { "id": 8, "name": "Gerencia" },
-  { "id": 9, "name": "Restaurante" },
-  { "id": 10, "name": "Cafeteria" },
-  { "id": 11, "name": "Mirador" },
-  { "id": 12, "name": "Lobby" },
-  { "id": 13, "name": "Atención al Socio" },
-  { "id": 14, "name": "Areas deportivas" },
-  { "id": 15, "name": "Crédito y Cobro" }
+  {
+    "id": 1,
+    "name": "Servicios Generales"
+  },
+  {
+    "id": 2,
+    "name": "Computo"
+  },
+  {
+    "id": 3,
+    "name": "Mantenimiento"
+  },
+  {
+    "id": 4,
+    "name": "Contabilidad"
+  },
+  {
+    "id": 5,
+    "name": "Talento Humano"
+  },
+  {
+    "id": 6,
+    "name": "Tesorería"
+  },
+  {
+    "id": 7,
+    "name": "Eventos"
+  },
+  {
+    "id": 8,
+    "name": "Gerencia"
+  },
+  {
+    "id": 9,
+    "name": "Restaurante"
+  },
+  {
+    "id": 10,
+    "name": "Cafetería"
+  },
+  {
+    "id": 11,
+    "name": "Mirador"
+  },
+  {
+    "id": 12,
+    "name": "Lobby"
+  },
+  {
+    "id": 13,
+    "name": "Atención al Socio"
+  },
+  {
+    "id": 14,
+    "name": "Áreas deportivas"
+  },
+  {
+    "id": 15,
+    "name": "Crédito y Cobro"
+  },
+  {
+    "name": "Caja Grill",
+    "id": 1776794689698
+  },
+  {
+    "name": "Bodega",
+    "id": 1776794781296
+  },
+  {
+    "name": "Jefatura",
+    "id": 1776794816991
+  },
+  {
+    "name": "Cocina",
+    "id": 1776794861296
+  },
+  {
+    "name": "Vestidores",
+    "id": 1776795044081
+  },
+  {
+    "name": "Instructores",
+    "id": 1776795212911
+  },
+  {
+    "name": "Procesos",
+    "id": 1776798907394
+  }
 ]

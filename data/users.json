@@ -33,5 +33,12 @@
     "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
     "role": "admin",
     "id": 1776792610867
+  },
+  {
+    "name": "Josué Conejo",
+    "username": "jconejo",
+    "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "role": "superadmin",
+    "id": 1776796244100
   }
 ]
