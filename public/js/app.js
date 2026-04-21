@@ -12,11 +12,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('userNameDisplay').textContent = currentUser.name;
     document.getElementById('userRoleDisplay').textContent = currentUser.role.toUpperCase();
 
-    // Configurar permisos de navegación
+    // Configurar permisos de navegación y formularios
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
         document.getElementById('navCollaborators').style.display = 'block';
         document.getElementById('navAreas').style.display = 'block';
         document.getElementById('navUsers').style.display = 'block';
+    }
+    
+    // Restringir que los admins puedan crear superadmins
+    if (currentUser.role !== 'superadmin') {
+        const roleSelect = document.getElementById('userRole');
+        if (roleSelect) {
+            const superOption = roleSelect.querySelector('option[value="superadmin"]');
+            if (superOption) superOption.remove();
+        }
     }
 
     // Eventos de navegación
