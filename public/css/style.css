@@ -223,6 +223,20 @@ body {
     margin-bottom: 1.5rem;
 }
 
+.search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 250px;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
 /* Tables */
 table {
     width: 100%;

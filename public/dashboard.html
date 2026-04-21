@@ -36,18 +36,21 @@
             <section id="sec-transactions" class="content-section">
                 <div class="section-title">
                     <h2>Transacciones (Entregas y Recepciones)</h2>
-                    <button class="btn-primary" style="width: auto;" onclick="openTransactionModal()">Nueva Salida</button>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="search-transactions" placeholder="Buscar..." oninput="renderTransactions()" class="search-input">
+                        <button class="btn-primary" style="width: auto;" onclick="openTransactionModal()">Nueva Salida</button>
+                    </div>
                 </div>
                 <div class="card">
                     <table id="transactionsTable">
                         <thead>
                             <tr>
-                                <th>Fecha/Hora</th>
-                                <th>Tipo</th>
-                                <th>Equipo</th>
-                                <th>Colaborador</th>
-                                <th>Oficial Entrega</th>
-                                <th>Oficial Recibe</th>
+                                <th onclick="toggleSort('transactions', 'dateOut')" style="cursor:pointer">Fecha/Hora <span></span></th>
+                                <th onclick="toggleSort('transactions', 'type')" style="cursor:pointer">Tipo <span></span></th>
+                                <th onclick="toggleSort('transactions', 'eqInfo')" style="cursor:pointer">Equipo <span></span></th>
+                                <th onclick="toggleSort('transactions', 'collab')" style="cursor:pointer">Colaborador <span></span></th>
+                                <th onclick="toggleSort('transactions', 'officerOut')" style="cursor:pointer">Oficial Entrega <span></span></th>
+                                <th onclick="toggleSort('transactions', 'officerIn')" style="cursor:pointer">Oficial Recibe <span></span></th>
                                 <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
@@ -61,15 +64,18 @@
             <section id="sec-radios" class="content-section" style="display: none;">
                 <div class="section-title">
                     <h2>Inventario de Radios</h2>
-                    <button class="btn-primary" style="width: auto;" onclick="openModal('radioModal')">Nuevo Radio</button>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="search-radios" placeholder="Buscar..." oninput="renderRadios()" class="search-input">
+                        <button class="btn-primary" style="width: auto;" onclick="openModal('radioModal')">Nuevo Radio</button>
+                    </div>
                 </div>
                 <div class="card">
                     <table id="radiosTable">
                         <thead>
                             <tr>
-                                <th>Número</th>
-                                <th>Área</th>
-                                <th>Detalle</th>
+                                <th onclick="toggleSort('radios', 'numero')" style="cursor:pointer">Número <span></span></th>
+                                <th onclick="toggleSort('radios', 'area')" style="cursor:pointer">Área <span></span></th>
+                                <th onclick="toggleSort('radios', 'detalle')" style="cursor:pointer">Detalle <span></span></th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -83,15 +89,18 @@
             <section id="sec-keys" class="content-section" style="display: none;">
                 <div class="section-title">
                     <h2>Inventario de Llaves</h2>
-                    <button class="btn-primary" style="width: auto;" onclick="openModal('keyModal')">Nueva Llave</button>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="search-keys" placeholder="Buscar..." oninput="renderKeys()" class="search-input">
+                        <button class="btn-primary" style="width: auto;" onclick="openModal('keyModal')">Nueva Llave</button>
+                    </div>
                 </div>
                 <div class="card">
                     <table id="keysTable">
                         <thead>
                             <tr>
-                                <th>Número/ID</th>
-                                <th>Área</th>
-                                <th>Detalle</th>
+                                <th onclick="toggleSort('keys', 'numero')" style="cursor:pointer">Número/ID <span></span></th>
+                                <th onclick="toggleSort('keys', 'area')" style="cursor:pointer">Área <span></span></th>
+                                <th onclick="toggleSort('keys', 'detalle')" style="cursor:pointer">Detalle <span></span></th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -105,14 +114,17 @@
             <section id="sec-collaborators" class="content-section" style="display: none;">
                 <div class="section-title">
                     <h2>Colaboradores</h2>
-                    <button class="btn-primary" style="width: auto;" onclick="openModal('collaboratorModal')">Nuevo Colaborador</button>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="search-collaborators" placeholder="Buscar..." oninput="renderCollaborators()" class="search-input">
+                        <button class="btn-primary" style="width: auto;" onclick="openModal('collaboratorModal')">Nuevo Colaborador</button>
+                    </div>
                 </div>
                 <div class="card">
                     <table id="collaboratorsTable">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Área de Trabajo</th>
+                                <th onclick="toggleSort('collaborators', 'name')" style="cursor:pointer">Nombre <span></span></th>
+                                <th onclick="toggleSort('collaborators', 'area')" style="cursor:pointer">Área de Trabajo <span></span></th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -125,13 +137,16 @@
             <section id="sec-areas" class="content-section" style="display: none;">
                 <div class="section-title">
                     <h2>Áreas de Trabajo</h2>
-                    <button class="btn-primary" style="width: auto;" onclick="openModal('areaModal')">Nueva Área</button>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="search-areas" placeholder="Buscar..." oninput="renderAreas()" class="search-input">
+                        <button class="btn-primary" style="width: auto;" onclick="openModal('areaModal')">Nueva Área</button>
+                    </div>
                 </div>
                 <div class="card">
                     <table id="areasTable">
                         <thead>
                             <tr>
-                                <th>Nombre del Área</th>
+                                <th onclick="toggleSort('areas', 'name')" style="cursor:pointer">Nombre del Área <span></span></th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -144,15 +159,18 @@
             <section id="sec-users" class="content-section" style="display: none;">
                 <div class="section-title">
                     <h2>Gestión de Usuarios</h2>
-                    <button class="btn-primary" style="width: auto;" onclick="openModal('userModal')">Nuevo Usuario</button>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="search-users" placeholder="Buscar..." oninput="renderUsers()" class="search-input">
+                        <button class="btn-primary" style="width: auto;" onclick="openModal('userModal')">Nuevo Usuario</button>
+                    </div>
                 </div>
                 <div class="card">
                     <table id="usersTable">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Usuario</th>
-                                <th>Rol</th>
+                                <th onclick="toggleSort('users', 'name')" style="cursor:pointer">Nombre <span></span></th>
+                                <th onclick="toggleSort('users', 'username')" style="cursor:pointer">Usuario <span></span></th>
+                                <th onclick="toggleSort('users', 'role')" style="cursor:pointer">Rol <span></span></th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>

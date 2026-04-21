@@ -105,6 +105,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+let sortState = {
+    transactions: { field: 'dateOut', dir: 'desc' },
+    radios: { field: 'numero', dir: 'asc' },
+    keys: { field: 'numero', dir: 'asc' },
+    collaborators: { field: 'name', dir: 'asc' },
+    users: { field: 'name', dir: 'asc' },
+    areas: { field: 'name', dir: 'asc' }
+};
+
+function toggleSort(endpoint, field) {
+    if (sortState[endpoint].field === field) {
+        sortState[endpoint].dir = sortState[endpoint].dir === 'asc' ? 'desc' : 'asc';
+    } else {
+        sortState[endpoint].field = field;
+        sortState[endpoint].dir = 'asc';
+    }
+    if(endpoint === 'radios') renderRadios();
+    else if(endpoint === 'keys') renderKeys();
+    else if(endpoint === 'collaborators') renderCollaborators();
+    else if(endpoint === 'areas') renderAreas();
+    else if(endpoint === 'users') renderUsers();
+    else if(endpoint === 'transactions') renderTransactions();
+}
+
+function updateSortIndicators(tableId, endpoint) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    const ths = table.querySelectorAll('th');
+    ths.forEach(th => {
+        const span = th.querySelector('span');
+        if (!span) return;
+        const attr = th.getAttribute('onclick');
+        if (attr && attr.includes(`'${sortState[endpoint].field}'`)) {
+            span.textContent = sortState[endpoint].dir === 'asc' ? ' ↑' : ' ↓';
+        } else {
+            span.textContent = '';
+        }
+    });
+}
+
+function getFilteredAndSorted(endpoint, list, searchFields) {
+    const input = document.getElementById(`search-${endpoint}`);
+    const query = input ? input.value.toLowerCase() : '';
+    
+    let result = [...list];
+    
+    if (query) {
+        result = result.filter(item => {
+            return searchFields.some(field => {
+                const val = item[field];
+                return val && val.toString().toLowerCase().includes(query);
+            });
+        });
+    }
+    
+    const { field, dir } = sortState[endpoint];
+    if (field) {
+        result.sort((a, b) => {
+            let valA = a[field]?.toString().toLowerCase() || '';
+            let valB = b[field]?.toString().toLowerCase() || '';
+            if (valA < valB) return dir === 'asc' ? -1 : 1;
+            if (valA > valB) return dir === 'asc' ? 1 : -1;
+            return 0;
+        });
+    }
+    
+    // Defer updateSortIndicators until after the table renders or do it directly
+    setTimeout(() => updateSortIndicators(`${endpoint}Table`, endpoint), 0);
+    return result;
+}
+
 async function loadAllData() {
     await Promise.all([
         fetchData('radios'),
@@ -143,23 +214,30 @@ function renderTransactions() {
     const tbody = document.querySelector('#transactionsTable tbody');
     tbody.innerHTML = '';
     
-    // Sort transactions by date desc
-    const sorted = [...dataCache.transactions].sort((a,b) => new Date(b.dateOut) - new Date(a.dateOut));
-    
-    sorted.forEach(t => {
+    let list = dataCache.transactions.map(t => {
         const eqInfo = t.type === 'radio' 
             ? dataCache.radios.find(r => r.id == t.equipmentId)?.numero || 'Desconocido'
             : dataCache.keys.find(k => k.id == t.equipmentId)?.numero || 'Desconocido';
-            
         const collab = dataCache.collaborators.find(c => c.id == t.collaboratorId)?.name || 'Desconocido';
-        const isPending = !t.dateIn;
+        return {
+            ...t,
+            eqInfo,
+            collab,
+            dateOutFormatted: new Date(t.dateOut).toLocaleString(),
+            dateInFormatted: t.dateIn ? new Date(t.dateIn).toLocaleString() : '-'
+        };
+    });
 
+    list = getFilteredAndSorted('transactions', list, ['dateOutFormatted', 'type', 'eqInfo', 'collab', 'officerOut', 'officerIn']);
+    
+    list.forEach(t => {
+        const isPending = !t.dateIn;
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${new Date(t.dateOut).toLocaleString()}</td>
+            <td>${t.dateOutFormatted}</td>
             <td>${t.type.toUpperCase()}</td>
-            <td>${eqInfo}</td>
-            <td>${collab}</td>
+            <td>${t.eqInfo}</td>
+            <td>${t.collab}</td>
             <td>${t.officerOut}</td>
             <td>${t.officerIn || '-'}</td>
             <td><span class="badge ${isPending ? 'en-uso' : 'disponible'}">${isPending ? 'En Uso' : 'Devuelto'}</span></td>
@@ -174,10 +252,11 @@ function renderTransactions() {
 function renderRadios() {
     const tbody = document.querySelector('#radiosTable tbody');
     tbody.innerHTML = '';
-    dataCache.radios.forEach(r => {
-        // Check if in use
+    
+    let list = getFilteredAndSorted('radios', dataCache.radios, ['numero', 'area', 'detalle']);
+    
+    list.forEach(r => {
         const inUse = dataCache.transactions.some(t => t.type === 'radio' && t.equipmentId == r.id && !t.dateIn);
-        
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${r.numero}</td>
@@ -194,10 +273,12 @@ function renderRadios() {
 }
 
 function renderKeys() {
-    // Similar to radios
     const tbody = document.querySelector('#keysTable tbody');
     tbody.innerHTML = '';
-    dataCache.keys.forEach(k => {
+    
+    let list = getFilteredAndSorted('keys', dataCache.keys, ['numero', 'area', 'detalle']);
+    
+    list.forEach(k => {
         const inUse = dataCache.transactions.some(t => t.type === 'llave' && t.equipmentId == k.id && !t.dateIn);
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -218,7 +299,10 @@ function renderCollaborators() {
     const tbody = document.querySelector('#collaboratorsTable tbody');
     if (!tbody) return;
     tbody.innerHTML = '';
-    dataCache.collaborators.forEach(c => {
+    
+    let list = getFilteredAndSorted('collaborators', dataCache.collaborators, ['name', 'area']);
+    
+    list.forEach(c => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${c.name}</td>
@@ -236,7 +320,10 @@ function renderUsers() {
     const tbody = document.querySelector('#usersTable tbody');
     if (!tbody) return;
     tbody.innerHTML = '';
-    dataCache.users.forEach(u => {
+    
+    let list = getFilteredAndSorted('users', dataCache.users, ['name', 'username', 'role']);
+    
+    list.forEach(u => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${u.name}</td>
@@ -258,7 +345,10 @@ function renderAreas() {
     if (!tbody) return;
     tbody.innerHTML = '';
     if (!Array.isArray(dataCache.areas)) return;
-    dataCache.areas.forEach(a => {
+    
+    let list = getFilteredAndSorted('areas', dataCache.areas, ['name']);
+    
+    list.forEach(a => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${a.name}</td>
