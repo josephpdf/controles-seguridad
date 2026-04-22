@@ -1,0 +1,1 @@
+[18:01:18] Usuario 'amora' realizó POST en 'transactions'. Datos: {"type":"radio","equipmentId":1700000000007,"collaboratorId":1776794737160,"officerOut":"Alejandro Mora","dateOut":"2026-04-22T00:01:18.773Z","dateIn":null,"officerIn":null,"id":1776816078779}

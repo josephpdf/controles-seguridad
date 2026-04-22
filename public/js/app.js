@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('userRoleDisplay').textContent = currentUser.role.toUpperCase();
 
     // Configurar permisos de navegación y formularios
+    document.getElementById('navCollaborators').style.display = 'block'; // Todos pueden ver colaboradores
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
-        document.getElementById('navCollaborators').style.display = 'block';
         document.getElementById('navAreas').style.display = 'block';
         document.getElementById('navUsers').style.display = 'block';
     }
@@ -26,6 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const superOption = roleSelect.querySelector('option[value="superadmin"]');
             if (superOption) superOption.remove();
         }
+    }
+    
+    // Ocultar botones de agregar para usuarios regulares
+    if (currentUser.role === 'user') {
+        const btnNewRadio = document.getElementById('btn-new-radio');
+        const btnNewKey = document.getElementById('btn-new-key');
+        const btnNewCollab = document.getElementById('btn-new-collaborator');
+        if (btnNewRadio) btnNewRadio.style.display = 'none';
+        if (btnNewKey) btnNewKey.style.display = 'none';
+        if (btnNewCollab) btnNewCollab.style.display = 'none';
     }
 
     // Eventos de navegación
@@ -242,10 +252,10 @@ function renderAll() {
     renderTransactions();
     renderRadios();
     renderKeys();
+    renderCollaborators();
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
-        renderCollaborators();
-        renderAreas();
         renderUsers();
+        renderAreas();
     }
     populateAreaSelects();
 }
@@ -420,8 +430,9 @@ function renderCollaborators() {
             <td>${c.name}</td>
             <td>${c.area}</td>
             <td>
-                <button class="btn-secondary" onclick="editCollaborator(${c.id})">Editar</button>
-                <button class="btn-danger" onclick="deleteItem('collaborators', ${c.id})">Eliminar</button>
+                ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
+                  `<button class="btn-secondary" onclick="editCollaborator(${c.id})">Editar</button>
+                   <button class="btn-danger" onclick="deleteItem('collaborators', ${c.id})">Eliminar</button>` : '-'}
             </td>
         `;
         tbody.appendChild(tr);

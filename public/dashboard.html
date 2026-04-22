@@ -78,7 +78,7 @@
                             <option value="en-uso">En Uso</option>
                             <option value="no-disponible">No Disponible</option>
                         </select>
-                        <button class="btn-primary" style="width: auto;" onclick="openModal('radioModal')">Nuevo Radio</button>
+                        <button id="btn-new-radio" class="btn-primary" style="width: auto;" onclick="openModal('radioModal')">Nuevo Radio</button>
                     </div>
                 </div>
                 <div class="card">
@@ -110,7 +110,7 @@
                             <option value="en-uso">En Uso</option>
                             <option value="no-disponible">No Disponible</option>
                         </select>
-                        <button class="btn-primary" style="width: auto;" onclick="openModal('keyModal')">Nueva Llave</button>
+                        <button id="btn-new-key" class="btn-primary" style="width: auto;" onclick="openModal('keyModal')">Nueva Llave</button>
                     </div>
                 </div>
                 <div class="card">
@@ -135,7 +135,7 @@
                     <h2>Colaboradores</h2>
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="search-collaborators" placeholder="Buscar..." oninput="renderCollaborators()" class="search-input">
-                        <button class="btn-primary" style="width: auto;" onclick="openModal('collaboratorModal')">Nuevo Colaborador</button>
+                        <button id="btn-new-collaborator" class="btn-primary" style="width: auto;" onclick="openModal('collaboratorModal')">Nuevo Colaborador</button>
                     </div>
                 </div>
                 <div class="card">
