@@ -25,8 +25,8 @@
     "collaboratorId": 1776794902132,
     "officerOut": "Marjorie Edmonson",
     "dateOut": "2026-04-21T23:34:21.017Z",
-    "dateIn": null,
-    "officerIn": null,
+    "dateIn": "2026-04-22T18:43:01.670Z",
+    "officerIn": "Alejandro Mora",
     "id": 1776814461021
   },
   {
@@ -35,8 +35,28 @@
     "collaboratorId": 1776794737160,
     "officerOut": "Alejandro Mora",
     "dateOut": "2026-04-22T00:01:18.773Z",
+    "dateIn": "2026-04-22T18:40:55.131Z",
+    "officerIn": "Marvin Torres",
+    "id": 1776816078779
+  },
+  {
+    "type": "llave",
+    "equipmentId": 1690000000001,
+    "collaboratorId": 1776811190237,
+    "officerOut": "Marvin Torres",
+    "dateOut": "2026-04-22T18:41:27.472Z",
+    "dateIn": "2026-04-22T18:41:47.395Z",
+    "officerIn": "Marvin Torres",
+    "id": 1776883287484
+  },
+  {
+    "type": "radio",
+    "equipmentId": 1700000000006,
+    "collaboratorId": 1776794620272,
+    "officerOut": "Alejandro Mora",
+    "dateOut": "2026-04-22T18:42:55.556Z",
     "dateIn": null,
     "officerIn": null,
-    "id": 1776816078779
+    "id": 1776883375561
   }
 ]

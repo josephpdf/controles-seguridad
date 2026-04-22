@@ -311,7 +311,7 @@ function renderTransactions() {
             <td><span class="badge ${isPending ? 'en-uso' : 'disponible'}">${isPending ? 'En Uso' : 'Devuelto'}</span></td>
             <td>
                 ${isPending ? `<button class="btn-secondary" onclick="receiveEquipment(${t.id})">Recibir</button>` : ''}
-                ${currentUser.role === 'superadmin' ? `<button class="btn-secondary" onclick="editTransaction(${t.id})">Editar</button>` : ''}
+                ${currentUser.role === 'superadmin' ? `<button class="btn-edit" onclick="editTransaction(${t.id})">Editar</button>` : ''}
                 ${!isPending && currentUser.role !== 'superadmin' ? '-' : ''}
             </td>
         `;
@@ -367,7 +367,7 @@ function renderRadios() {
             <td><span class="badge ${r.statusBadge}">${r.statusText}</span></td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
-                  `<button class="btn-secondary" onclick="editRadio(${r.id})">Editar</button>
+                  `<button class="btn-edit" onclick="editRadio(${r.id})">Editar</button>
                    <button class="btn-danger" onclick="deleteItem('radios', ${r.id})">Eliminar</button>` : '-'}
             </td>
         `;
@@ -422,7 +422,7 @@ function renderKeys() {
             <td><span class="badge ${k.statusBadge}">${k.statusText}</span></td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
-                  `<button class="btn-secondary" onclick="editKey(${k.id})">Editar</button>
+                  `<button class="btn-edit" onclick="editKey(${k.id})">Editar</button>
                    <button class="btn-danger" onclick="deleteItem('keys', ${k.id})">Eliminar</button>` : '-'}
             </td>
         `;
@@ -444,7 +444,7 @@ function renderCollaborators() {
             <td>${c.area}</td>
             <td>
                 ${(currentUser.role === 'superadmin' || currentUser.role === 'admin') ? 
-                  `<button class="btn-secondary" onclick="editCollaborator(${c.id})">Editar</button>
+                  `<button class="btn-edit" onclick="editCollaborator(${c.id})">Editar</button>
                    <button class="btn-danger" onclick="deleteItem('collaborators', ${c.id})">Eliminar</button>` : '-'}
             </td>
         `;
@@ -489,7 +489,7 @@ function renderAreas() {
         tr.innerHTML = `
             <td>${a.name}</td>
             <td>
-                <button class="btn-secondary" onclick="editArea(${a.id})">Editar</button>
+                <button class="btn-edit" onclick="editArea(${a.id})">Editar</button>
                 <button class="btn-danger" onclick="deleteItem('areas', ${a.id})">Eliminar</button>
             </td>
         `;

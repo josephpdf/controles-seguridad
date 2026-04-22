@@ -329,6 +329,16 @@ tr:hover {
     cursor: pointer;
 }
 
+.btn-edit {
+    padding: 0.5rem 1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-edit:hover { background: var(--primary-dark); }
+
 .action-btns {
     display: flex; gap: 0.5rem;
 }
