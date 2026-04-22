@@ -311,7 +311,7 @@ function renderTransactions() {
             <td><span class="badge ${isPending ? 'en-uso' : 'disponible'}">${isPending ? 'En Uso' : 'Devuelto'}</span></td>
             <td>
                 ${isPending ? `<button class="btn-secondary" onclick="receiveEquipment(${t.id})">Recibir</button>` : ''}
-                ${currentUser.role === 'superadmin' ? `<button class="btn-primary" onclick="editTransaction(${t.id})">Editar</button>` : ''}
+                ${currentUser.role === 'superadmin' ? `<button class="btn-secondary" onclick="editTransaction(${t.id})">Editar</button>` : ''}
                 ${!isPending && currentUser.role !== 'superadmin' ? '-' : ''}
             </td>
         `;
