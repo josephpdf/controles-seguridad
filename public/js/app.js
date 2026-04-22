@@ -54,9 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAllData();
 
     // Eventos de formularios
-    document.getElementById('transactionForm').addEventListener('submit', handleTransactionSubmit);
-    
     const forms = [
+        { id: 'transactionForm', endpoint: 'transactions', modal: 'transactionModal', customSubmit: handleTransactionSubmit },
+        { id: 'editTransactionForm', endpoint: 'transactions', modal: 'editTransactionModal', fields: ['editTransDateOut', 'editTransDateIn'], map: f => ({ dateOut: new Date(f[0]).toISOString(), dateIn: f[1] ? new Date(f[1]).toISOString() : null }) },
         { id: 'radioForm', endpoint: 'radios', modal: 'radioModal', fields: ['radioNumero', 'radioSerie', 'radioArea', 'radioColaborador', 'radioDetalle'], map: f => ({ numero: f[0], serie: f[1], area: f[2], colaborador: f[3], detalle: f[4] }) },
         { id: 'keyForm', endpoint: 'keys', modal: 'keyModal', fields: ['keyNumero', 'keyColaborador', 'keyDetalle'], map: f => ({ numero: f[0], colaborador: f[1], detalle: f[2] }) },
         { id: 'collaboratorForm', endpoint: 'collaborators', modal: 'collaboratorModal', fields: ['collabName', 'collabArea'], map: f => ({ name: f[0], area: f[1] }) },
@@ -69,6 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (formEl) {
             formEl.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                if (f.customSubmit) {
+                    await f.customSubmit(e);
+                    return;
+                }
                 const values = f.fields.map(fid => document.getElementById(fid).value);
                 const payload = f.map(values);
                 
@@ -91,6 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (f.id === 'keyForm') {
                     const kid = document.getElementById('keyId').value;
                     if (kid) payload.id = parseInt(kid);
+                }
+                if (f.id === 'editTransactionForm') {
+                    const tid = document.getElementById('editTransId').value;
+                    if (tid) payload.id = parseInt(tid);
                 }
 
                 await fetch(`/api/${f.endpoint}`, {
@@ -123,6 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (f.id === 'keyForm') {
                     document.getElementById('keyId').value = '';
                     document.getElementById('keyModalTitle').textContent = 'Nueva Llave';
+                }
+                if (f.id === 'editTransactionForm') {
+                    document.getElementById('editTransId').value = '';
                 }
                 closeModal(f.modal);
                 await loadAllData();
@@ -299,7 +310,9 @@ function renderTransactions() {
             <td>${t.officerIn || '-'}</td>
             <td><span class="badge ${isPending ? 'en-uso' : 'disponible'}">${isPending ? 'En Uso' : 'Devuelto'}</span></td>
             <td>
-                ${isPending ? `<button class="btn-secondary" onclick="receiveEquipment(${t.id})">Recibir</button>` : '-'}
+                ${isPending ? `<button class="btn-secondary" onclick="receiveEquipment(${t.id})">Recibir</button>` : ''}
+                ${currentUser.role === 'superadmin' ? `<button class="btn-primary" onclick="editTransaction(${t.id})">Editar</button>` : ''}
+                ${!isPending && currentUser.role !== 'superadmin' ? '-' : ''}
             </td>
         `;
         tbody.appendChild(tr);
@@ -547,35 +560,51 @@ function loadEquipmentOptions() {
     }
 }
 
-async function handleTransactionSubmit(e) {
+function handleTransactionSubmit(e) {
     e.preventDefault();
+    const type = document.getElementById('transType').value;
     const equipmentId = document.getElementById('transEquipment').value;
-    if (!equipmentId) {
-        alert("Seleccione un equipo disponible.");
+    const collaboratorId = document.getElementById('transCollaborator').value;
+    
+    if (!type || !equipmentId || !collaboratorId) {
+        alert('Por favor complete todos los campos.');
         return;
     }
-
+    
     const payload = {
-        type: document.getElementById('transType').value,
+        type,
         equipmentId: parseInt(equipmentId),
-        collaboratorId: parseInt(document.getElementById('transCollaborator').value),
+        collaboratorId: parseInt(collaboratorId),
         officerOut: currentUser.name,
         dateOut: new Date().toISOString(),
         dateIn: null,
         officerIn: null
     };
-
-    await fetch('/api/transactions', {
+    
+    fetch('/api/transactions', {
         method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json',
-            'X-User': currentUser.username
-        },
+        headers: { 'Content-Type': 'application/json', 'X-User': currentUser.name },
         body: JSON.stringify(payload)
-    });
+    }).then(res => res.json()).then(data => {
+        closeModal('transactionModal');
+        loadAllData();
+    }).catch(e => console.error('Error al guardar transacción:', e));
+}
 
-    closeModal('transactionModal');
-    await loadAllData();
+function formatForDateTimeLocal(isoString) {
+    if (!isoString) return '';
+    const d = new Date(isoString);
+    const pad = (n) => n.toString().padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function editTransaction(id) {
+    const t = dataCache.transactions.find(x => x.id === id);
+    if (!t) return;
+    document.getElementById('editTransId').value = t.id;
+    document.getElementById('editTransDateOut').value = formatForDateTimeLocal(t.dateOut);
+    document.getElementById('editTransDateIn').value = formatForDateTimeLocal(t.dateIn);
+    openModal('editTransactionModal');
 }
 
 async function receiveEquipment(transactionId) {

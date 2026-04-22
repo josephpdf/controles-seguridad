@@ -231,6 +231,30 @@
         </div>
     </div>
 
+    <!-- Modal Editar Transacción -->
+    <div id="editTransactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Tiempos de Transacción</h3>
+                <button class="close-btn" onclick="closeModal('editTransactionModal')">&times;</button>
+            </div>
+            <form id="editTransactionForm">
+                <input type="hidden" id="editTransId">
+                <div class="form-group">
+                    <label>Fecha/Hora Entrega</label>
+                    <input type="datetime-local" id="editTransDateOut" required>
+                </div>
+                <div class="form-group">
+                    <label>Fecha/Hora Devolución <small>(Dejar en blanco si no se ha devuelto)</small></label>
+                    <input type="datetime-local" id="editTransDateIn">
+                </div>
+                <div class="action-btns">
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal Radio -->
     <div id="radioModal" class="modal">
         <div class="modal-content">

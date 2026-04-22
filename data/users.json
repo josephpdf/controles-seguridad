@@ -19,5 +19,12 @@
     "password": "bffb44cea55fe8218718b6fd43f2fb8e96575168b62e675c5b0020f85213fb1a",
     "role": "admin",
     "id": 1776814393297
+  },
+  {
+    "name": "Marvin Torres",
+    "username": "mtorres",
+    "password": "72593e8e6285f58c32adb35fd6003b1b10bad076ea8ff13f01ba308f2762cc56",
+    "role": "admin",
+    "id": 1776870267995
   }
 ]
