@@ -261,6 +261,7 @@ async function fetchData(endpoint) {
 
 function renderAll() {
     renderTransactions();
+    renderDashboardChart();
     renderRadios();
     renderKeys();
     renderCollaborators();
@@ -269,6 +270,108 @@ function renderAll() {
         renderAreas();
     }
     populateAreaSelects();
+}
+
+// ---- DASHBOARD GRAFICO ----
+let inventoryChartInstance = null;
+
+function renderDashboardChart() {
+    const chartType = document.getElementById('chart-type-selector')?.value || 'radio';
+    
+    let disponibles = 0;
+    let enUso = 0;
+    let noDisponibles = 0;
+    let devueltosHistorico = 0;
+    
+    // Calcular métricas de inventario real
+    if (chartType === 'radio' && dataCache.radios) {
+        dataCache.radios.forEach(r => {
+            const activeTx = dataCache.transactions?.find(t => t.type === 'radio' && t.equipmentId == r.id && !t.dateIn);
+            if (activeTx) {
+                enUso++;
+            } else if (r.colaborador && r.colaborador !== '') {
+                noDisponibles++;
+            } else {
+                disponibles++;
+            }
+        });
+    } else if (chartType === 'llave' && dataCache.keys) {
+        dataCache.keys.forEach(k => {
+            const activeTx = dataCache.transactions?.find(t => t.type === 'llave' && t.equipmentId == k.id && !t.dateIn);
+            if (activeTx) {
+                enUso++;
+            } else if (k.colaborador && k.colaborador !== '') {
+                noDisponibles++;
+            } else {
+                disponibles++;
+            }
+        });
+    }
+
+    // Calcular histórico
+    if (dataCache.transactions) {
+        dataCache.transactions.forEach(t => {
+            if (t.type === chartType && t.dateIn) {
+                devueltosHistorico++;
+            }
+        });
+    }
+
+    const ctx = document.getElementById('inventoryChart');
+    if (!ctx) return;
+
+    if (inventoryChartInstance) {
+        inventoryChartInstance.destroy();
+    }
+
+    inventoryChartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Disponibles', 'En Uso (Temporal)', 'No Disponibles (Fijo)'],
+            datasets: [{
+                data: [disponibles, enUso, noDisponibles],
+                backgroundColor: [
+                    '#2ECC71', // Verde (Disponibles)
+                    '#F07E26', // Naranja (En Uso)
+                    '#E74C3C'  // Rojo (No Disponibles)
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            family: 'Inter',
+                            size: 14
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: `Estado Actual de Inventario (${chartType === 'radio' ? 'Radios' : 'Llaves'})`,
+                    font: {
+                        family: 'Inter',
+                        size: 16
+                    }
+                },
+                subtitle: {
+                    display: true,
+                    text: `Histórico de devoluciones completadas: ${devueltosHistorico}`,
+                    font: {
+                        family: 'Inter',
+                        size: 13,
+                        style: 'italic'
+                    },
+                    padding: { bottom: 10 }
+                }
+            }
+        }
+    });
 }
 
 // ---- RENDERIZADOS ----

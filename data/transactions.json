@@ -58,5 +58,15 @@
     "dateIn": "2026-04-22T21:12:59.832Z",
     "officerIn": "Alejandro Mora",
     "id": 1776883375561
+  },
+  {
+    "type": "radio",
+    "equipmentId": 1700000000010,
+    "collaboratorId": 1776794902132,
+    "officerOut": "Super Administrador",
+    "dateOut": "2026-04-22T23:56:25.108Z",
+    "dateIn": null,
+    "officerIn": null,
+    "id": 1776902185111
   }
 ]

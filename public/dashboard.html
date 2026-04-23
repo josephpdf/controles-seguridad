@@ -6,6 +6,7 @@
     <title>Dashboard - Indoor Club</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="dashboard-layout">
@@ -16,6 +17,7 @@
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li data-section="transactions" class="active">Transacciones</li>
+                <li data-section="dashboard">Dashboard Gráfico</li>
                 <li data-section="radios">Radios</li>
                 <li data-section="keys">Llaves</li>
                 <li data-section="collaborators" id="navCollaborators" style="display: none;">Colaboradores</li>
@@ -32,6 +34,20 @@
         </aside>
 
         <main class="main-content">
+            <!-- SECCION: DASHBOARD GRAFICO -->
+            <section id="sec-dashboard" class="content-section" style="display: none;">
+                <div class="section-title">
+                    <h2>Dashboard de Movimientos</h2>
+                    <select id="chart-type-selector" onchange="renderDashboardChart()" class="search-input" style="width: auto;">
+                        <option value="radio">Radios</option>
+                        <option value="llave">Llaves</option>
+                    </select>
+                </div>
+                <div class="card" style="display: flex; justify-content: center; align-items: center; height: 400px;">
+                    <canvas id="inventoryChart"></canvas>
+                </div>
+            </section>
+
             <!-- SECCION: TRANSACCIONES -->
             <section id="sec-transactions" class="content-section">
                 <div class="section-title">
