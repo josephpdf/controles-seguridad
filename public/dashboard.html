@@ -187,49 +187,95 @@
             <!-- SECCION: REPORTES -->
             <section id="sec-reports" class="content-section" style="display: none;">
                 <div class="section-title">
-                    <h2>Reportes de Ingreso</h2>
+                    <h2>Reportes</h2>
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <label for="report-date" style="font-weight: 500;">Fecha:</label>
+                        <select id="report-type-selector" onchange="switchReportTab()" class="search-input" style="width: auto; font-weight: 600; background-color: #f1f5f9;">
+                            <option value="socios">Socios</option>
+                            <option value="equipos">Radios y Llaves</option>
+                        </select>
+                        <label for="report-date" style="font-weight: 500; margin-left: 10px;">Fecha:</label>
                         <input type="date" id="report-date" onchange="renderReports()" class="search-input" style="width: auto;">
                         <button class="btn-secondary" style="width: auto; padding: 8px 12px;" onclick="exportReportsPDF()">PDF</button>
                         <button class="btn-secondary" style="width: auto; padding: 8px 12px;" onclick="exportReportsExcel()">Excel</button>
                     </div>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
-                    <div class="card" style="text-align: center; padding: 20px;">
-                        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Total Ingresos</h3>
-                        <div id="rep-total-in" style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">0</div>
+                <!-- REPORTE SOCIOS -->
+                <div id="report-socios-wrapper">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                        <div class="card" style="text-align: center; padding: 20px;">
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Total Ingresos</h3>
+                            <div id="rep-total-in" style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">0</div>
+                        </div>
+                        <div class="card" style="text-align: center; padding: 20px;">
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Salidas No Registradas</h3>
+                            <div id="rep-no-out" style="font-size: 2rem; font-weight: 700; color: #E74C3C;">0</div>
+                        </div>
+                        <div class="card" style="text-align: center; padding: 20px;">
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Oficial Más Activo</h3>
+                            <div id="rep-top-officer" style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); min-height: 36px; display: flex; align-items: center; justify-content: center;">-</div>
+                        </div>
                     </div>
-                    <div class="card" style="text-align: center; padding: 20px;">
-                        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Salidas No Registradas</h3>
-                        <div id="rep-no-out" style="font-size: 2rem; font-weight: 700; color: #E74C3C;">0</div>
+
+                    <div class="card" style="margin-bottom: 20px; height: 300px;">
+                        <canvas id="reportsChart"></canvas>
                     </div>
-                    <div class="card" style="text-align: center; padding: 20px;">
-                        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Oficial Más Activo</h3>
-                        <div id="rep-top-officer" style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); min-height: 36px; display: flex; align-items: center; justify-content: center;">-</div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 15px;">Detalle de Ingresos</h3>
+                        <table id="reportsTable">
+                            <thead>
+                                <tr>
+                                    <th>Hora Ingreso</th>
+                                    <th>Hora Salida</th>
+                                    <th>Nº Socio</th>
+                                    <th>Nombre</th>
+                                    <th>Oficial Ingreso</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="card" style="margin-bottom: 20px; height: 300px;">
-                    <canvas id="reportsChart"></canvas>
-                </div>
+                <!-- REPORTE EQUIPOS -->
+                <div id="report-equipos-wrapper" style="display: none;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                        <div class="card" style="text-align: center; padding: 20px;">
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Total Préstamos</h3>
+                            <div id="rep-eq-total" style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">0</div>
+                        </div>
+                        <div class="card" style="text-align: center; padding: 20px;">
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Equipos NO Devueltos</h3>
+                            <div id="rep-eq-no-out" style="font-size: 2rem; font-weight: 700; color: #E74C3C;">0</div>
+                        </div>
+                        <div class="card" style="text-align: center; padding: 20px;">
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Colaborador Más Activo</h3>
+                            <div id="rep-eq-top-collab" style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); min-height: 36px; display: flex; align-items: center; justify-content: center;">-</div>
+                        </div>
+                    </div>
 
-                <div class="card">
-                    <h3 style="margin-bottom: 15px;">Detalle de Ingresos</h3>
-                    <table id="reportsTable">
-                        <thead>
-                            <tr>
-                                <th>Hora Ingreso</th>
-                                <th>Hora Salida</th>
-                                <th>Nº Socio</th>
-                                <th>Nombre</th>
-                                <th>Oficial Ingreso</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    <div class="card" style="margin-bottom: 20px; height: 300px;">
+                        <canvas id="equipmentReportsChart"></canvas>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 15px;">Detalle de Préstamos</h3>
+                        <table id="equipmentReportsTable">
+                            <thead>
+                                <tr>
+                                    <th>Hora Préstamo</th>
+                                    <th>Hora Devolución</th>
+                                    <th>Tipo</th>
+                                    <th>Equipo</th>
+                                    <th>Colaborador</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
