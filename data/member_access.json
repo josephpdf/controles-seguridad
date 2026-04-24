@@ -18,5 +18,15 @@
     "dateOut": null,
     "officerOut": null,
     "id": 1777068443857
+  },
+  {
+    "memberNumber": "102001",
+    "memberName": "Mariam Bakit",
+    "observations": "",
+    "officerIn": "Super Administrador",
+    "dateIn": "2026-04-24T22:26:03.158Z",
+    "dateOut": null,
+    "officerOut": null,
+    "id": 1777069563162
   }
 ]

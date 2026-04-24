@@ -984,6 +984,86 @@ function renderReports() {
     });
 }
 
+function exportReportsPDF() {
+    const dateInput = document.getElementById('report-date')?.value;
+    if (!dateInput) return alert('Seleccione una fecha primero.');
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.text("Reporte de Ingreso de Socios", 14, 20);
+    
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Fecha: ${dateInput}`, 14, 28);
+    
+    const totalIn = document.getElementById('rep-total-in').innerText;
+    const noOut = document.getElementById('rep-no-out').innerText;
+    const topOff = document.getElementById('rep-top-officer').innerText;
+    
+    doc.text(`Total de Ingresos: ${totalIn}`, 14, 38);
+    doc.text(`Salidas no registradas: ${noOut}`, 14, 46);
+    doc.text(`Oficial con más registros: ${topOff}`, 14, 54);
+
+    const tbody = document.querySelector('#reportsTable tbody');
+    const rows = [];
+    tbody.querySelectorAll('tr').forEach(tr => {
+        const cells = tr.querySelectorAll('td');
+        if(cells.length > 0) {
+            rows.push([
+                cells[0].innerText,
+                cells[1].innerText,
+                cells[2].innerText,
+                cells[3].innerText,
+                cells[4].innerText,
+                cells[5].innerText
+            ]);
+        }
+    });
+
+    doc.autoTable({
+        startY: 64,
+        head: [['Hora Ingreso', 'Hora Salida', 'Nº Socio', 'Nombre', 'Oficial', 'Estado']],
+        body: rows,
+        theme: 'striped',
+        headStyles: { fillColor: [44, 62, 80] }
+    });
+
+    doc.save(`Reporte_Socios_${dateInput}.pdf`);
+}
+
+function exportReportsExcel() {
+    const dateInput = document.getElementById('report-date')?.value;
+    if (!dateInput) return alert('Seleccione una fecha primero.');
+
+    const table = document.getElementById('reportsTable');
+    
+    const totalIn = document.getElementById('rep-total-in').innerText;
+    const noOut = document.getElementById('rep-no-out').innerText;
+    const topOff = document.getElementById('rep-top-officer').innerText;
+
+    const data = [
+        ["Reporte de Ingreso de Socios"],
+        [`Fecha: ${dateInput}`],
+        [],
+        ["Métricas"],
+        ["Total de Ingresos:", totalIn],
+        ["Salidas no registradas:", noOut],
+        ["Oficial más activo:", topOff],
+        []
+    ];
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(data);
+
+    XLSX.utils.sheet_add_dom(ws, table, {origin: -1});
+
+    XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+    XLSX.writeFile(wb, `Reporte_Socios_${dateInput}.xlsx`);
+}
+
 // ---- UTILS ----
 function openModal(id) { 
     document.getElementById(id).classList.add('active'); 
