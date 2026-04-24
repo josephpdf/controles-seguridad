@@ -307,6 +307,12 @@ function renderDashboardChart() {
     let enUso = 0;
     let noDisponibles = 0;
     let devueltosHistorico = 0;
+
+    let labels = [];
+    let bgColors = [];
+    let titleText = '';
+    let subtitleText = '';
+    let chartData = [];
     
     // Calcular métricas de inventario real
     if (chartType === 'radio' && dataCache.radios) {
@@ -320,6 +326,16 @@ function renderDashboardChart() {
                 disponibles++;
             }
         });
+        if (dataCache.transactions) {
+            dataCache.transactions.forEach(t => {
+                if (t.type === 'radio' && t.dateIn) devueltosHistorico++;
+            });
+        }
+        labels = ['Disponibles', 'En Uso (Temporal)', 'No Disponibles (Fijo)'];
+        bgColors = ['#2ECC71', '#F07E26', '#E74C3C'];
+        chartData = [disponibles, enUso, noDisponibles];
+        titleText = 'Estado Actual de Inventario (Radios)';
+        subtitleText = `Histórico de devoluciones completadas: ${devueltosHistorico}`;
     } else if (chartType === 'llave' && dataCache.keys) {
         dataCache.keys.forEach(k => {
             const activeTx = dataCache.transactions?.find(t => t.type === 'llave' && t.equipmentId == k.id && !t.dateIn);
@@ -331,15 +347,34 @@ function renderDashboardChart() {
                 disponibles++;
             }
         });
-    }
+        if (dataCache.transactions) {
+            dataCache.transactions.forEach(t => {
+                if (t.type === 'llave' && t.dateIn) devueltosHistorico++;
+            });
+        }
+        labels = ['Disponibles', 'En Uso (Temporal)', 'No Disponibles (Fijo)'];
+        bgColors = ['#2ECC71', '#F07E26', '#E74C3C'];
+        chartData = [disponibles, enUso, noDisponibles];
+        titleText = 'Estado Actual de Inventario (Llaves)';
+        subtitleText = `Histórico de devoluciones completadas: ${devueltosHistorico}`;
+    } else if (chartType === 'socio' && dataCache.member_access) {
+        let dentroHoy = 0;
+        let salioHoy = 0;
+        const todayStr = new Date().toLocaleDateString();
 
-    // Calcular histórico
-    if (dataCache.transactions) {
-        dataCache.transactions.forEach(t => {
-            if (t.type === chartType && t.dateIn) {
-                devueltosHistorico++;
+        dataCache.member_access.forEach(a => {
+            const entryDateStr = new Date(a.dateIn).toLocaleDateString();
+            if (entryDateStr === todayStr) {
+                if (!a.dateOut) dentroHoy++;
+                else salioHoy++;
             }
         });
+
+        labels = ['Dentro del Club (Aún no salen)', 'Ya Salieron'];
+        bgColors = ['#F07E26', '#2ECC71'];
+        chartData = [dentroHoy, salioHoy];
+        titleText = 'Control de Ingreso de Socios (Hoy)';
+        subtitleText = `Total de socios que ingresaron hoy: ${dentroHoy + salioHoy}`;
     }
 
     const ctx = document.getElementById('inventoryChart');
@@ -352,14 +387,10 @@ function renderDashboardChart() {
     inventoryChartInstance = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Disponibles', 'En Uso (Temporal)', 'No Disponibles (Fijo)'],
+            labels: labels,
             datasets: [{
-                data: [disponibles, enUso, noDisponibles],
-                backgroundColor: [
-                    '#2ECC71', // Verde (Disponibles)
-                    '#F07E26', // Naranja (En Uso)
-                    '#E74C3C'  // Rojo (No Disponibles)
-                ],
+                data: chartData,
+                backgroundColor: bgColors,
                 borderWidth: 1
             }]
         },
@@ -378,7 +409,7 @@ function renderDashboardChart() {
                 },
                 title: {
                     display: true,
-                    text: `Estado Actual de Inventario (${chartType === 'radio' ? 'Radios' : 'Llaves'})`,
+                    text: titleText,
                     font: {
                         family: 'Inter',
                         size: 16
@@ -386,7 +417,7 @@ function renderDashboardChart() {
                 },
                 subtitle: {
                     display: true,
-                    text: `Histórico de devoluciones completadas: ${devueltosHistorico}`,
+                    text: subtitleText,
                     font: {
                         family: 'Inter',
                         size: 13,

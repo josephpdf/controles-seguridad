@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +12,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
+
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="img/indoor-club-dark.png" alt="San José Indoor Club" style="max-width: 80%; height: auto; display: block; margin: 0 auto 10px auto;">
+                <img src="img/indoor-club-dark.png" alt="San José Indoor Club"
+                    style="max-width: 80%; height: auto; display: block; margin: 0 auto 10px auto;">
                 <p style="font-size: 0.8rem; color: var(--text-muted)">Control de Inventario</p>
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li data-section="transactions" class="active">Transacciones</li>
-                <li data-section="dashboard">Dashboard Gráfico</li>
+                <!-- <li data-section="dashboard">Dashboard Gráfico</li> -->
                 <li data-section="radios">Radios</li>
                 <li data-section="keys">Llaves</li>
                 <li data-section="member-access">Ingreso Socios</li>
@@ -43,9 +46,11 @@
             <section id="sec-dashboard" class="content-section" style="display: none;">
                 <div class="section-title">
                     <h2>Dashboard de Movimientos</h2>
-                    <select id="chart-type-selector" onchange="renderDashboardChart()" class="search-input" style="width: auto;">
+                    <select id="chart-type-selector" onchange="renderDashboardChart()" class="search-input"
+                        style="width: auto;">
                         <option value="radio">Radios</option>
                         <option value="llave">Llaves</option>
+                        <option value="socio">Socios</option>
                     </select>
                 </div>
                 <div class="card" style="display: flex; justify-content: center; align-items: center; height: 400px;">
@@ -58,26 +63,36 @@
                 <div class="section-title">
                     <h2>Transacciones (Entregas y Recepciones)</h2>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="search-transactions" placeholder="Buscar..." oninput="renderTransactions()" class="search-input">
-                        <select id="status-transactions" onchange="renderTransactions()" class="search-input" style="width: auto;">
+                        <input type="text" id="search-transactions" placeholder="Buscar..."
+                            oninput="renderTransactions()" class="search-input">
+                        <select id="status-transactions" onchange="renderTransactions()" class="search-input"
+                            style="width: auto;">
                             <option value="">Todos los estados</option>
                             <option value="en-uso">En Uso (Pendiente)</option>
                             <option value="devuelto">Devuelto</option>
                         </select>
-                        <button class="btn-primary" style="width: auto;" onclick="openTransactionModal()">Nueva Salida</button>
+                        <button class="btn-primary" style="width: auto;" onclick="openTransactionModal()">Nueva
+                            Salida</button>
                     </div>
                 </div>
                 <div class="card">
                     <table id="transactionsTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('transactions', 'dateOut')" style="cursor:pointer">Fecha/Hora Entrega <span></span></th>
-                                <th onclick="toggleSort('transactions', 'dateIn')" style="cursor:pointer">Fecha/Hora Devolución <span></span></th>
-                                <th onclick="toggleSort('transactions', 'type')" style="cursor:pointer">Tipo <span></span></th>
-                                <th onclick="toggleSort('transactions', 'eqInfo')" style="cursor:pointer">Equipo <span></span></th>
-                                <th onclick="toggleSort('transactions', 'collab')" style="cursor:pointer">Colaborador <span></span></th>
-                                <th onclick="toggleSort('transactions', 'officerOut')" style="cursor:pointer">Oficial Entrega <span></span></th>
-                                <th onclick="toggleSort('transactions', 'officerIn')" style="cursor:pointer">Oficial Recibe <span></span></th>
+                                <th onclick="toggleSort('transactions', 'dateOut')" style="cursor:pointer">Fecha/Hora
+                                    Entrega <span></span></th>
+                                <th onclick="toggleSort('transactions', 'dateIn')" style="cursor:pointer">Fecha/Hora
+                                    Devolución <span></span></th>
+                                <th onclick="toggleSort('transactions', 'type')" style="cursor:pointer">Tipo
+                                    <span></span></th>
+                                <th onclick="toggleSort('transactions', 'eqInfo')" style="cursor:pointer">Equipo
+                                    <span></span></th>
+                                <th onclick="toggleSort('transactions', 'collab')" style="cursor:pointer">Colaborador
+                                    <span></span></th>
+                                <th onclick="toggleSort('transactions', 'officerOut')" style="cursor:pointer">Oficial
+                                    Entrega <span></span></th>
+                                <th onclick="toggleSort('transactions', 'officerIn')" style="cursor:pointer">Oficial
+                                    Recibe <span></span></th>
                                 <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
@@ -92,24 +107,30 @@
                 <div class="section-title">
                     <h2>Inventario de Radios</h2>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="search-radios" placeholder="Buscar..." oninput="renderRadios()" class="search-input">
+                        <input type="text" id="search-radios" placeholder="Buscar..." oninput="renderRadios()"
+                            class="search-input">
                         <select id="status-radios" onchange="renderRadios()" class="search-input" style="width: auto;">
                             <option value="">Todos los estados</option>
                             <option value="disponible">Disponible</option>
                             <option value="en-uso">En Uso</option>
                             <option value="no-disponible">No Disponible</option>
                         </select>
-                        <button id="btn-new-radio" class="btn-primary" style="width: auto;" onclick="openModal('radioModal')">Nuevo Radio</button>
+                        <button id="btn-new-radio" class="btn-primary" style="width: auto;"
+                            onclick="openModal('radioModal')">Nuevo Radio</button>
                     </div>
                 </div>
                 <div class="card">
                     <table id="radiosTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('radios', 'numero')" style="cursor:pointer">Etiqueta / Asignación <span></span></th>
-                                <th onclick="toggleSort('radios', 'area')" style="cursor:pointer">Área <span></span></th>
-                                <th onclick="toggleSort('radios', 'detalle')" style="cursor:pointer">Detalle <span></span></th>
-                                <th onclick="toggleSort('radios', 'colaborador')" style="cursor:pointer">Colaborador Asignado <span></span></th>
+                                <th onclick="toggleSort('radios', 'numero')" style="cursor:pointer">Etiqueta /
+                                    Asignación <span></span></th>
+                                <th onclick="toggleSort('radios', 'area')" style="cursor:pointer">Área <span></span>
+                                </th>
+                                <th onclick="toggleSort('radios', 'detalle')" style="cursor:pointer">Detalle
+                                    <span></span></th>
+                                <th onclick="toggleSort('radios', 'colaborador')" style="cursor:pointer">Colaborador
+                                    Asignado <span></span></th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -124,23 +145,28 @@
                 <div class="section-title">
                     <h2>Inventario de Llaves</h2>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="search-keys" placeholder="Buscar..." oninput="renderKeys()" class="search-input">
+                        <input type="text" id="search-keys" placeholder="Buscar..." oninput="renderKeys()"
+                            class="search-input">
                         <select id="status-keys" onchange="renderKeys()" class="search-input" style="width: auto;">
                             <option value="">Todos los estados</option>
                             <option value="disponible">Disponible</option>
                             <option value="en-uso">En Uso</option>
                             <option value="no-disponible">No Disponible</option>
                         </select>
-                        <button id="btn-new-key" class="btn-primary" style="width: auto;" onclick="openModal('keyModal')">Nueva Llave</button>
+                        <button id="btn-new-key" class="btn-primary" style="width: auto;"
+                            onclick="openModal('keyModal')">Nueva Llave</button>
                     </div>
                 </div>
                 <div class="card">
                     <table id="keysTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('keys', 'numero')" style="cursor:pointer">Número/ID <span></span></th>
-                                <th onclick="toggleSort('keys', 'detalle')" style="cursor:pointer">Detalle <span></span></th>
-                                <th onclick="toggleSort('keys', 'colaborador')" style="cursor:pointer">Colaborador Asignado <span></span></th>
+                                <th onclick="toggleSort('keys', 'numero')" style="cursor:pointer">Número/ID
+                                    <span></span></th>
+                                <th onclick="toggleSort('keys', 'detalle')" style="cursor:pointer">Detalle <span></span>
+                                </th>
+                                <th onclick="toggleSort('keys', 'colaborador')" style="cursor:pointer">Colaborador
+                                    Asignado <span></span></th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -155,26 +181,36 @@
                 <div class="section-title">
                     <h2>Registro de Ingreso y Salida de Socios</h2>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="search-member-access" placeholder="Buscar..." oninput="renderMemberAccess()" class="search-input">
-                        <select id="status-member-access" onchange="renderMemberAccess()" class="search-input" style="width: auto;">
+                        <input type="text" id="search-member-access" placeholder="Buscar..."
+                            oninput="renderMemberAccess()" class="search-input">
+                        <select id="status-member-access" onchange="renderMemberAccess()" class="search-input"
+                            style="width: auto;">
                             <option value="">Todos los estados</option>
                             <option value="dentro">Dentro (Pendiente Salida)</option>
                             <option value="salio">Salió</option>
                         </select>
-                        <button class="btn-primary" style="width: auto;" onclick="openModal('memberAccessModal')">Registrar Ingreso</button>
+                        <button class="btn-primary" style="width: auto;"
+                            onclick="openModal('memberAccessModal')">Registrar Ingreso</button>
                     </div>
                 </div>
                 <div class="card">
                     <table id="memberAccessTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('member_access', 'dateIn')" style="cursor:pointer">Ingreso <span></span></th>
-                                <th onclick="toggleSort('member_access', 'dateOut')" style="cursor:pointer">Salida <span></span></th>
-                                <th onclick="toggleSort('member_access', 'memberNumber')" style="cursor:pointer">Nº Socio <span></span></th>
-                                <th onclick="toggleSort('member_access', 'memberName')" style="cursor:pointer">Nombre <span></span></th>
-                                <th onclick="toggleSort('member_access', 'observations')" style="cursor:pointer">Observaciones <span></span></th>
-                                <th onclick="toggleSort('member_access', 'officerIn')" style="cursor:pointer">Oficial Ingreso <span></span></th>
-                                <th onclick="toggleSort('member_access', 'officerOut')" style="cursor:pointer">Oficial Salida <span></span></th>
+                                <th onclick="toggleSort('member_access', 'dateIn')" style="cursor:pointer">Ingreso
+                                    <span></span></th>
+                                <th onclick="toggleSort('member_access', 'dateOut')" style="cursor:pointer">Salida
+                                    <span></span></th>
+                                <th onclick="toggleSort('member_access', 'memberNumber')" style="cursor:pointer">Nº
+                                    Socio <span></span></th>
+                                <th onclick="toggleSort('member_access', 'memberName')" style="cursor:pointer">Nombre
+                                    <span></span></th>
+                                <th onclick="toggleSort('member_access', 'observations')" style="cursor:pointer">
+                                    Observaciones <span></span></th>
+                                <th onclick="toggleSort('member_access', 'officerIn')" style="cursor:pointer">Oficial
+                                    Ingreso <span></span></th>
+                                <th onclick="toggleSort('member_access', 'officerOut')" style="cursor:pointer">Oficial
+                                    Salida <span></span></th>
                                 <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
@@ -189,31 +225,42 @@
                 <div class="section-title">
                     <h2>Reportes</h2>
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <select id="report-type-selector" onchange="switchReportTab()" class="search-input" style="width: auto; font-weight: 600; background-color: #f1f5f9;">
+                        <select id="report-type-selector" onchange="switchReportTab()" class="search-input"
+                            style="width: auto; font-weight: 600; background-color: #f1f5f9;">
                             <option value="socios">Socios</option>
                             <option value="equipos">Radios y Llaves</option>
                         </select>
                         <label for="report-date" style="font-weight: 500; margin-left: 10px;">Fecha:</label>
-                        <input type="date" id="report-date" onchange="renderReports()" class="search-input" style="width: auto;">
-                        <button class="btn-secondary" style="width: auto; padding: 8px 12px;" onclick="exportReportsPDF()">PDF</button>
-                        <button class="btn-secondary" style="width: auto; padding: 8px 12px;" onclick="exportReportsExcel()">Excel</button>
+                        <input type="date" id="report-date" onchange="renderReports()" class="search-input"
+                            style="width: auto;">
+                        <button class="btn-secondary" style="width: auto; padding: 8px 12px;"
+                            onclick="exportReportsPDF()">PDF</button>
+                        <button class="btn-secondary" style="width: auto; padding: 8px 12px;"
+                            onclick="exportReportsExcel()">Excel</button>
                     </div>
                 </div>
-                
+
                 <!-- REPORTE SOCIOS -->
                 <div id="report-socios-wrapper">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
                         <div class="card" style="text-align: center; padding: 20px;">
-                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Total Ingresos</h3>
-                            <div id="rep-total-in" style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">0</div>
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Total Ingresos
+                            </h3>
+                            <div id="rep-total-in"
+                                style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">0</div>
                         </div>
                         <div class="card" style="text-align: center; padding: 20px;">
-                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Salidas No Registradas</h3>
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Salidas No
+                                Registradas</h3>
                             <div id="rep-no-out" style="font-size: 2rem; font-weight: 700; color: #E74C3C;">0</div>
                         </div>
                         <div class="card" style="text-align: center; padding: 20px;">
-                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Oficial Más Activo</h3>
-                            <div id="rep-top-officer" style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); min-height: 36px; display: flex; align-items: center; justify-content: center;">-</div>
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Oficial Más
+                                Activo</h3>
+                            <div id="rep-top-officer"
+                                style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); min-height: 36px; display: flex; align-items: center; justify-content: center;">
+                                -</div>
                         </div>
                     </div>
 
@@ -241,18 +288,25 @@
 
                 <!-- REPORTE EQUIPOS -->
                 <div id="report-equipos-wrapper" style="display: none;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
                         <div class="card" style="text-align: center; padding: 20px;">
-                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Total Préstamos</h3>
-                            <div id="rep-eq-total" style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">0</div>
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Total Préstamos
+                            </h3>
+                            <div id="rep-eq-total"
+                                style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">0</div>
                         </div>
                         <div class="card" style="text-align: center; padding: 20px;">
-                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Equipos NO Devueltos</h3>
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Equipos NO
+                                Devueltos</h3>
                             <div id="rep-eq-no-out" style="font-size: 2rem; font-weight: 700; color: #E74C3C;">0</div>
                         </div>
                         <div class="card" style="text-align: center; padding: 20px;">
-                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Colaborador Más Activo</h3>
-                            <div id="rep-eq-top-collab" style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); min-height: 36px; display: flex; align-items: center; justify-content: center;">-</div>
+                            <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Colaborador Más
+                                Activo</h3>
+                            <div id="rep-eq-top-collab"
+                                style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); min-height: 36px; display: flex; align-items: center; justify-content: center;">
+                                -</div>
                         </div>
                     </div>
 
@@ -284,16 +338,20 @@
                 <div class="section-title">
                     <h2>Colaboradores</h2>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="search-collaborators" placeholder="Buscar..." oninput="renderCollaborators()" class="search-input">
-                        <button id="btn-new-collaborator" class="btn-primary" style="width: auto;" onclick="openModal('collaboratorModal')">Nuevo Colaborador</button>
+                        <input type="text" id="search-collaborators" placeholder="Buscar..."
+                            oninput="renderCollaborators()" class="search-input">
+                        <button id="btn-new-collaborator" class="btn-primary" style="width: auto;"
+                            onclick="openModal('collaboratorModal')">Nuevo Colaborador</button>
                     </div>
                 </div>
                 <div class="card">
                     <table id="collaboratorsTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('collaborators', 'name')" style="cursor:pointer">Nombre <span></span></th>
-                                <th onclick="toggleSort('collaborators', 'area')" style="cursor:pointer">Área de Trabajo <span></span></th>
+                                <th onclick="toggleSort('collaborators', 'name')" style="cursor:pointer">Nombre
+                                    <span></span></th>
+                                <th onclick="toggleSort('collaborators', 'area')" style="cursor:pointer">Área de Trabajo
+                                    <span></span></th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -307,15 +365,18 @@
                 <div class="section-title">
                     <h2>Áreas de Trabajo</h2>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="search-areas" placeholder="Buscar..." oninput="renderAreas()" class="search-input">
-                        <button class="btn-primary" style="width: auto;" onclick="openModal('areaModal')">Nueva Área</button>
+                        <input type="text" id="search-areas" placeholder="Buscar..." oninput="renderAreas()"
+                            class="search-input">
+                        <button class="btn-primary" style="width: auto;" onclick="openModal('areaModal')">Nueva
+                            Área</button>
                     </div>
                 </div>
                 <div class="card">
                     <table id="areasTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('areas', 'name')" style="cursor:pointer">Nombre del Área <span></span></th>
+                                <th onclick="toggleSort('areas', 'name')" style="cursor:pointer">Nombre del Área
+                                    <span></span></th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -329,16 +390,20 @@
                 <div class="section-title">
                     <h2>Gestión de Usuarios</h2>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="search-users" placeholder="Buscar..." oninput="renderUsers()" class="search-input">
-                        <button class="btn-primary" style="width: auto;" onclick="openModal('userModal')">Nuevo Usuario</button>
+                        <input type="text" id="search-users" placeholder="Buscar..." oninput="renderUsers()"
+                            class="search-input">
+                        <button class="btn-primary" style="width: auto;" onclick="openModal('userModal')">Nuevo
+                            Usuario</button>
                     </div>
                 </div>
                 <div class="card">
                     <table id="usersTable">
                         <thead>
                             <tr>
-                                <th onclick="toggleSort('users', 'name')" style="cursor:pointer">Nombre <span></span></th>
-                                <th onclick="toggleSort('users', 'username')" style="cursor:pointer">Usuario <span></span></th>
+                                <th onclick="toggleSort('users', 'name')" style="cursor:pointer">Nombre <span></span>
+                                </th>
+                                <th onclick="toggleSort('users', 'username')" style="cursor:pointer">Usuario
+                                    <span></span></th>
                                 <th onclick="toggleSort('users', 'role')" style="cursor:pointer">Rol <span></span></th>
                                 <th>Acciones</th>
                             </tr>
@@ -610,4 +675,5 @@
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
 </body>
+
 </html>
