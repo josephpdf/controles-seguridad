@@ -33,11 +33,23 @@
                 <li data-section="users" id="navUsers" style="display: none;">Usuarios</li>
             </ul>
             <div class="sidebar-footer">
-                <div class="user-info">
-                    Hola, <strong id="userNameDisplay">Usuario</strong>
-                    <br><small id="userRoleDisplay"></small>
+                <div class="user-profile">
+                    <!-- <div class="avatar" id="userNameInitials">U</div> -->
+                    <div class="user-info">
+                        <p class="user-name" id="userNameDisplay">Usuario</p>
+                        <p class="user-role" id="userRoleDisplay">ROL</p>
+                        <p class="user-role" id="userAreaDisplay"
+                            style="color: var(--primary-color); font-weight: 600; margin-top: 2px;"></p>
+                    </div>
+                    <button class="btn-logout" onclick="logout()" title="Cerrar Sesión">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                    </button>
                 </div>
-                <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
             </div>
         </aside>
 
@@ -84,11 +96,14 @@
                                 <th onclick="toggleSort('transactions', 'dateIn')" style="cursor:pointer">Fecha/Hora
                                     Devolución <span></span></th>
                                 <th onclick="toggleSort('transactions', 'type')" style="cursor:pointer">Tipo
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('transactions', 'eqInfo')" style="cursor:pointer">Equipo
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('transactions', 'collab')" style="cursor:pointer">Colaborador
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('transactions', 'officerOut')" style="cursor:pointer">Oficial
                                     Entrega <span></span></th>
                                 <th onclick="toggleSort('transactions', 'officerIn')" style="cursor:pointer">Oficial
@@ -128,7 +143,8 @@
                                 <th onclick="toggleSort('radios', 'area')" style="cursor:pointer">Área <span></span>
                                 </th>
                                 <th onclick="toggleSort('radios', 'detalle')" style="cursor:pointer">Detalle
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('radios', 'colaborador')" style="cursor:pointer">Colaborador
                                     Asignado <span></span></th>
                                 <th>Estado</th>
@@ -162,7 +178,8 @@
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('keys', 'numero')" style="cursor:pointer">Número/ID
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('keys', 'detalle')" style="cursor:pointer">Detalle <span></span>
                                 </th>
                                 <th onclick="toggleSort('keys', 'colaborador')" style="cursor:pointer">Colaborador
@@ -198,13 +215,16 @@
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('member_access', 'dateIn')" style="cursor:pointer">Ingreso
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('member_access', 'dateOut')" style="cursor:pointer">Salida
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('member_access', 'memberNumber')" style="cursor:pointer">Nº
                                     Socio <span></span></th>
                                 <th onclick="toggleSort('member_access', 'memberName')" style="cursor:pointer">Nombre
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('member_access', 'observations')" style="cursor:pointer">
                                     Observaciones <span></span></th>
                                 <th onclick="toggleSort('member_access', 'officerIn')" style="cursor:pointer">Oficial
@@ -349,9 +369,11 @@
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('collaborators', 'name')" style="cursor:pointer">Nombre
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('collaborators', 'area')" style="cursor:pointer">Área de Trabajo
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -376,7 +398,8 @@
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('areas', 'name')" style="cursor:pointer">Nombre del Área
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -403,7 +426,8 @@
                                 <th onclick="toggleSort('users', 'name')" style="cursor:pointer">Nombre <span></span>
                                 </th>
                                 <th onclick="toggleSort('users', 'username')" style="cursor:pointer">Usuario
-                                    <span></span></th>
+                                    <span></span>
+                                </th>
                                 <th onclick="toggleSort('users', 'role')" style="cursor:pointer">Rol <span></span></th>
                                 <th>Acciones</th>
                             </tr>

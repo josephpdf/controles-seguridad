@@ -27,6 +27,13 @@
                     <label for="password">Contraseña</label>
                     <input type="password" id="password" required placeholder="Ingrese su contraseña">
                 </div>
+                <div class="input-group">
+                    <label for="login-area">Área de Trabajo</label>
+                    <select id="login-area" class="input-field" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: var(--card-bg); font-size: 1rem; color: var(--text-color);">
+                        <option value="Parqueo">Parqueo</option>
+                        <option value="Hectárea">Hectárea</option>
+                    </select>
+                </div>
                 <div id="loginError" class="error-msg" style="display: none;">Credenciales inválidas</div>
                 <button type="submit" class="btn-primary">Ingresar</button>
             </form>

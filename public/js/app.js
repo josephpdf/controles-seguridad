@@ -12,6 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('userNameDisplay').textContent = currentUser.name;
     document.getElementById('userRoleDisplay').textContent = currentUser.role.toUpperCase();
 
+    const initialsEl = document.getElementById('userNameInitials');
+    if (initialsEl) initialsEl.textContent = currentUser.name.charAt(0).toUpperCase();
+
+    const selectedArea = localStorage.getItem('selectedArea') || 'Parqueo';
+    const areaDisplay = document.getElementById('userAreaDisplay');
+    if (areaDisplay) {
+        areaDisplay.textContent = `Área: ${selectedArea}`;
+    }
+
     // Configurar permisos de navegación y formularios
     document.getElementById('navCollaborators').style.display = 'block'; // Todos pueden ver colaboradores
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
@@ -36,6 +45,41 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnNewRadio) btnNewRadio.style.display = 'none';
         if (btnNewKey) btnNewKey.style.display = 'none';
         if (btnNewCollab) btnNewCollab.style.display = 'none';
+
+        // LÓGICA DE ÁREAS PARA OFICIALES
+        const reportSelector = document.getElementById('report-type-selector');
+        
+        if (selectedArea === 'Parqueo') {
+            const memAccLi = document.querySelector('.nav-menu li[data-section="member-access"]');
+            if(memAccLi) memAccLi.style.display = 'none';
+            
+            if (reportSelector) {
+                reportSelector.value = 'equipos';
+                reportSelector.style.display = 'none';
+                currentReportTab = 'equipos';
+            }
+        } else if (selectedArea === 'Hectárea') {
+            const transLi = document.querySelector('.nav-menu li[data-section="transactions"]');
+            const radLi = document.querySelector('.nav-menu li[data-section="radios"]');
+            const keyLi = document.querySelector('.nav-menu li[data-section="keys"]');
+            const colLi = document.querySelector('.nav-menu li[data-section="collaborators"]');
+            
+            if(transLi) transLi.style.display = 'none';
+            if(radLi) radLi.style.display = 'none';
+            if(keyLi) keyLi.style.display = 'none';
+            if(colLi) colLi.style.display = 'none';
+            
+            if (reportSelector) {
+                reportSelector.value = 'socios';
+                reportSelector.style.display = 'none';
+                currentReportTab = 'socios';
+            }
+            
+            setTimeout(() => {
+                const memAccBtn = document.querySelector('.nav-menu li[data-section="member-access"]');
+                if(memAccBtn) memAccBtn.click();
+            }, 100);
+        }
     }
 
     // Eventos de navegación

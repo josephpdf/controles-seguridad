@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const area = document.getElementById('login-area')?.value || 'Parqueo';
         const errorMsg = document.getElementById('loginError');
 
         try {
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.success) {
                 localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('selectedArea', area);
                 window.location.href = 'dashboard.html';
             } else {
                 errorMsg.textContent = data.message || 'Credenciales inválidas';
