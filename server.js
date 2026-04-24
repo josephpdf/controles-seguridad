@@ -161,6 +161,7 @@ const server = http.createServer((req, res) => {
             if (req.url.startsWith('/api/keys')) return handleCRUD('keys', 'keys.json');
             if (req.url.startsWith('/api/transactions')) return handleCRUD('transactions', 'transactions.json');
             if (req.url.startsWith('/api/areas')) return handleCRUD('areas', 'areas.json');
+            if (req.url.startsWith('/api/member_access')) return handleCRUD('member_access', 'member_access.json');
 
             res.writeHead(404);
             res.end(JSON.stringify({ error: 'Ruta API no encontrada' }));

@@ -1,5 +1,5 @@
 let currentUser = null;
-let dataCache = { radios: [], keys: [], collaborators: [], users: [], transactions: [], areas: [] };
+let dataCache = { radios: [], keys: [], collaborators: [], users: [], transactions: [], areas: [], member_access: [] };
 
 document.addEventListener('DOMContentLoaded', () => {
     const userStr = localStorage.getItem('user');
@@ -47,6 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const section = e.target.getAttribute('data-section');
             document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
             document.getElementById(`sec-${section}`).style.display = 'block';
+            
+            if (section === 'reports') {
+                const dateInput = document.getElementById('report-date');
+                if (!dateInput.value) {
+                    const today = new Date();
+                    const yyyy = today.getFullYear();
+                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    dateInput.value = `${yyyy}-${mm}-${dd}`;
+                }
+                renderReports();
+            }
         });
     });
 
@@ -61,7 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'keyForm', endpoint: 'keys', modal: 'keyModal', fields: ['keyNumero', 'keyColaborador', 'keyDetalle'], map: f => ({ numero: f[0], colaborador: f[1], detalle: f[2] }) },
         { id: 'collaboratorForm', endpoint: 'collaborators', modal: 'collaboratorModal', fields: ['collabName', 'collabArea'], map: f => ({ name: f[0], area: f[1] }) },
         { id: 'userForm', endpoint: 'users', modal: 'userModal', fields: ['userName', 'userUsername', 'userPassword', 'userRole'], map: f => ({ name: f[0], username: f[1], password: f[2], role: f[3] }) },
-        { id: 'areaForm', endpoint: 'areas', modal: 'areaModal', fields: ['areaName'], map: f => ({ name: f[0] }) }
+        { id: 'areaForm', endpoint: 'areas', modal: 'areaModal', fields: ['areaName'], map: f => ({ name: f[0] }) },
+        { id: 'memberAccessForm', endpoint: 'member_access', modal: 'memberAccessModal', customSubmit: handleMemberAccessSubmit },
+        { id: 'editMemberAccessForm', endpoint: 'member_access', modal: 'editMemberAccessModal', fields: ['editAccessDateIn', 'editAccessDateOut'], map: f => ({ dateIn: new Date(f[0]).toISOString(), dateOut: f[1] ? new Date(f[1]).toISOString() : null }) }
     ];
 
     forms.forEach(f => {
@@ -100,6 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const tid = document.getElementById('editTransId').value;
                     if (tid) payload.id = parseInt(tid);
                 }
+                if (f.id === 'editMemberAccessForm') {
+                    const aid = document.getElementById('editAccessId').value;
+                    if (aid) payload.id = parseInt(aid);
+                }
 
                 await fetch(`/api/${f.endpoint}`, {
                     method: 'POST',
@@ -135,6 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (f.id === 'editTransactionForm') {
                     document.getElementById('editTransId').value = '';
                 }
+                if (f.id === 'editMemberAccessForm') {
+                    document.getElementById('editAccessId').value = '';
+                }
                 closeModal(f.modal);
                 await loadAllData();
             });
@@ -148,7 +169,8 @@ let sortState = {
     keys: { field: 'numero', dir: 'asc' },
     collaborators: { field: 'name', dir: 'asc' },
     users: { field: 'name', dir: 'asc' },
-    areas: { field: 'name', dir: 'asc' }
+    areas: { field: 'name', dir: 'asc' },
+    member_access: { field: 'dateIn', dir: 'desc' }
 };
 
 function toggleSort(endpoint, field) {
@@ -164,6 +186,7 @@ function toggleSort(endpoint, field) {
     else if(endpoint === 'areas') renderAreas();
     else if(endpoint === 'users') renderUsers();
     else if(endpoint === 'transactions') renderTransactions();
+    else if(endpoint === 'member_access') renderMemberAccess();
 }
 
 function updateSortIndicators(tableId, endpoint) {
@@ -244,6 +267,7 @@ async function loadAllData() {
         fetchData('keys'),
         fetchData('collaborators'),
         fetchData('transactions'),
+        fetchData('member_access'),
         (currentUser.role === 'superadmin' || currentUser.role === 'admin') ? fetchData('areas') : Promise.resolve(),
         (currentUser.role === 'superadmin' || currentUser.role === 'admin') ? fetchData('users') : Promise.resolve()
     ]);
@@ -261,6 +285,7 @@ async function fetchData(endpoint) {
 
 function renderAll() {
     renderTransactions();
+    renderMemberAccess();
     renderDashboardChart();
     renderRadios();
     renderKeys();
@@ -729,6 +754,234 @@ async function receiveEquipment(transactionId) {
     });
 
     await loadAllData();
+}
+
+// ---- LOGICA ACCESO SOCIOS ----
+function renderMemberAccess() {
+    const tbody = document.querySelector('#memberAccessTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    
+    const statusFilter = document.getElementById('status-member-access')?.value || '';
+    
+    let list = dataCache.member_access || [];
+    list = list.map(a => ({
+        ...a,
+        dateInFormatted: new Date(a.dateIn).toLocaleString(),
+        dateOutFormatted: a.dateOut ? new Date(a.dateOut).toLocaleString() : '-'
+    }));
+
+    if (statusFilter === 'dentro') list = list.filter(a => !a.dateOut);
+    if (statusFilter === 'salio') list = list.filter(a => a.dateOut);
+
+    list = getFilteredAndSorted('member_access', list, ['dateInFormatted', 'dateOutFormatted', 'memberNumber', 'memberName', 'observations', 'officerIn', 'officerOut']);
+    
+    list.forEach(a => {
+        const isInside = !a.dateOut;
+        
+        // Comprobar si el ingreso fue el día de hoy
+        const entryDateStr = new Date(a.dateIn).toLocaleDateString();
+        const todayStr = new Date().toLocaleDateString();
+        const isToday = entryDateStr === todayStr;
+        
+        const showExitButton = isInside && isToday;
+        
+        let statusBadge = '';
+        let statusText = '';
+        if (isInside) {
+            if (isToday) {
+                statusBadge = 'en-uso';
+                statusText = 'Dentro';
+            } else {
+                statusBadge = 'no-disponible'; // Usamos rojo para indicar que expiró o salió por otro lado
+                statusText = 'Salida no registrada';
+            }
+        } else {
+            statusBadge = 'disponible';
+            statusText = 'Salió';
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${a.dateInFormatted}</td>
+            <td>${a.dateOutFormatted}</td>
+            <td>${a.memberNumber}</td>
+            <td>${a.memberName}</td>
+            <td>${a.observations || ''}</td>
+            <td>${a.officerIn}</td>
+            <td>${a.officerOut || '-'}</td>
+            <td><span class="badge ${statusBadge}">${statusText}</span></td>
+            <td>
+                ${showExitButton ? `<button class="btn-secondary" onclick="registerMemberExit(${a.id})">Registrar Salida</button>` : ''}
+                ${currentUser.role === 'superadmin' ? `<button class="btn-edit" onclick="editMemberAccess(${a.id})">Editar</button>` : ''}
+                ${!showExitButton && currentUser.role !== 'superadmin' ? '-' : ''}
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function handleMemberAccessSubmit(e) {
+    e.preventDefault();
+    const memberNumber = document.getElementById('accessMemberNumber').value;
+    const memberName = document.getElementById('accessMemberName').value;
+    const observations = document.getElementById('accessObservations').value;
+    
+    if (!memberNumber || !memberName) {
+        alert('Por favor complete el número y nombre del socio.');
+        return;
+    }
+    
+    const payload = {
+        memberNumber,
+        memberName,
+        observations,
+        officerIn: currentUser.name,
+        dateIn: new Date().toISOString(),
+        dateOut: null,
+        officerOut: null
+    };
+    
+    fetch('/api/member_access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-User': currentUser.name },
+        body: JSON.stringify(payload)
+    }).then(res => res.json()).then(data => {
+        closeModal('memberAccessModal');
+        document.getElementById('memberAccessForm').reset();
+        loadAllData();
+    }).catch(e => console.error('Error al guardar acceso:', e));
+}
+
+async function registerMemberExit(id) {
+    if (!confirm('¿Confirmar salida del socio?')) return;
+    
+    const a = dataCache.member_access.find(x => x.id === id);
+    if (!a) return;
+
+    a.dateOut = new Date().toISOString();
+    a.officerOut = currentUser.name;
+
+    await fetch('/api/member_access', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-User': currentUser.username
+        },
+        body: JSON.stringify(a)
+    });
+
+    await loadAllData();
+}
+
+function editMemberAccess(id) {
+    const a = dataCache.member_access.find(x => x.id === id);
+    if (!a) return;
+    document.getElementById('editAccessId').value = a.id;
+    document.getElementById('editAccessDateIn').value = formatForDateTimeLocal(a.dateIn);
+    document.getElementById('editAccessDateOut').value = formatForDateTimeLocal(a.dateOut);
+    openModal('editMemberAccessModal');
+}
+
+// ---- LOGICA REPORTES ----
+let reportsChartInstance = null;
+
+function renderReports() {
+    const dateInput = document.getElementById('report-date')?.value;
+    if (!dateInput) return;
+
+    const [year, month, day] = dateInput.split('-');
+    const selectedDateStr = new Date(year, month - 1, day).toLocaleDateString();
+
+    const allAccess = dataCache.member_access || [];
+    const dayAccess = allAccess.filter(a => new Date(a.dateIn).toLocaleDateString() === selectedDateStr);
+
+    let totalIn = dayAccess.length;
+    let noOut = 0;
+    const officerCount = {};
+    const hourlyData = new Array(24).fill(0);
+
+    const tbody = document.querySelector('#reportsTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    dayAccess.forEach(a => {
+        const dIn = new Date(a.dateIn);
+        const isInside = !a.dateOut;
+        
+        if (isInside) noOut++;
+        officerCount[a.officerIn] = (officerCount[a.officerIn] || 0) + 1;
+        hourlyData[dIn.getHours()]++;
+
+        let statusText = isInside ? 'Salida no registrada' : 'Salió';
+        if (isInside && selectedDateStr === new Date().toLocaleDateString()) {
+            statusText = 'Dentro';
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${dIn.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+            <td>${a.dateOut ? new Date(a.dateOut).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '-'}</td>
+            <td>${a.memberNumber}</td>
+            <td>${a.memberName}</td>
+            <td>${a.officerIn}</td>
+            <td>${statusText}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    let topOfficer = '-';
+    let maxOps = 0;
+    for (const off in officerCount) {
+        if (officerCount[off] > maxOps) {
+            maxOps = officerCount[off];
+            topOfficer = `${off} (${maxOps})`;
+        }
+    }
+
+    document.getElementById('rep-total-in').textContent = totalIn;
+    document.getElementById('rep-no-out').textContent = noOut;
+    document.getElementById('rep-top-officer').textContent = topOfficer;
+
+    const ctx = document.getElementById('reportsChart');
+    if (!ctx) return;
+    
+    if (reportsChartInstance) {
+        reportsChartInstance.destroy();
+    }
+
+    const labels = Array.from({length: 24}, (_, i) => `${i.toString().padStart(2, '0')}:00`);
+
+    reportsChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Ingresos por Hora',
+                data: hourlyData,
+                backgroundColor: '#3498DB',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Picos de Acceso (Por Hora)',
+                    font: { family: 'Inter', size: 16 }
+                }
+            }
+        }
+    });
 }
 
 // ---- UTILS ----

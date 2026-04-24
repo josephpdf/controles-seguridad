@@ -20,6 +20,8 @@
                 <li data-section="dashboard">Dashboard Gráfico</li>
                 <li data-section="radios">Radios</li>
                 <li data-section="keys">Llaves</li>
+                <li data-section="member-access">Ingreso Socios</li>
+                <li data-section="reports">Reportes</li>
                 <li data-section="collaborators" id="navCollaborators" style="display: none;">Colaboradores</li>
                 <li data-section="areas" id="navAreas" style="display: none;">Áreas</li>
                 <li data-section="users" id="navUsers" style="display: none;">Usuarios</li>
@@ -138,6 +140,87 @@
                                 <th onclick="toggleSort('keys', 'colaborador')" style="cursor:pointer">Colaborador Asignado <span></span></th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECCION: ACCESOS SOCIOS -->
+            <section id="sec-member-access" class="content-section" style="display: none;">
+                <div class="section-title">
+                    <h2>Registro de Ingreso y Salida de Socios</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="search-member-access" placeholder="Buscar..." oninput="renderMemberAccess()" class="search-input">
+                        <select id="status-member-access" onchange="renderMemberAccess()" class="search-input" style="width: auto;">
+                            <option value="">Todos los estados</option>
+                            <option value="dentro">Dentro (Pendiente Salida)</option>
+                            <option value="salio">Salió</option>
+                        </select>
+                        <button class="btn-primary" style="width: auto;" onclick="openModal('memberAccessModal')">Registrar Ingreso</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <table id="memberAccessTable">
+                        <thead>
+                            <tr>
+                                <th onclick="toggleSort('member_access', 'dateIn')" style="cursor:pointer">Ingreso <span></span></th>
+                                <th onclick="toggleSort('member_access', 'dateOut')" style="cursor:pointer">Salida <span></span></th>
+                                <th onclick="toggleSort('member_access', 'memberNumber')" style="cursor:pointer">Nº Socio <span></span></th>
+                                <th onclick="toggleSort('member_access', 'memberName')" style="cursor:pointer">Nombre <span></span></th>
+                                <th onclick="toggleSort('member_access', 'observations')" style="cursor:pointer">Observaciones <span></span></th>
+                                <th onclick="toggleSort('member_access', 'officerIn')" style="cursor:pointer">Oficial Ingreso <span></span></th>
+                                <th onclick="toggleSort('member_access', 'officerOut')" style="cursor:pointer">Oficial Salida <span></span></th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECCION: REPORTES -->
+            <section id="sec-reports" class="content-section" style="display: none;">
+                <div class="section-title">
+                    <h2>Reportes de Ingreso</h2>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <label for="report-date" style="font-weight: 500;">Fecha:</label>
+                        <input type="date" id="report-date" onchange="renderReports()" class="search-input" style="width: auto;">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                    <div class="card" style="text-align: center; padding: 20px;">
+                        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Total Ingresos</h3>
+                        <div id="rep-total-in" style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">0</div>
+                    </div>
+                    <div class="card" style="text-align: center; padding: 20px;">
+                        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Salidas No Registradas</h3>
+                        <div id="rep-no-out" style="font-size: 2rem; font-weight: 700; color: #E74C3C;">0</div>
+                    </div>
+                    <div class="card" style="text-align: center; padding: 20px;">
+                        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Oficial Más Activo</h3>
+                        <div id="rep-top-officer" style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); min-height: 36px; display: flex; align-items: center; justify-content: center;">-</div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 20px; height: 300px;">
+                    <canvas id="reportsChart"></canvas>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-bottom: 15px;">Detalle de Ingresos</h3>
+                    <table id="reportsTable">
+                        <thead>
+                            <tr>
+                                <th>Hora Ingreso</th>
+                                <th>Hora Salida</th>
+                                <th>Nº Socio</th>
+                                <th>Nombre</th>
+                                <th>Oficial Ingreso</th>
+                                <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -334,6 +417,57 @@
                 </div>
                 <div class="action-btns">
                     <button type="submit" class="btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Acceso Socios -->
+    <div id="memberAccessModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Registrar Ingreso de Socio</h3>
+                <button class="close-btn" onclick="closeModal('memberAccessModal')">&times;</button>
+            </div>
+            <form id="memberAccessForm">
+                <div class="form-group">
+                    <label>Número de Socio</label>
+                    <input type="text" id="accessMemberNumber" required>
+                </div>
+                <div class="form-group">
+                    <label>Nombre del Socio/Persona</label>
+                    <input type="text" id="accessMemberName" required>
+                </div>
+                <div class="form-group">
+                    <label>Observaciones / Comentarios</label>
+                    <input type="text" id="accessObservations">
+                </div>
+                <div class="action-btns">
+                    <button type="submit" class="btn-primary">Registrar Ingreso</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Editar Acceso Socio -->
+    <div id="editMemberAccessModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Tiempos de Acceso</h3>
+                <button class="close-btn" onclick="closeModal('editMemberAccessModal')">&times;</button>
+            </div>
+            <form id="editMemberAccessForm">
+                <input type="hidden" id="editAccessId">
+                <div class="form-group">
+                    <label>Fecha/Hora Ingreso</label>
+                    <input type="datetime-local" id="editAccessDateIn" required>
+                </div>
+                <div class="form-group">
+                    <label>Fecha/Hora Salida <small>(Dejar en blanco si no ha salido)</small></label>
+                    <input type="datetime-local" id="editAccessDateOut">
+                </div>
+                <div class="action-btns">
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
                 </div>
             </form>
         </div>
