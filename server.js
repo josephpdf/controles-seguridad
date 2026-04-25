@@ -29,16 +29,15 @@ const logAction = (user, method, url, details) => {
         const logFile = path.join(LOGS_DIR, `log_${dateStr}.txt`);
         
         let actionDesc = '';
-        const resource = url.split('/').pop() || url.split('/')[2];
+        const resource = url.includes('/') ? (url.split('/').pop() || url.split('/')[2]) : url;
         
         if (method === 'POST') {
-            // Se determina si fue creación o edición basado en el ID y otros detalles
-            actionDesc = details.id && details.id.toString().length > 10 ? 'CREÓ/EDITÓ' : 'EDITÓ/CREÓ'; 
-            // Mejor descripción según los datos proporcionados
-            actionDesc = details.numero || details.name || details.username || `Transaccion/Equipo ${details.equipmentId}`;
             fs.appendFileSync(logFile, `[${timeStr}] Usuario '${user}' realizó POST en '${resource}'. Datos: ${JSON.stringify(details)}\n`, 'utf8');
         } else if (method === 'DELETE') {
-            fs.appendFileSync(logFile, `[${timeStr}] Usuario '${user}' ELIMINÓ registro ID ${details} de '${resource}'.\n`, 'utf8');
+            const id = details.id || details;
+            const extraInfo = details.name || details.numero || details.username || '';
+            const detailStr = extraInfo ? `ID ${id} (${extraInfo})` : `ID ${id}`;
+            fs.appendFileSync(logFile, `[${timeStr}] Usuario '${user}' ELIMINÓ registro ${detailStr} de '${resource}'. Datos: ${JSON.stringify(details)}\n`, 'utf8');
         }
     } catch (e) {
         console.error("Error guardando log:", e);
@@ -191,16 +190,17 @@ const server = http.createServer((req, res) => {
                     
                     // Guardar los cambios y registrar la acción
                     writeData(filename, data);
-                    logAction(reqUser, 'POST', req.url, parsedBody);
+                    logAction(reqUser, 'POST', entityName, parsedBody);
                     res.writeHead(200);
                     res.end(JSON.stringify({ success: true }));
                 } else if (req.method === 'DELETE') {
                     // ELIMINAR (Extraer ID de la URL)
                     const id = parseInt(req.url.split('/').pop());
+                    const itemToDelete = data.find(item => item.id === id);
                     const newData = data.filter(item => item.id !== id);
                     
                     writeData(filename, newData);
-                    logAction(reqUser, 'DELETE', req.url, id);
+                    logAction(reqUser, 'DELETE', entityName, itemToDelete || id);
                     res.writeHead(200);
                     res.end(JSON.stringify({ success: true }));
                 }
@@ -244,8 +244,13 @@ const server = http.createServer((req, res) => {
                                     let dataMatch = line.split('Datos: ');
                                     details = dataMatch.length > 1 ? dataMatch[1] : '';
                                 } else if (action === 'Eliminar') {
-                                    let idMatch = line.match(/registro ID (.*?) de/);
-                                    details = idMatch ? `ID: ${idMatch[1]}` : '';
+                                    let dataMatch = line.split('Datos: ');
+                                    if (dataMatch.length > 1) {
+                                        details = dataMatch[1];
+                                    } else {
+                                        let idMatch = line.match(/registro (.*?) de/);
+                                        details = idMatch ? `${idMatch[1]}` : '';
+                                    }
                                 }
                                 
                                 allLogs.push({

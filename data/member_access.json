@@ -38,5 +38,15 @@
     "dateOut": "2026-04-25T23:05:47.749Z",
     "officerOut": "Super Administrador",
     "id": 1777158309688
+  },
+  {
+    "memberNumber": "144801",
+    "memberName": "Arturo Herrera",
+    "observations": "Prueba",
+    "officerIn": "Super Administrador",
+    "dateIn": "2026-04-25T23:39:00.000Z",
+    "dateOut": null,
+    "officerOut": "Super Administrador",
+    "id": 1777160386793
   }
 ]
