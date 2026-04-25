@@ -182,3 +182,55 @@ async function registerMemberExit(id) {
 
     await loadAllData();
 }
+
+// ==========================================
+// CAMBIO DE CONTRASEÑA
+// ==========================================
+
+/**
+ * Maneja el cambio de contraseña de cualquier usuario logueado
+ * @param {Event} e - Evento del formulario
+ */
+async function handlePasswordChange(e) {
+    e.preventDefault();
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmNewPassword').value;
+    
+    if (newPassword !== confirmPassword) {
+        alert('Las contraseñas no coinciden.');
+        return;
+    }
+
+    if (newPassword.length < 6) {
+        alert('La contraseña debe tener al menos 6 caracteres.');
+        return;
+    }
+    
+    // currentUser se inicializa en app.js globalmente
+    const payload = {
+        id: currentUser.id,
+        password: newPassword
+    };
+    
+    try {
+        const response = await fetch('/api/users', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json', 
+                'X-User': currentUser.username 
+            },
+            body: JSON.stringify(payload)
+        });
+        
+        if (response.ok) {
+            alert('Contraseña actualizada exitosamente.');
+            closeModal('passwordModal');
+            document.getElementById('passwordForm').reset();
+        } else {
+            alert('Error al actualizar la contraseña en el servidor.');
+        }
+    } catch (error) {
+        console.error('Error al cambiar contraseña:', error);
+        alert('Hubo un error al cambiar la contraseña.');
+    }
+}

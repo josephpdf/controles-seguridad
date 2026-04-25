@@ -176,7 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'userForm', endpoint: 'users', modal: 'userModal', fields: ['userName', 'userUsername', 'userPassword', 'userRole'], map: f => ({ name: f[0], username: f[1], password: f[2], role: f[3] }) },
         { id: 'areaForm', endpoint: 'areas', modal: 'areaModal', fields: ['areaName'], map: f => ({ name: f[0] }) },
         { id: 'memberAccessForm', endpoint: 'member_access', modal: 'memberAccessModal', customSubmit: handleMemberAccessSubmit },
-        { id: 'editMemberAccessForm', endpoint: 'member_access', modal: 'editMemberAccessModal', fields: ['editAccessDateIn', 'editAccessDateOut'], map: f => ({ dateIn: new Date(f[0]).toISOString(), dateOut: f[1] ? new Date(f[1]).toISOString() : null }) }
+        { id: 'editMemberAccessForm', endpoint: 'member_access', modal: 'editMemberAccessModal', fields: ['editAccessDateIn', 'editAccessDateOut'], map: f => ({ dateIn: new Date(f[0]).toISOString(), dateOut: f[1] ? new Date(f[1]).toISOString() : null }) },
+        { id: 'passwordForm', endpoint: 'users', modal: 'passwordModal', customSubmit: handlePasswordChange }
     ];
 
     // Asignar el event listener a cada formulario iterando sobre la configuración
