@@ -8,7 +8,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. VERIFICACIÓN DE SESIÓN
-    const userStr = localStorage.getItem('user');
+    const userStr = sessionStorage.getItem('user');
     if (!userStr) {
         window.location.href = 'index.html';
         return;
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialsEl = document.getElementById('userNameInitials');
     if (initialsEl) initialsEl.textContent = currentUser.name.charAt(0).toUpperCase();
 
-    const selectedArea = localStorage.getItem('selectedArea') || 'Parqueo';
+    const selectedArea = sessionStorage.getItem('selectedArea') || 'Parqueo';
     const areaDisplay = document.getElementById('userAreaDisplay');
     if (areaDisplay) {
         areaDisplay.textContent = `Área: ${selectedArea}`;

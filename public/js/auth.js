@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!loginForm) return;
 
     // --- PROTECCIÓN DE RUTAS ---
-    // Si ya existe un usuario guardado en localStorage, redirigir automáticamente al dashboard
-    if (localStorage.getItem('user')) {
+    // Si ya existe un usuario guardado en sessionStorage, redirigir automáticamente al dashboard
+    if (sessionStorage.getItem('user')) {
         window.location.href = 'dashboard.html';
     }
 
@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.success) {
-                // Si el login es exitoso, guardar datos del usuario y área en localStorage
-                localStorage.setItem('user', JSON.stringify(data.user));
-                localStorage.setItem('selectedArea', area);
+                // Si el login es exitoso, guardar datos del usuario y área en sessionStorage
+                sessionStorage.setItem('user', JSON.stringify(data.user));
+                sessionStorage.setItem('selectedArea', area);
                 // Redirigir al dashboard
                 window.location.href = 'dashboard.html';
             } else {
@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * Elimina la información almacenada y redirige al index.html
  */
 function logout() {
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('selectedArea');
     window.location.href = 'index.html';
 }
