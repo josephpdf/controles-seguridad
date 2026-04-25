@@ -76,13 +76,3 @@ Esta es la manera correcta de montar el sistema en el servidor (ej. `192.168.1.1
 *   `/public`: Archivos expuestos para el cliente (HTML, CSS, JS e Imágenes).
 *   `server.js`: Servidor backend en Node.js puro. Maneja las rutas API (`/api/...`).
 *   `Arrancar_Sistema.bat`: Script de Windows de uso rápido.
-
----
-
-## 🔐 Credenciales por Defecto
-
-Al ejecutar el sistema por primera vez, utiliza el siguiente usuario maestro:
-*   **Usuario:** `superadmin`
-*   **Contraseña:** `admin123`
-
-*(Se recomienda crear tus propios usuarios y cambiar o desactivar estas credenciales iniciales por seguridad).*
