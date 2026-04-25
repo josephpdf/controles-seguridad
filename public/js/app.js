@@ -1046,6 +1046,7 @@ function renderReports() {
             <td>${a.memberNumber}</td>
             <td>${a.memberName}</td>
             <td>${a.officerIn}</td>
+            <td>${a.officerOut || '-'}</td>
             <td>${statusText}</td>
         `;
         tbody.appendChild(tr);
@@ -1151,6 +1152,8 @@ function renderEquipmentReports() {
             <td>${t.type.toUpperCase()}</td>
             <td>${eqInfo}</td>
             <td>${collabName}</td>
+            <td>${t.officerOut || '-'}</td>
+            <td>${t.officerIn || '-'}</td>
             <td>${statusText}</td>
         `;
         tbody.appendChild(tr);
@@ -1246,7 +1249,7 @@ function exportReportsPDF() {
 
         doc.autoTable({
             startY: 64,
-            head: [['Hora Ingreso', 'Hora Salida', 'Nº Socio', 'Nombre', 'Oficial', 'Estado']],
+            head: [['Hora Ingreso', 'Hora Salida', 'Nº Socio', 'Nombre', 'Oficial Ing.', 'Oficial Sal.', 'Estado']],
             body: rows,
             theme: 'striped',
             headStyles: { fillColor: [44, 62, 80] }
@@ -1278,7 +1281,7 @@ function exportReportsPDF() {
 
         doc.autoTable({
             startY: 64,
-            head: [['Hora Préstamo', 'Hora Devolución', 'Tipo', 'Equipo', 'Colaborador', 'Estado']],
+            head: [['Hora Préstamo', 'Hora Devol.', 'Tipo', 'Equipo', 'Colaborador', 'Ofic. Ent.', 'Ofic. Rec.', 'Estado']],
             body: rows,
             theme: 'striped',
             headStyles: { fillColor: [44, 62, 80] }
