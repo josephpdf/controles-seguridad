@@ -434,3 +434,106 @@ tr:hover {
         width: 100%;
     }
 }
+
+/* Clases de Utilidad y Refactorización del HTML */
+.sidebar-logo {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
+.sidebar-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.user-area-display {
+    color: var(--primary);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.w-auto {
+    width: auto !important;
+}
+
+.filters-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.sortable-header {
+    cursor: pointer;
+}
+
+/* Dashboard & Reports Styles */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.chart-container.small {
+    margin-bottom: 20px;
+    height: 300px;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.metric-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.metric-title {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.metric-value.primary { color: var(--primary); }
+.metric-value.danger { color: var(--error); }
+.metric-value.text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-main);
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.report-filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.report-selector {
+    width: auto;
+    font-weight: 600;
+    background-color: #f1f5f9;
+}
+
+.report-date-label {
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.btn-report {
+    width: auto;
+    padding: 8px 12px;
+}
+
