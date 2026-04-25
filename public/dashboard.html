@@ -88,6 +88,7 @@
                             <option value="en-uso">En Uso (Pendiente)</option>
                             <option value="devuelto">Devuelto</option>
                         </select>
+                        <input type="date" id="filter-date-transactions" onchange="renderTransactions()" class="search-input" style="width: auto;" title="Filtrar por fecha">
                         <button class="btn-primary" style="width: auto;" onclick="openTransactionModal()">Nueva
                             Salida</button>
                     </div>
@@ -217,6 +218,7 @@
                             <option value="dentro">Dentro (Pendiente Salida)</option>
                             <option value="salio">Salió</option>
                         </select>
+                        <input type="date" id="filter-date-member-access" onchange="renderMemberAccess()" class="search-input" style="width: auto;" title="Filtrar por fecha">
                         <button class="btn-primary" style="width: auto;"
                             onclick="openModal('memberAccessModal')">Registrar Ingreso</button>
                     </div>

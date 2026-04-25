@@ -21,6 +21,19 @@ document.addEventListener('DOMContentLoaded', () => {
         areaDisplay.textContent = `Área: ${selectedArea}`;
     }
 
+    // Limitar fechas a máximo el día de hoy
+    const todayStr = new Date().toISOString().split('T')[0];
+    const dtTx = document.getElementById('filter-date-transactions');
+    const dtMa = document.getElementById('filter-date-member-access');
+    if (dtTx) {
+        dtTx.setAttribute('max', todayStr);
+        dtTx.value = todayStr;
+    }
+    if (dtMa) {
+        dtMa.setAttribute('max', todayStr);
+        dtMa.value = todayStr;
+    }
+
     // Configurar permisos de navegación y formularios
     document.getElementById('navCollaborators').style.display = 'block'; // Todos pueden ver colaboradores
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
@@ -505,6 +518,7 @@ function renderTransactions() {
     tbody.innerHTML = '';
     
     const statusFilter = document.getElementById('status-transactions')?.value || '';
+    const dateFilter = document.getElementById('filter-date-transactions')?.value || '';
     
     let list = dataCache.transactions.map(t => {
         const eqInfo = t.type === 'radio' 
@@ -522,6 +536,12 @@ function renderTransactions() {
 
     if (statusFilter === 'en-uso') list = list.filter(t => !t.dateIn);
     if (statusFilter === 'devuelto') list = list.filter(t => t.dateIn);
+
+    if (dateFilter) {
+        const [year, month, day] = dateFilter.split('-');
+        const filterStr = new Date(year, month - 1, day).toLocaleDateString();
+        list = list.filter(t => new Date(t.dateOut).toLocaleDateString() === filterStr);
+    }
 
     list = getFilteredAndSorted('transactions', list, ['dateOutFormatted', 'dateInFormatted', 'type', 'eqInfo', 'collab', 'officerOut', 'officerIn']);
     
@@ -863,6 +883,7 @@ function renderMemberAccess() {
     tbody.innerHTML = '';
     
     const statusFilter = document.getElementById('status-member-access')?.value || '';
+    const dateFilter = document.getElementById('filter-date-member-access')?.value || '';
     
     let list = dataCache.member_access || [];
     list = list.map(a => ({
@@ -873,6 +894,12 @@ function renderMemberAccess() {
 
     if (statusFilter === 'dentro') list = list.filter(a => !a.dateOut);
     if (statusFilter === 'salio') list = list.filter(a => a.dateOut);
+
+    if (dateFilter) {
+        const [year, month, day] = dateFilter.split('-');
+        const filterStr = new Date(year, month - 1, day).toLocaleDateString();
+        list = list.filter(a => new Date(a.dateIn).toLocaleDateString() === filterStr);
+    }
 
     list = getFilteredAndSorted('member_access', list, ['dateInFormatted', 'dateOutFormatted', 'memberNumber', 'memberName', 'observations', 'officerIn', 'officerOut']);
     
