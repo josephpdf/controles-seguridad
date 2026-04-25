@@ -17,7 +17,8 @@ let dataCache = {
     users: [], 
     transactions: [], 
     areas: [], 
-    member_access: [] 
+    member_access: [],
+    logs: []
 };
 
 // Estado actual del ordenamiento para cada tabla (campo por el cual se ordena y dirección)
@@ -28,7 +29,8 @@ let sortState = {
     collaborators: { field: 'name', dir: 'asc' },
     users: { field: 'name', dir: 'asc' },
     areas: { field: 'name', dir: 'asc' },
-    member_access: { field: 'dateIn', dir: 'desc' }
+    member_access: { field: 'dateIn', dir: 'desc' },
+    logs: { field: 'time', dir: 'desc' }
 };
 
 /**
@@ -56,6 +58,7 @@ function toggleSort(endpoint, field) {
     else if(endpoint === 'users') renderUsers();
     else if(endpoint === 'transactions') renderTransactions();
     else if(endpoint === 'member_access') renderMemberAccess();
+    else if(endpoint === 'logs') renderLogs();
 }
 
 /**
@@ -203,4 +206,26 @@ async function deleteItem(endpoint, id) {
     
     // Recargar datos tras eliminación
     await loadAllData();
+}
+
+/**
+ * Función específica para obtener los logs de una fecha y renderizarlos
+ */
+async function fetchAndRenderLogs() {
+    const dateInput = document.getElementById('log-date')?.value;
+    if (!dateInput) return;
+    
+    try {
+        const res = await fetch(`/api/logs?date=${dateInput}`);
+        if (res.ok) {
+            dataCache.logs = await res.json();
+            if (typeof renderLogs === 'function') renderLogs();
+        } else {
+            console.error('Error fetching logs');
+            dataCache.logs = [];
+            if (typeof renderLogs === 'function') renderLogs();
+        }
+    } catch (e) {
+        console.error('Error fetching logs:', e);
+    }
 }

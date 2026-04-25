@@ -378,3 +378,36 @@ function renderMemberAccess() {
         tbody.appendChild(tr);
     });
 }
+
+/**
+ * Renderiza la tabla de Auditoría (Logs) de manera visual para el superadministrador.
+ */
+function renderLogs() {
+    const tbody = document.querySelector('#logsTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    
+    // Filtro y ordenamiento
+    let list = getFilteredAndSorted('logs', dataCache.logs || [], ['user', 'action', 'resource', 'details']);
+    
+    if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No hay registros de auditoría para la fecha seleccionada.</td></tr>';
+        return;
+    }
+    
+    list.forEach(log => {
+        let badgeClass = 'disponible'; // Color verde por defecto
+        if (log.action === 'Eliminar') badgeClass = 'no-disponible'; // Rojo para eliminación
+        if (log.action === 'Crear/Editar') badgeClass = 'en-uso'; // Naranja/Amarillo
+        
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${log.time}</td>
+            <td><strong>${log.user}</strong></td>
+            <td><span class="badge ${badgeClass}">${log.action}</span></td>
+            <td>${log.resource}</td>
+            <td style="font-size: 0.9em; color: var(--text-muted);">${log.details}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}

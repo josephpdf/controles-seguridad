@@ -51,6 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('navUsers').style.display = 'block';
     }
     
+    // Solo superadmin puede ver la pestaña de Auditoría
+    if (currentUser.role === 'superadmin') {
+        document.getElementById('navLogs').style.display = 'block';
+    }
+    
     // Restringir que los admins no puedan crear nuevos superadmins
     if (currentUser.role !== 'superadmin') {
         const roleSelect = document.getElementById('userRole');
@@ -147,9 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(overlay) overlay.classList.remove('active');
             }
             
-            // Lógica específica al abrir "Reportes"
-            if (section === 'reports') {
-                const dateInput = document.getElementById('report-date');
+            // Lógica específica al abrir "Reportes" o "Auditoría"
+            if (section === 'reports' || section === 'logs') {
+                const dateInput = document.getElementById(section === 'reports' ? 'report-date' : 'log-date');
                 if (!dateInput.value) {
                     const today = new Date();
                     const yyyy = today.getFullYear();
@@ -157,7 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dd = String(today.getDate()).padStart(2, '0');
                     dateInput.value = `${yyyy}-${mm}-${dd}`;
                 }
-                renderReports();
+                
+                if (section === 'reports') {
+                    renderReports();
+                } else if (section === 'logs') {
+                    if (typeof fetchAndRenderLogs === 'function') {
+                        fetchAndRenderLogs();
+                    }
+                }
             }
         });
     });

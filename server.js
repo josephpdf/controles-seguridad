@@ -206,6 +206,76 @@ const server = http.createServer((req, res) => {
                 }
             };
 
+            // --- ENDPOINT DE AUDITORÍA (LOGS) ---
+            if (req.method === 'GET' && req.url.startsWith('/api/logs')) {
+                try {
+                    const urlObj = new URL(req.url, `http://${req.headers.host}`);
+                    const dateParam = urlObj.searchParams.get('date');
+                    
+                    if (!dateParam) {
+                        res.writeHead(400);
+                        res.end(JSON.stringify({ error: 'Se requiere el parámetro date (YYYY-MM-DD)' }));
+                        return;
+                    }
+                    
+                    const logFileName = `log_${dateParam}.txt`;
+                    const filePath = path.join(LOGS_DIR, logFileName);
+                    let allLogs = [];
+                    
+                    if (fs.existsSync(filePath)) {
+                        const content = fs.readFileSync(filePath, 'utf8');
+                        const lines = content.split('\n');
+                        
+                        lines.forEach(line => {
+                            if (line.trim()) {
+                                let timeMatch = line.match(/^\[(.*?)\]/);
+                                let time = timeMatch ? timeMatch[1] : '';
+                                
+                                let userMatch = line.match(/Usuario '(.*?)'/);
+                                let user = userMatch ? userMatch[1] : 'Desconocido';
+                                
+                                let action = line.includes('realizó POST') ? 'Crear/Editar' : (line.includes('ELIMINÓ') ? 'Eliminar' : 'Otro');
+                                
+                                let resourceMatch = line.match(/en '(.*?)'\./) || line.match(/de '(.*?)'\./);
+                                let resource = resourceMatch ? resourceMatch[1] : '';
+                                
+                                let details = '';
+                                if (action === 'Crear/Editar') {
+                                    let dataMatch = line.split('Datos: ');
+                                    details = dataMatch.length > 1 ? dataMatch[1] : '';
+                                } else if (action === 'Eliminar') {
+                                    let idMatch = line.match(/registro ID (.*?) de/);
+                                    details = idMatch ? `ID: ${idMatch[1]}` : '';
+                                }
+                                
+                                allLogs.push({
+                                    date: dateParam,
+                                    time: time,
+                                    user: user,
+                                    action: action,
+                                    resource: resource,
+                                    details: details
+                                });
+                            }
+                        });
+                        
+                        // Ordenar del más reciente al más antiguo por hora
+                        allLogs.sort((a, b) => {
+                            let dtA = new Date(`${a.date}T${a.time}`);
+                            let dtB = new Date(`${b.date}T${b.time}`);
+                            return dtB - dtA;
+                        });
+                    }
+                    
+                    res.writeHead(200);
+                    res.end(JSON.stringify(allLogs));
+                } catch (err) {
+                    res.writeHead(500);
+                    res.end(JSON.stringify({ error: 'Error al leer logs' }));
+                }
+                return;
+            }
+
             // Enrutamiento a la función CRUD correspondiente según la URL
             if (req.url.startsWith('/api/users')) return handleCRUD('users', 'users.json');
             if (req.url.startsWith('/api/collaborators')) return handleCRUD('collaborators', 'collaborators.json');
