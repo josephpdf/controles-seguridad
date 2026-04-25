@@ -1,10 +1,20 @@
+/**
+ * app.js
+ * 
+ * Este es el archivo principal de la aplicación. Se encarga de inicializar
+ * el dashboard, configurar la interfaz según el rol y área del usuario,
+ * manejar la navegación del menú lateral y adjuntar eventos a los formularios.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. VERIFICACIÓN DE SESIÓN
     const userStr = localStorage.getItem('user');
     if (!userStr) {
         window.location.href = 'index.html';
         return;
     }
     
+    // 2. CONFIGURACIÓN DEL PERFIL EN LA INTERFAZ
     currentUser = JSON.parse(userStr);
     document.getElementById('userNameDisplay').textContent = currentUser.name;
     document.getElementById('userRoleDisplay').textContent = currentUser.role.toUpperCase();
@@ -18,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         areaDisplay.textContent = `Área: ${selectedArea}`;
     }
 
-    // Limitar fechas a máximo el día de hoy
+    // 3. RESTRICCIONES DE FECHAS EN FILTROS
+    // Limitar fechas a máximo el día de hoy para evitar transacciones en el futuro
     const todayStr = new Date().toISOString().split('T')[0];
     const dtTx = document.getElementById('filter-date-transactions');
     const dtMa = document.getElementById('filter-date-member-access');
@@ -31,14 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
         dtMa.value = todayStr;
     }
 
-    // Configurar permisos de navegación y formularios
+    // 4. CONFIGURAR PERMISOS BASADOS EN ROLES
     document.getElementById('navCollaborators').style.display = 'block'; // Todos pueden ver colaboradores
+    
+    // Solo admins y superadmins pueden ver las pestañas de Áreas y Usuarios
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
         document.getElementById('navAreas').style.display = 'block';
         document.getElementById('navUsers').style.display = 'block';
     }
     
-    // Restringir que los admins puedan crear superadmins
+    // Restringir que los admins no puedan crear nuevos superadmins
     if (currentUser.role !== 'superadmin') {
         const roleSelect = document.getElementById('userRole');
         if (roleSelect) {
@@ -47,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Ocultar botones de agregar para usuarios regulares
+    // Ocultar botones de "Agregar nuevo" para usuarios regulares (oficiales)
     if (currentUser.role === 'user') {
         const btnNewRadio = document.getElementById('btn-new-radio');
         const btnNewKey = document.getElementById('btn-new-key');
@@ -56,21 +69,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnNewKey) btnNewKey.style.display = 'none';
         if (btnNewCollab) btnNewCollab.style.display = 'none';
 
-        // LÓGICA DE ÁREAS PARA OFICIALES
+        // LÓGICA ESPECÍFICA SEGÚN EL ÁREA DE TRABAJO (Parqueo vs Hectárea)
         const reportSelector = document.getElementById('report-type-selector');
         
         if (selectedArea === 'Parqueo') {
+            // El Parqueo solo maneja Radios y Llaves, no acceso de socios
             const memAccLi = document.querySelector('.nav-menu li[data-section="member-access"]');
             if(memAccLi) memAccLi.style.display = 'none';
             
             if (reportSelector) {
                 reportSelector.value = 'equipos';
-                reportSelector.style.display = 'none';
+                reportSelector.style.display = 'none'; // Forzar reporte de equipos
                 currentReportTab = 'equipos';
                 document.getElementById('report-socios-wrapper').style.display = 'none';
                 document.getElementById('report-equipos-wrapper').style.display = 'block';
             }
         } else if (selectedArea === 'Hectárea') {
+            // La Hectárea solo maneja Ingreso de Socios
             const transLi = document.querySelector('.nav-menu li[data-section="transactions"]');
             const radLi = document.querySelector('.nav-menu li[data-section="radios"]');
             const keyLi = document.querySelector('.nav-menu li[data-section="keys"]');
@@ -83,12 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (reportSelector) {
                 reportSelector.value = 'socios';
-                reportSelector.style.display = 'none';
+                reportSelector.style.display = 'none'; // Forzar reporte de socios
                 currentReportTab = 'socios';
                 document.getElementById('report-socios-wrapper').style.display = 'block';
                 document.getElementById('report-equipos-wrapper').style.display = 'none';
             }
             
+            // Redirigir a la pestaña correcta por defecto
             setTimeout(() => {
                 const memAccBtn = document.querySelector('.nav-menu li[data-section="member-access"]');
                 if(memAccBtn) memAccBtn.click();
@@ -96,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Eventos de navegación
+    // 5. MANEJO DE EVENTOS DE NAVEGACIÓN (Menú lateral y responsive)
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.getElementById('sidebar-overlay');
@@ -113,20 +129,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Eventos de clic para los items del menú de navegación
     document.querySelectorAll('.nav-menu li').forEach(item => {
         item.addEventListener('click', (e) => {
+            // Actualizar estilo activo en el menú
             document.querySelectorAll('.nav-menu li').forEach(i => i.classList.remove('active'));
             e.target.classList.add('active');
             
+            // Ocultar todas las secciones y mostrar la seleccionada
             const section = e.target.getAttribute('data-section');
             document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
             document.getElementById(`sec-${section}`).style.display = 'block';
 
+            // Cerrar menú en móviles
             if (sidebar && sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active');
                 if(overlay) overlay.classList.remove('active');
             }
             
+            // Lógica específica al abrir "Reportes"
             if (section === 'reports') {
                 const dateInput = document.getElementById('report-date');
                 if (!dateInput.value) {
@@ -141,10 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Cargar datos iniciales
+    // 6. CARGAR DATOS INICIALES DESDE EL BACKEND
     loadAllData();
 
-    // Eventos de formularios
+    // 7. CONFIGURACIÓN DE ENVÍO DE FORMULARIOS (Configuración Dinámica)
+    // Se define un arreglo con la configuración de cada formulario para mapear los campos a JSON
     const forms = [
         { id: 'transactionForm', endpoint: 'transactions', modal: 'transactionModal', customSubmit: handleTransactionSubmit },
         { id: 'editTransactionForm', endpoint: 'transactions', modal: 'editTransactionModal', fields: ['editTransDateOut', 'editTransDateIn'], map: f => ({ dateOut: new Date(f[0]).toISOString(), dateIn: f[1] ? new Date(f[1]).toISOString() : null }) },
@@ -157,18 +179,27 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'editMemberAccessForm', endpoint: 'member_access', modal: 'editMemberAccessModal', fields: ['editAccessDateIn', 'editAccessDateOut'], map: f => ({ dateIn: new Date(f[0]).toISOString(), dateOut: f[1] ? new Date(f[1]).toISOString() : null }) }
     ];
 
+    // Asignar el event listener a cada formulario iterando sobre la configuración
     forms.forEach(f => {
         const formEl = document.getElementById(f.id);
         if (formEl) {
             formEl.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                
+                // Si existe un manejador personalizado (como transacciones), usarlo
                 if (f.customSubmit) {
                     await f.customSubmit(e);
                     return;
                 }
+                
+                // Obtener valores de los inputs definidos en 'fields'
                 const values = f.fields.map(fid => document.getElementById(fid).value);
+                // Mapear los valores a un objeto payload para el backend usando 'map'
                 const payload = f.map(values);
                 
+                // --- MANEJO DE IDs PARA EDICIÓN ---
+                // Si el formulario tiene un campo oculto con ID, significa que es una actualización (PUT/PATCH), 
+                // se añade el ID al payload.
                 if (f.id === 'userForm') {
                     const uid = document.getElementById('userId').value;
                     if (uid) payload.id = parseInt(uid);
@@ -198,16 +229,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (aid) payload.id = parseInt(aid);
                 }
 
+                // Enviar la petición de guardado/actualización al backend
                 await fetch(`/api/${f.endpoint}`, {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'X-User': currentUser.username
+                        'X-User': currentUser.username // Enviado para los logs de auditoría
                     },
                     body: JSON.stringify(payload)
                 });
                 
+                // Limpiar formulario y cerrar modal
                 formEl.reset();
+                
+                // Resetear campos ocultos de IDs y títulos a su estado por defecto
                 if (f.id === 'userForm') {
                     document.getElementById('userId').value = '';
                     document.getElementById('userModalTitle').textContent = 'Nuevo Usuario Oficial';
@@ -235,7 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (f.id === 'editMemberAccessForm') {
                     document.getElementById('editAccessId').value = '';
                 }
+                
                 closeModal(f.modal);
+                // Recargar todos los datos para refrescar las tablas
                 await loadAllData();
             });
         }

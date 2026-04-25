@@ -1,17 +1,24 @@
+/* ==========================================================================
+   VARIABLES GLOBALES (Design Tokens)
+   Definen los colores y estilos base de toda la aplicación para mantener consistencia.
+   ========================================================================== */
 :root {
-    --primary: #F07E26; /* Naranja Indoor Club */
-    --primary-dark: #D66C1E;
-    --secondary: #E3E829; /* Amarillo */
-    --accent: #1EB42F; /* Verde */
-    --bg-color: #F8F9FA;
-    --card-bg: #FFFFFF;
-    --text-main: #2C3E50;
-    --text-muted: #7F8C8D;
-    --border-color: #E0E6ED;
-    --error: #E74C3C;
-    --success: #2ECC71;
+    --primary: #F07E26; /* Naranja corporativo Indoor Club */
+    --primary-dark: #D66C1E; /* Variante oscura para efectos hover */
+    --secondary: #E3E829; /* Amarillo secundario */
+    --accent: #1EB42F; /* Verde para acentos */
+    --bg-color: #F8F9FA; /* Fondo principal de la app */
+    --card-bg: #FFFFFF; /* Fondo de contenedores y tarjetas */
+    --text-main: #2C3E50; /* Texto principal oscuro */
+    --text-muted: #7F8C8D; /* Texto secundario gris */
+    --border-color: #E0E6ED; /* Color de bordes y líneas divisorias */
+    --error: #E74C3C; /* Rojo para errores o alertas */
+    --success: #2ECC71; /* Verde claro para éxitos o estados "disponible" */
 }
 
+/* ==========================================================================
+   RESETEOS BÁSICOS
+   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -27,7 +34,10 @@ body {
     min-height: 100vh;
 }
 
-/* Login Styles */
+/* ==========================================================================
+   ESTILOS DE LA PÁGINA DE LOGIN (index.html)
+   ========================================================================== */
+/* Contenedor principal centrado */
 .login-container {
     display: flex;
     justify-content: center;
@@ -125,12 +135,16 @@ body {
     display: none;
 }
 
-/* Dashboard Styles */
+/* ==========================================================================
+   ESTILOS DEL DASHBOARD PRINCIPAL (dashboard.html)
+   ========================================================================== */
+/* Contenedor que abarca pantalla completa (Sidebar + Main) */
 .dashboard-layout {
     display: flex;
     height: 100vh;
 }
 
+/* Menú lateral izquierdo */
 .sidebar {
     width: 260px;
     background-color: white;
@@ -237,7 +251,9 @@ body {
     border-color: var(--primary);
 }
 
-/* Tables */
+/* ==========================================================================
+   TABLAS Y LISTADOS DE DATOS
+   ========================================================================== */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -261,7 +277,9 @@ tr:hover {
     background-color: #fcfcfc;
 }
 
-/* Badges */
+/* ==========================================================================
+   BADGES (Etiquetas de estado)
+   ========================================================================== */
 .badge {
     padding: 0.25rem 0.5rem;
     border-radius: 20px;
@@ -272,7 +290,9 @@ tr:hover {
 .badge.disponible { background-color: rgba(46, 204, 113, 0.2); color: #27ae60; }
 .badge.en-uso { background-color: rgba(240, 126, 38, 0.2); color: #d35400; }
 
-/* Modals */
+/* ==========================================================================
+   MODALES (Ventanas emergentes)
+   ========================================================================== */
 .modal {
     display: none;
     position: fixed;
@@ -344,7 +364,9 @@ tr:hover {
     display: flex; gap: 0.5rem;
 }
 
-/* RESPONSIVE DESIGN */
+/* ==========================================================================
+   DISEÑO ADAPTABLE (Responsive Design - Mobile First Media Queries)
+   ========================================================================== */
 .mobile-header {
     display: none;
     background-color: var(--card-bg);
@@ -435,7 +457,9 @@ tr:hover {
     }
 }
 
-/* Clases de Utilidad y Refactorización del HTML */
+/* ==========================================================================
+   CLASES DE UTILIDAD Y REFACTORIZACIÓN
+   ========================================================================== */
 .sidebar-logo {
     max-width: 80%;
     height: auto;

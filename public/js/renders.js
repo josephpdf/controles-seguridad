@@ -1,4 +1,16 @@
-// ---- RENDERIZADOS ----
+/**
+ * renders.js
+ * 
+ * Este archivo contiene todas las funciones encargadas de dibujar (renderizar)
+ * la interfaz de usuario. Principalmente lee de la caché de datos (dataCache)
+ * y genera las filas de las tablas HTML dinámicamente.
+ */
+
+/**
+ * Función principal que llama a todas las funciones de renderizado individuales
+ * para actualizar toda la vista al mismo tiempo. Se usa después de la carga inicial
+ * o después de crear/editar un registro.
+ */
 function renderAll() {
     renderTransactions();
     renderMemberAccess();
@@ -6,13 +18,21 @@ function renderAll() {
     renderRadios();
     renderKeys();
     renderCollaborators();
+    
+    // Solo renderizar Usuarios y Áreas si el usuario actual tiene permisos
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
         renderUsers();
         renderAreas();
     }
+    
+    // Llenar los selectores desplegables (dropdowns) en los modales
     populateAreaSelects();
 }
 
+/**
+ * Renderiza la tabla de Transacciones (Préstamos y Devoluciones).
+ * Aplica filtros por estado (En uso / Devuelto) y por fecha antes de dibujar.
+ */
 function renderTransactions() {
     const tbody = document.querySelector('#transactionsTable tbody');
     if(!tbody) return;
@@ -68,6 +88,10 @@ function renderTransactions() {
     });
 }
 
+/**
+ * Renderiza la tabla del inventario de Radios.
+ * Calcula el estado en tiempo real (Disponible, En uso temporal o Asignado fijo).
+ */
 function renderRadios() {
     const tbody = document.querySelector('#radiosTable tbody');
     if(!tbody) return;
@@ -248,6 +272,10 @@ function renderAreas() {
     });
 }
 
+/**
+ * Llena todos los `<select>` (listas desplegables) de la aplicación 
+ * con las Áreas y Colaboradores registrados.
+ */
 function populateAreaSelects() {
     if (!Array.isArray(dataCache.areas)) return;
     const options = dataCache.areas.map(a => `<option value="${a.name}">${a.name}</option>`).join('');

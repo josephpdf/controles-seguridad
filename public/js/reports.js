@@ -1,8 +1,24 @@
-// ---- LOGICA REPORTES ----
+/**
+ * reports.js
+ * 
+ * Este archivo gestiona la sección de reportes:
+ * - Cambio entre pestañas (Socios vs Equipos)
+ * - Cálculo de métricas agregadas por día
+ * - Renderizado de tablas de reportes
+ * - Exportación de datos a PDF y Excel
+ */
+
+// Referencias a las instancias de los gráficos para poder actualizarlos
 let reportsChartInstance = null;
 let equipmentReportsChartInstance = null;
+
+// Controla qué pestaña de reporte está activa actualmente
 let currentReportTab = 'socios';
 
+/**
+ * Alterna la vista entre el reporte de Socios y el de Equipos,
+ * mostrando/ocultando los contenedores correspondientes y recargando los datos.
+ */
 function switchReportTab() {
     currentReportTab = document.getElementById('report-type-selector').value;
     
@@ -17,6 +33,11 @@ function switchReportTab() {
     renderReports();
 }
 
+/**
+ * Renderiza el reporte de Accesos de Socios para una fecha específica.
+ * Calcula totales, identifica "picos" por hora para el gráfico de barras
+ * y dibuja la tabla detallada. Si la pestaña activa es Equipos, delega el renderizado.
+ */
 function renderReports() {
     if (currentReportTab === 'equipos') {
         renderEquipmentReports();
@@ -121,6 +142,11 @@ function renderReports() {
     });
 }
 
+/**
+ * Renderiza el reporte de Préstamos de Equipos para una fecha específica.
+ * Calcula totales prestados, equipos no devueltos, el colaborador con más préstamos,
+ * y grafica los picos de uso por hora.
+ */
 function renderEquipmentReports() {
     const dateInput = document.getElementById('report-date')?.value;
     if (!dateInput) return;
@@ -228,6 +254,11 @@ function renderEquipmentReports() {
     });
 }
 
+/**
+ * Exporta el reporte visible actual (Socios o Equipos) a un archivo PDF.
+ * Utiliza jsPDF y jsPDF-AutoTable para crear el documento con encabezados,
+ * métricas principales y la tabla de datos renderizada.
+ */
 function exportReportsPDF() {
     const dateInput = document.getElementById('report-date')?.value;
     if (!dateInput) return alert('Seleccione una fecha primero.');
@@ -305,6 +336,11 @@ function exportReportsPDF() {
     }
 }
 
+/**
+ * Exporta el reporte visible actual (Socios o Equipos) a un archivo de Excel (.xlsx).
+ * Utiliza la librería SheetJS (XLSX). Incrusta las métricas calculadas arriba
+ * y luego exporta la tabla HTML tal cual se está mostrando.
+ */
 function exportReportsExcel() {
     const dateInput = document.getElementById('report-date')?.value;
     if (!dateInput) return alert('Seleccione una fecha primero.');

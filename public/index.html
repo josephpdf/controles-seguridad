@@ -5,28 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indoor Club - Control de Inventario</title>
+    
+    <!-- Enlace a la hoja de estilos principal -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Importación de fuentes tipográficas desde Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Contenedor principal que centra el formulario de inicio de sesión -->
     <div class="login-container">
+        
+        <!-- Tarjeta blanca o de fondo oscuro que contiene el formulario -->
         <div class="login-card">
+            
+            <!-- Sección del logotipo -->
             <div class="logo-container">
                 <img src="img/indoor-club-dark.png" alt="San José Indoor Club"
                     style="max-width: 300px; height: auto; display: block; margin: 0 auto;">
             </div>
+            
+            <!-- Títulos descriptivos -->
             <h1>Control de Inventario</h1>
             <p>Radios y Llaves de Cerrajería</p>
+            
+            <!-- Formulario de Autenticación -->
             <form id="loginForm">
+                
+                <!-- Campo: Nombre de Usuario -->
                 <div class="input-group">
                     <label for="username">Usuario</label>
                     <input type="text" id="username" required placeholder="Ingrese su usuario">
                 </div>
+                
+                <!-- Campo: Contraseña -->
                 <div class="input-group">
                     <label for="password">Contraseña</label>
                     <input type="password" id="password" required placeholder="Ingrese su contraseña">
                 </div>
+                
+                <!-- Campo: Área de Trabajo (Seleccionada al iniciar sesión para registrar contexto) -->
                 <div class="input-group">
                     <label for="login-area">Área de Trabajo</label>
                     <select id="login-area" class="input-field" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: var(--card-bg); font-size: 1rem; color: var(--text-color);">
@@ -34,11 +53,17 @@
                         <option value="Hectárea">Hectárea</option>
                     </select>
                 </div>
+                
+                <!-- Contenedor para mostrar mensajes de error de autenticación (oculto por defecto) -->
                 <div id="loginError" class="error-msg" style="display: none;">Credenciales inválidas</div>
+                
+                <!-- Botón de envío del formulario -->
                 <button type="submit" class="btn-primary">Ingresar</button>
             </form>
         </div>
     </div>
+
+    <!-- Carga del script de autenticación que manejará el evento submit del formulario -->
     <script src="js/auth.js"></script>
 </body>
 

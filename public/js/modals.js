@@ -1,4 +1,17 @@
-// ---- UTILS & MODALS ----
+/**
+ * modals.js
+ * 
+ * Este archivo gestiona el comportamiento de las ventanas modales de la aplicación,
+ * incluyendo su apertura, cierre, formateo de fechas y preparación de formularios
+ * para la creación o edición de registros (CRUD).
+ */
+
+/**
+ * Formatea una fecha en formato ISO para que pueda ser asignada al valor
+ * de un input de tipo datetime-local en los formularios HTML.
+ * @param {string} isoString - Fecha en formato ISO 8601 (ej. "2023-10-25T10:30:00.000Z")
+ * @returns {string} - Fecha formateada (ej. "2023-10-25T06:30")
+ */
 function formatForDateTimeLocal(isoString) {
     if (!isoString) return '';
     const d = new Date(isoString);
@@ -6,8 +19,18 @@ function formatForDateTimeLocal(isoString) {
     return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+/**
+ * Abre una ventana modal por su ID.
+ * También realiza ajustes específicos a los títulos y campos requeridos
+ * si se está abriendo en modo "Creación" (cuando los campos ocultos de ID están vacíos).
+ * @param {string} id - El ID del elemento modal en el DOM (ej. 'transactionModal')
+ */
 function openModal(id) { 
     document.getElementById(id).classList.add('active'); 
+    
+    // Ajustes dinámicos según el tipo de modal:
+    // Si se está creando un nuevo registro (el ID oculto está vacío),
+    // se restauran los títulos y los requisitos de los campos (ej. la contraseña es obligatoria).
     if (id === 'userModal') {
         const uid = document.getElementById('userId').value;
         if (!uid) {
@@ -41,8 +64,15 @@ function openModal(id) {
     }
 }
 
+/**
+ * Cierra una ventana modal por su ID y resetea su formulario asociado 
+ * para limpiar cualquier dato previo (evitando estados inconsistentes).
+ * @param {string} id - El ID del modal a cerrar
+ */
 function closeModal(id) { 
     document.getElementById(id).classList.remove('active'); 
+    
+    // Limpieza de formularios y campos ocultos
     if (id === 'userModal') {
         document.getElementById('userForm').reset();
         document.getElementById('userId').value = '';
@@ -65,6 +95,14 @@ function closeModal(id) {
     }
 }
 
+// ==============================================================
+// FUNCIONES DE PREPARACIÓN DE EDICIÓN (Llenado de Formularios)
+// ==============================================================
+
+/**
+ * Prepara el modal para editar los tiempos de una transacción existente.
+ * @param {number} id - ID de la transacción a editar
+ */
 function editTransaction(id) {
     const t = dataCache.transactions.find(x => x.id === id);
     if (!t) return;
@@ -74,6 +112,10 @@ function editTransaction(id) {
     openModal('editTransactionModal');
 }
 
+/**
+ * Prepara el modal para editar los tiempos de acceso de un socio.
+ * @param {number} id - ID del registro de acceso
+ */
 function editMemberAccess(id) {
     const a = dataCache.member_access.find(x => x.id === id);
     if (!a) return;
@@ -83,6 +125,11 @@ function editMemberAccess(id) {
     openModal('editMemberAccessModal');
 }
 
+/**
+ * Prepara el modal para editar la información de un Usuario.
+ * Nota: La contraseña no se carga por seguridad y se vuelve opcional.
+ * @param {number} id - ID del usuario
+ */
 function editUser(id) {
     const user = dataCache.users.find(u => u.id === id);
     if (!user) return;
@@ -90,12 +137,19 @@ function editUser(id) {
     document.getElementById('userName').value = user.name;
     document.getElementById('userUsername').value = user.username;
     document.getElementById('userRole').value = user.role;
+    
+    // Configuración específica de contraseña
     document.getElementById('userPassword').value = '';
-    document.getElementById('userPassword').removeAttribute('required');
+    document.getElementById('userPassword').removeAttribute('required'); // Al editar no es obligatorio
     document.getElementById('userModalTitle').textContent = 'Editar Usuario';
+    
     openModal('userModal');
 }
 
+/**
+ * Prepara el modal para editar un Área.
+ * @param {number} id - ID del área
+ */
 function editArea(id) {
     const area = dataCache.areas.find(a => a.id === id);
     if (!area) return;
@@ -105,6 +159,10 @@ function editArea(id) {
     openModal('areaModal');
 }
 
+/**
+ * Prepara el modal para editar un Colaborador.
+ * @param {number} id - ID del colaborador
+ */
 function editCollaborator(id) {
     const collab = dataCache.collaborators.find(c => c.id === id);
     if (!collab) return;
@@ -115,6 +173,10 @@ function editCollaborator(id) {
     openModal('collaboratorModal');
 }
 
+/**
+ * Prepara el modal para editar la información de un Radio.
+ * @param {number} id - ID del radio
+ */
 function editRadio(id) {
     const radio = dataCache.radios.find(r => r.id === id);
     if (!radio) return;
@@ -128,6 +190,10 @@ function editRadio(id) {
     openModal('radioModal');
 }
 
+/**
+ * Prepara el modal para editar la información de una Llave.
+ * @param {number} id - ID de la llave
+ */
 function editKey(id) {
     const key = dataCache.keys.find(k => k.id === id);
     if (!key) return;

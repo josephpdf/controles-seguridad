@@ -5,21 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Indoor Club</title>
+    <!-- Hoja de estilos principal -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- Fuente tipográfica Inter de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Librerías Externas -->
+    <!-- Chart.js para renderizar los gráficos del dashboard -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jsPDF para exportar reportes a formato PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- jsPDF AutoTable para generar tablas dentro de los PDFs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <!-- XLSX.js para exportar reportes a formato Excel (.xlsx) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 
 <body>
+    <!-- Encabezado visible solo en dispositivos móviles (hamburguesa) -->
     <div class="mobile-header">
         <img src="img/indoor-club-dark.png" alt="San José Indoor Club">
         <button id="menu-toggle" class="btn-menu">☰</button>
     </div>
+    
+    <!-- Overlay oscuro para cuando el menú lateral está abierto en móviles -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    
+    <!-- Contenedor principal flex: Menú lateral + Contenido -->
     <div class="dashboard-layout">
+        
+        <!-- BARRA LATERAL (Navegación) -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <img src="img/indoor-club-dark.png" alt="San José Indoor Club" class="sidebar-logo">
@@ -55,6 +70,8 @@
             </div>
         </aside>
 
+        <!-- CONTENIDO PRINCIPAL -->
+        <!-- Las secciones se ocultan o muestran dinámicamente mediante JS (style="display: none;") -->
         <main class="main-content">
             <!-- SECCION: DASHBOARD GRAFICO -->
             <section id="sec-dashboard" class="content-section" style="display: none;">
@@ -464,8 +481,11 @@
         </main>
     </div>
 
-    <!-- Modals -->
-    <!-- Modal Transaccion -->
+    <!-- ============================================== -->
+    <!-- MODALES: Ventanas emergentes para Formularios CRUD -->
+    <!-- ============================================== -->
+    
+    <!-- Modal Transaccion (Prestar Equipo) -->
     <div id="transactionModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -720,15 +740,17 @@
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/auth.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/renders.js"></script>
-    <script src="js/modals.js"></script>
-    <script src="js/logic.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/reports.js"></script>
-    <script src="js/app.js"></script>
+    <!-- ============================================== -->
+    <!-- SCRIPTS DE LA APLICACIÓN (Arquitectura Modular) -->
+    <!-- ============================================== -->
+    <script src="js/auth.js"></script>     <!-- Lógica de Sesión y Protección de Rutas -->
+    <script src="js/api.js"></script>      <!-- Funciones para peticiones fetch al Backend -->
+    <script src="js/renders.js"></script>  <!-- Funciones para dibujar tablas y pintar el DOM -->
+    <script src="js/modals.js"></script>   <!-- Lógica para abrir/cerrar modales y llenado dinámico -->
+    <script src="js/logic.js"></script>    <!-- Lógica de negocio (guardar, eliminar, procesar forms) -->
+    <script src="js/charts.js"></script>   <!-- Inicialización de Chart.js y gráficos -->
+    <script src="js/reports.js"></script>  <!-- Cálculos de reportes y exportación PDF/Excel -->
+    <script src="js/app.js"></script>      <!-- Inicialización general, menú y eventos principales -->
 </body>
 
 </html>
