@@ -83,6 +83,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Eventos de navegación
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (menuToggle && sidebar && overlay) {
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    }
+
     document.querySelectorAll('.nav-menu li').forEach(item => {
         item.addEventListener('click', (e) => {
             document.querySelectorAll('.nav-menu li').forEach(i => i.classList.remove('active'));
@@ -91,6 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const section = e.target.getAttribute('data-section');
             document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
             document.getElementById(`sec-${section}`).style.display = 'block';
+
+            if (sidebar && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                if(overlay) overlay.classList.remove('active');
+            }
             
             if (section === 'reports') {
                 const dateInput = document.getElementById('report-date');

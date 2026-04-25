@@ -1,0 +1,2 @@
+[09:57:41] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"01","colaborador":"1776813005679","detalle":"Puerta Contabilidad","id":1690000000001}
+[09:58:10] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"01","colaborador":"","detalle":"Puerta Contabilidad","id":1690000000001}

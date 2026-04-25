@@ -14,6 +14,11 @@
 </head>
 
 <body>
+    <div class="mobile-header">
+        <img src="img/indoor-club-dark.png" alt="San José Indoor Club">
+        <button id="menu-toggle" class="btn-menu">☰</button>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -88,7 +93,8 @@
                     </div>
                 </div>
                 <div class="card">
-                    <table id="transactionsTable">
+                    <div class="table-responsive">
+<table id="transactionsTable">
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('transactions', 'dateOut')" style="cursor:pointer">Fecha/Hora
@@ -114,6 +120,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+</div>
                 </div>
             </section>
 
@@ -135,7 +142,8 @@
                     </div>
                 </div>
                 <div class="card">
-                    <table id="radiosTable">
+                    <div class="table-responsive">
+<table id="radiosTable">
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('radios', 'numero')" style="cursor:pointer">Etiqueta /
@@ -153,6 +161,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+</div>
                 </div>
             </section>
 
@@ -174,7 +183,8 @@
                     </div>
                 </div>
                 <div class="card">
-                    <table id="keysTable">
+                    <div class="table-responsive">
+<table id="keysTable">
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('keys', 'numero')" style="cursor:pointer">Número/ID
@@ -190,6 +200,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+</div>
                 </div>
             </section>
 
@@ -211,7 +222,8 @@
                     </div>
                 </div>
                 <div class="card">
-                    <table id="memberAccessTable">
+                    <div class="table-responsive">
+<table id="memberAccessTable">
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('member_access', 'dateIn')" style="cursor:pointer">Ingreso
@@ -237,6 +249,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+</div>
                 </div>
             </section>
 
@@ -290,7 +303,8 @@
 
                     <div class="card">
                         <h3 style="margin-bottom: 15px;">Detalle de Ingresos</h3>
-                        <table id="reportsTable">
+                        <div class="table-responsive">
+<table id="reportsTable">
                             <thead>
                                 <tr>
                                     <th>Hora Ingreso</th>
@@ -303,6 +317,7 @@
                             </thead>
                             <tbody></tbody>
                         </table>
+</div>
                     </div>
                 </div>
 
@@ -336,7 +351,8 @@
 
                     <div class="card">
                         <h3 style="margin-bottom: 15px;">Detalle de Préstamos</h3>
-                        <table id="equipmentReportsTable">
+                        <div class="table-responsive">
+<table id="equipmentReportsTable">
                             <thead>
                                 <tr>
                                     <th>Hora Préstamo</th>
@@ -349,6 +365,7 @@
                             </thead>
                             <tbody></tbody>
                         </table>
+</div>
                     </div>
                 </div>
             </section>
@@ -365,7 +382,8 @@
                     </div>
                 </div>
                 <div class="card">
-                    <table id="collaboratorsTable">
+                    <div class="table-responsive">
+<table id="collaboratorsTable">
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('collaborators', 'name')" style="cursor:pointer">Nombre
@@ -379,6 +397,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+</div>
                 </div>
             </section>
 
@@ -394,7 +413,8 @@
                     </div>
                 </div>
                 <div class="card">
-                    <table id="areasTable">
+                    <div class="table-responsive">
+<table id="areasTable">
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('areas', 'name')" style="cursor:pointer">Nombre del Área
@@ -405,6 +425,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+</div>
                 </div>
             </section>
 
@@ -420,7 +441,8 @@
                     </div>
                 </div>
                 <div class="card">
-                    <table id="usersTable">
+                    <div class="table-responsive">
+<table id="usersTable">
                         <thead>
                             <tr>
                                 <th onclick="toggleSort('users', 'name')" style="cursor:pointer">Nombre <span></span>
@@ -434,6 +456,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+</div>
                 </div>
             </section>
         </main>
