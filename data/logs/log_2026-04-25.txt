@@ -5,3 +5,18 @@
 [10:13:27] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Daniela García","area":"Servicios Generales","id":1776794737160}
 [16:55:28] Usuario 'rpadilla' realizó POST en 'users'. Datos: {"id":1777133576145,"password":"472bbe83616e93d3c09a79103ae47d8f71e3d35a966d6e8b22f743218d04171d"}
 [16:55:57] Usuario 'rpadilla' realizó POST en 'users'. Datos: {"id":1777133576145,"password":"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"}
+[17:03:25] Usuario 'Super Administrador' realizó POST en 'transactions'. Datos: {"type":"llave","equipmentId":1690000000013,"collaboratorId":1,"officerOut":"Super Administrador","dateOut":"2026-04-25T23:03:25.465Z","dateIn":null,"officerIn":null,"id":1777158205471}
+[17:03:30] Usuario 'superadmin' realizó POST en 'transactions'. Datos: {"dateOut":"2026-04-25T23:03:00.000Z","dateIn":null,"id":1777158205471}
+[17:03:39] Usuario 'superadmin' realizó POST en 'transactions'. Datos: {"type":"llave","equipmentId":1690000000013,"collaboratorId":1,"officerOut":"Super Administrador","dateOut":"2026-04-25T23:03:00.000Z","dateIn":"2026-04-25T23:03:39.711Z","officerIn":"Super Administrador","id":1777158205471}
+[17:03:55] Usuario 'superadmin' realizó POST en 'transactions'. Datos: {"dateOut":"2026-04-25T23:03:00.000Z","dateIn":null,"id":1777158205471}
+[17:04:03] Usuario 'superadmin' realizó POST en 'transactions'. Datos: {"type":"llave","equipmentId":1690000000013,"collaboratorId":1,"officerOut":"Super Administrador","dateOut":"2026-04-25T23:03:00.000Z","dateIn":"2026-04-25T23:04:03.274Z","officerIn":"Super Administrador","id":1777158205471}
+[17:04:13] Usuario 'superadmin' ELIMINÓ registro ID 1776883084236 de '1776883084236'.
+[17:04:42] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"82","colaborador":"","detalle":"Juice Bar","id":1777158282347}
+[17:04:51] Usuario 'superadmin' ELIMINÓ registro ID 1777158282347 de '1777158282347'.
+[17:05:09] Usuario 'Super Administrador' realizó POST en 'member_access'. Datos: {"memberNumber":"144801","memberName":"aArturo Herrera","observations":"Prueba","officerIn":"Super Administrador","dateIn":"2026-04-25T23:05:09.685Z","dateOut":null,"officerOut":null,"id":1777158309688}
+[17:05:47] Usuario 'superadmin' realizó POST en 'member_access'. Datos: {"memberNumber":"144801","memberName":"Arturo Herrera","observations":"Prueba","officerIn":"Super Administrador","dateIn":"2026-04-25T23:05:09.685Z","dateOut":"2026-04-25T23:05:47.749Z","officerOut":"Super Administrador","id":1777158309688}
+[17:06:13] Usuario 'superadmin' realizó POST en 'transactions'. Datos: {"dateOut":"2026-04-25T23:03:00.000Z","dateIn":null,"id":1777158205471}
+[17:06:51] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Joseph Poveda","area":"Computo","id":1777158411651}
+[17:07:07] Usuario 'superadmin' ELIMINÓ registro ID 1777158411651 de '1777158411651'.
+[17:07:18] Usuario 'superadmin' ELIMINÓ registro ID 1776814393297 de '1776814393297'.
+[17:07:49] Usuario 'superadmin' realizó POST en 'users'. Datos: {"id":1,"password":"4b831937920dd65dc81480ab41914056f34a2f289871e028c67ca12dd6edc50c"}

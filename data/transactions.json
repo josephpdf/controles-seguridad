@@ -68,5 +68,15 @@
     "dateIn": null,
     "officerIn": null,
     "id": 1776902185111
+  },
+  {
+    "type": "llave",
+    "equipmentId": 1690000000013,
+    "collaboratorId": 1,
+    "officerOut": "Super Administrador",
+    "dateOut": "2026-04-25T23:03:00.000Z",
+    "dateIn": null,
+    "officerIn": "Super Administrador",
+    "id": 1777158205471
   }
 ]

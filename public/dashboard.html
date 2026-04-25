@@ -764,6 +764,37 @@
         </div>
     </div>
 
+    <!-- Modal Custom Alert -->
+    <div id="customAlertModal" class="modal" style="z-index: 9999;">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-header" style="justify-content: center; border-bottom: none;">
+                <h3 id="customAlertTitle">Aviso</h3>
+            </div>
+            <div style="margin: 20px 0;">
+                <p id="customAlertMessage" style="font-size: 1.1em;"></p>
+            </div>
+            <div class="action-btns" style="justify-content: center;">
+                <button type="button" class="btn-primary" onclick="closeModal('customAlertModal'); if(window.customAlertCallback) window.customAlertCallback();">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Custom Confirm -->
+    <div id="customConfirmModal" class="modal" style="z-index: 9999;">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-header" style="justify-content: center; border-bottom: none;">
+                <h3 id="customConfirmTitle">Confirmación</h3>
+            </div>
+            <div style="margin: 20px 0;">
+                <p id="customConfirmMessage" style="font-size: 1.1em;"></p>
+            </div>
+            <div class="action-btns" style="justify-content: center; gap: 15px;">
+                <button type="button" class="btn-secondary" onclick="closeModal('customConfirmModal'); if(window.customConfirmResolve) window.customConfirmResolve(false);">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="closeModal('customConfirmModal'); if(window.customConfirmResolve) window.customConfirmResolve(true);">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ============================================== -->
     <!-- SCRIPTS DE LA APLICACIÓN (Arquitectura Modular) -->
     <!-- ============================================== -->

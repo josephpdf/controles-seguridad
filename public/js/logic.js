@@ -65,7 +65,7 @@ function handleTransactionSubmit(e) {
     const collaboratorId = document.getElementById('transCollaborator').value;
     
     if (!type || !equipmentId || !collaboratorId) {
-        alert('Por favor complete todos los campos.');
+        showCustomAlert('Por favor complete todos los campos.');
         return;
     }
     
@@ -95,7 +95,7 @@ function handleTransactionSubmit(e) {
  * @param {number} transactionId - ID de la transacción a cerrar
  */
 async function receiveEquipment(transactionId) {
-    if (!confirm('¿Confirmar recepción del equipo?')) return;
+    if (!(await showCustomConfirm('¿Confirmar recepción del equipo?'))) return;
     
     const t = dataCache.transactions.find(x => x.id === transactionId);
     if (!t) return;
@@ -131,7 +131,7 @@ function handleMemberAccessSubmit(e) {
     const observations = document.getElementById('accessObservations').value;
     
     if (!memberNumber || !memberName) {
-        alert('Por favor complete el número y nombre del socio.');
+        showCustomAlert('Por favor complete el número y nombre del socio.');
         return;
     }
     
@@ -162,7 +162,7 @@ function handleMemberAccessSubmit(e) {
  * @param {number} id - ID del registro de acceso
  */
 async function registerMemberExit(id) {
-    if (!confirm('¿Confirmar salida del socio?')) return;
+    if (!(await showCustomConfirm('¿Confirmar salida del socio?'))) return;
     
     const a = dataCache.member_access.find(x => x.id === id);
     if (!a) return;
@@ -197,12 +197,12 @@ async function handlePasswordChange(e) {
     const confirmPassword = document.getElementById('confirmNewPassword').value;
     
     if (newPassword !== confirmPassword) {
-        alert('Las contraseñas no coinciden.');
+        showCustomAlert('Las contraseñas no coinciden.');
         return;
     }
 
     if (newPassword.length < 6) {
-        alert('La contraseña debe tener al menos 6 caracteres.');
+        showCustomAlert('La contraseña debe tener al menos 6 caracteres.');
         return;
     }
     
@@ -223,14 +223,14 @@ async function handlePasswordChange(e) {
         });
         
         if (response.ok) {
-            alert('Contraseña actualizada exitosamente.');
+            showCustomAlert('Contraseña actualizada exitosamente.');
             closeModal('passwordModal');
             document.getElementById('passwordForm').reset();
         } else {
-            alert('Error al actualizar la contraseña en el servidor.');
+            showCustomAlert('Error al actualizar la contraseña en el servidor.');
         }
     } catch (error) {
         console.error('Error al cambiar contraseña:', error);
-        alert('Hubo un error al cambiar la contraseña.');
+        showCustomAlert('Hubo un error al cambiar la contraseña.');
     }
 }

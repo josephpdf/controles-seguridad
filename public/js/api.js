@@ -194,7 +194,7 @@ async function fetchData(endpoint) {
  * @param {number|string} id - ID del registro a eliminar
  */
 async function deleteItem(endpoint, id) {
-    if (!confirm('¿Está seguro de eliminar este registro?')) return;
+    if (!(await showCustomConfirm('¿Está seguro de eliminar este registro?'))) return;
     
     await fetch(`/api/${endpoint}/${id}`, { 
         method: 'DELETE',

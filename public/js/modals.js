@@ -204,3 +204,31 @@ function editKey(id) {
     document.getElementById('keyModalTitle').textContent = 'Editar Llave';
     openModal('keyModal');
 }
+
+// ==============================================================
+// FUNCIONES DE ALERTAS Y CONFIRMACIONES PERSONALIZADAS
+// ==============================================================
+
+/**
+ * Muestra un modal de alerta personalizado.
+ * @param {string} message - Mensaje a mostrar
+ * @param {function} callback - Función opcional a ejecutar al cerrar la alerta
+ */
+function showCustomAlert(message, callback = null) {
+    document.getElementById('customAlertMessage').textContent = message;
+    window.customAlertCallback = callback;
+    openModal('customAlertModal');
+}
+
+/**
+ * Muestra un modal de confirmación personalizado y devuelve una Promesa.
+ * @param {string} message - Mensaje a mostrar en la confirmación
+ * @returns {Promise<boolean>} - Promesa que se resuelve con true o false
+ */
+function showCustomConfirm(message) {
+    return new Promise((resolve) => {
+        document.getElementById('customConfirmMessage').textContent = message;
+        window.customConfirmResolve = resolve;
+        openModal('customConfirmModal');
+    });
+}

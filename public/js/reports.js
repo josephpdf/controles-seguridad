@@ -261,7 +261,7 @@ function renderEquipmentReports() {
  */
 function exportReportsPDF() {
     const dateInput = document.getElementById('report-date')?.value;
-    if (!dateInput) return alert('Seleccione una fecha primero.');
+    if (!dateInput) return showCustomAlert('Seleccione una fecha primero.');
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -343,7 +343,7 @@ function exportReportsPDF() {
  */
 function exportReportsExcel() {
     const dateInput = document.getElementById('report-date')?.value;
-    if (!dateInput) return alert('Seleccione una fecha primero.');
+    if (!dateInput) return showCustomAlert('Seleccione una fecha primero.');
 
     let tableId = '';
     let title = '';
