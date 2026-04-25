@@ -57,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 reportSelector.value = 'equipos';
                 reportSelector.style.display = 'none';
                 currentReportTab = 'equipos';
+                document.getElementById('report-socios-wrapper').style.display = 'none';
+                document.getElementById('report-equipos-wrapper').style.display = 'block';
             }
         } else if (selectedArea === 'Hectárea') {
             const transLi = document.querySelector('.nav-menu li[data-section="transactions"]');
@@ -73,6 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 reportSelector.value = 'socios';
                 reportSelector.style.display = 'none';
                 currentReportTab = 'socios';
+                document.getElementById('report-socios-wrapper').style.display = 'block';
+                document.getElementById('report-equipos-wrapper').style.display = 'none';
             }
             
             setTimeout(() => {

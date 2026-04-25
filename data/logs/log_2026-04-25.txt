@@ -1,2 +1,5 @@
 [09:57:41] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"01","colaborador":"1776813005679","detalle":"Puerta Contabilidad","id":1690000000001}
 [09:58:10] Usuario 'superadmin' realizó POST en 'keys'. Datos: {"numero":"01","colaborador":"","detalle":"Puerta Contabilidad","id":1690000000001}
+[10:12:56] Usuario 'superadmin' realizó POST en 'users'. Datos: {"name":"Raúl Padilla","username":"rpadilla","password":"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92","role":"user","id":1777133576145}
+[10:13:14] Usuario 'superadmin' realizó POST en 'users'. Datos: {"name":"Super Administrador","username":"superadmin","password":"4b831937920dd65dc81480ab41914056f34a2f289871e028c67ca12dd6edc50c","role":"superadmin","id":1}
+[10:13:27] Usuario 'superadmin' realizó POST en 'collaborators'. Datos: {"name":"Daniela García","area":"Servicios Generales","id":1776794737160}
