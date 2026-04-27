@@ -250,14 +250,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Enviar la petición de guardado/actualización al backend
-                await fetch(`/api/${f.endpoint}`, {
+                const token = sessionStorage.getItem('token');
+                const res = await fetch(`/api/${f.endpoint}`, {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'X-User': currentUser.username // Enviado para los logs de auditoría
+                        'X-User': currentUser.username, // Enviado para los logs de auditoría
+                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(payload)
                 });
+                
+                if (res.status === 401) {
+                    alert('Sesión expirada. Por favor inicie sesión nuevamente.');
+                    logout();
+                    return;
+                }
                 
                 // Limpiar formulario y cerrar modal
                 formEl.reset();

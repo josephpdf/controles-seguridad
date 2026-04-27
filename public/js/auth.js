@@ -42,9 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.success) {
-                // Si el login es exitoso, guardar datos del usuario y área en sessionStorage
+                // Si el login es exitoso, guardar datos del usuario, área y token en sessionStorage
                 sessionStorage.setItem('user', JSON.stringify(data.user));
                 sessionStorage.setItem('selectedArea', area);
+                sessionStorage.setItem('token', data.token);
                 // Redirigir al dashboard
                 window.location.href = 'dashboard.html';
             } else {
@@ -68,5 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function logout() {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('selectedArea');
+    sessionStorage.removeItem('token');
     window.location.href = 'index.html';
 }

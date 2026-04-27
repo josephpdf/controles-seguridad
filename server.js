@@ -3,6 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
+// --- GESTOR DE SESIONES EN MEMORIA ---
+const activeSessions = new Map();
+
 // --- CONFIGURACIÓN PRINCIPAL ---
 // Puerto en el que el servidor escuchará las peticiones
 const PORT = 3000;
@@ -141,13 +144,53 @@ const server = http.createServer((req, res) => {
                 if (user) {
                     // Remover la contraseña del objeto retornado por seguridad
                     const { password: _, ...userWithoutPassword } = user;
+                    
+                    // Generar Token de Sesión seguro
+                    const token = crypto.randomBytes(32).toString('hex');
+                    const expires = Date.now() + 12 * 60 * 60 * 1000; // 12 horas de validez
+                    activeSessions.set(token, { user: userWithoutPassword, expires });
+                    
                     res.writeHead(200);
-                    res.end(JSON.stringify({ success: true, user: userWithoutPassword }));
+                    res.end(JSON.stringify({ success: true, user: userWithoutPassword, token }));
                 } else {
                     res.writeHead(401);
                     res.end(JSON.stringify({ success: false, message: 'Credenciales inválidas' }));
                 }
                 return;
+            }
+
+            // --- PROTECCIÓN DE API (MIDDLEWARE) ---
+            if (req.url !== '/api/login') {
+                const authHeader = req.headers['authorization'];
+                let token = null;
+                if (authHeader && authHeader.startsWith('Bearer ')) {
+                    token = authHeader.split(' ')[1];
+                }
+
+                if (!token || !activeSessions.has(token)) {
+                    res.writeHead(401);
+                    res.end(JSON.stringify({ error: 'No autorizado. Token inválido o ausente.' }));
+                    return;
+                }
+
+                const session = activeSessions.get(token);
+                if (Date.now() > session.expires) {
+                    activeSessions.delete(token);
+                    res.writeHead(401);
+                    res.end(JSON.stringify({ error: 'Sesión expirada. Vuelva a iniciar sesión.' }));
+                    return;
+                }
+                
+                // --- SEGURIDAD EXTRA DE ROLES ---
+                // Oficiales (user) no pueden borrar nada
+                if (req.method === 'DELETE' && session.user.role === 'user') {
+                    res.writeHead(403);
+                    res.end(JSON.stringify({ error: 'Prohibido. Solo administradores pueden eliminar registros.' }));
+                    return;
+                }
+                
+                // Actualizar x-user para la auditoría de forma segura usando la sesión validada
+                req.headers['x-user'] = session.user.username; 
             }
 
             // --- FUNCIÓN GENÉRICA DE CRUD (Create, Read, Update, Delete) ---

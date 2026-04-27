@@ -82,7 +82,11 @@ function handleTransactionSubmit(e) {
     
     fetch('/api/transactions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-User': currentUser.name },
+        headers: { 
+            'Content-Type': 'application/json', 
+            'X-User': currentUser.name,
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}` 
+        },
         body: JSON.stringify(payload)
     }).then(res => res.json()).then(data => {
         closeModal('transactionModal');
@@ -108,7 +112,8 @@ async function receiveEquipment(transactionId) {
         method: 'POST', // Nuestro backend maneja PUT dentro de POST si hay un ID
         headers: { 
             'Content-Type': 'application/json',
-            'X-User': currentUser.username
+            'X-User': currentUser.username,
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(t)
     });
@@ -148,7 +153,11 @@ function handleMemberAccessSubmit(e) {
     
     fetch('/api/member_access', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-User': currentUser.name },
+        headers: { 
+            'Content-Type': 'application/json', 
+            'X-User': currentUser.name,
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}` 
+        },
         body: JSON.stringify(payload)
     }).then(res => res.json()).then(data => {
         closeModal('memberAccessModal');
@@ -175,7 +184,8 @@ async function registerMemberExit(id) {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'X-User': currentUser.username
+            'X-User': currentUser.username,
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(a)
     });
@@ -217,7 +227,8 @@ async function handlePasswordChange(e) {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json', 
-                'X-User': currentUser.username 
+                'X-User': currentUser.username,
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}` 
             },
             body: JSON.stringify(payload)
         });

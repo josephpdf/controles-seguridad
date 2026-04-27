@@ -195,7 +195,18 @@ async function loadAllData() {
  */
 async function fetchData(endpoint) {
     try {
-        const res = await fetch(`/api/${endpoint}`);
+        const token = sessionStorage.getItem('token');
+        const res = await fetch(`/api/${endpoint}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (res.status === 401) {
+            sessionStorage.removeItem('user');
+            sessionStorage.removeItem('token');
+            window.location.href = 'index.html';
+            return;
+        }
+        
         dataCache[endpoint] = await res.json();
     } catch (e) {
         console.error(`Error loading ${endpoint}:`, e);
@@ -211,10 +222,19 @@ async function fetchData(endpoint) {
 async function deleteItem(endpoint, id) {
     if (!(await showCustomConfirm('¿Está seguro de eliminar este registro?'))) return;
     
-    await fetch(`/api/${endpoint}/${id}`, { 
+    const token = sessionStorage.getItem('token');
+    const res = await fetch(`/api/${endpoint}/${id}`, { 
         method: 'DELETE',
-        headers: { 'X-User': currentUser.username } // Enviar usuario para log/auditoría
+        headers: { 
+            'X-User': currentUser.username,
+            'Authorization': `Bearer ${token}`
+        }
     });
+    
+    if (res.status === 403) {
+        alert('Permiso denegado. Solo administradores pueden eliminar registros.');
+        return;
+    }
     
     // Recargar datos tras eliminación
     await loadAllData();
@@ -228,7 +248,10 @@ async function fetchAndRenderLogs() {
     if (!dateInput) return;
     
     try {
-        const res = await fetch(`/api/logs?date=${dateInput}`);
+        const token = sessionStorage.getItem('token');
+        const res = await fetch(`/api/logs?date=${dateInput}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
         if (res.ok) {
             dataCache.logs = await res.json();
             if (typeof renderLogs === 'function') renderLogs();
