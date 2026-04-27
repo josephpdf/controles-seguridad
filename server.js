@@ -224,6 +224,33 @@ const server = http.createServer((req, res) => {
                         }
                     } else {
                         // CREAR (Se genera un nuevo ID basado en la fecha actual)
+                        
+                        // Validaciones de concurrencia para evitar duplicados simultáneos
+                        if (entityName === 'transactions') {
+                            const isAlreadyInUse = data.some(t => 
+                                t.type === parsedBody.type && 
+                                t.equipmentId === parsedBody.equipmentId && 
+                                !t.dateIn
+                            );
+                            if (isAlreadyInUse) {
+                                res.writeHead(400);
+                                res.end(JSON.stringify({ error: 'El equipo seleccionado ya fue prestado a otro colaborador o se encuentra en uso.' }));
+                                return;
+                            }
+                        }
+                        
+                        if (entityName === 'member_access') {
+                            const isAlreadyInside = data.some(a => 
+                                a.memberNumber === parsedBody.memberNumber && 
+                                !a.dateOut
+                            );
+                            if (isAlreadyInside) {
+                                res.writeHead(400);
+                                res.end(JSON.stringify({ error: 'Este socio ya se encuentra registrado dentro de las instalaciones.' }));
+                                return;
+                            }
+                        }
+
                         parsedBody.id = Date.now();
                         if (entityName === 'users') {
                             parsedBody.password = hashPassword(parsedBody.password || '123456');

@@ -88,10 +88,17 @@ function handleTransactionSubmit(e) {
             'Authorization': `Bearer ${sessionStorage.getItem('token')}` 
         },
         body: JSON.stringify(payload)
-    }).then(res => res.json()).then(data => {
+    }).then(async res => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Error en el servidor');
+        return data;
+    }).then(data => {
         closeModal('transactionModal');
         loadAllData(); // Recargar datos para mostrar en la tabla
-    }).catch(e => console.error('Error al guardar transacción:', e));
+    }).catch(e => {
+        console.error('Error al guardar transacción:', e);
+        showCustomAlert(e.message);
+    });
 }
 
 /**
@@ -159,11 +166,18 @@ function handleMemberAccessSubmit(e) {
             'Authorization': `Bearer ${sessionStorage.getItem('token')}` 
         },
         body: JSON.stringify(payload)
-    }).then(res => res.json()).then(data => {
+    }).then(async res => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Error en el servidor');
+        return data;
+    }).then(data => {
         closeModal('memberAccessModal');
         document.getElementById('memberAccessForm').reset();
         loadAllData();
-    }).catch(e => console.error('Error al guardar acceso:', e));
+    }).catch(e => {
+        console.error('Error al guardar acceso:', e);
+        showCustomAlert(e.message);
+    });
 }
 
 /**

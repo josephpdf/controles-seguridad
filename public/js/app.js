@@ -277,6 +277,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
                 
+                if (!res.ok) {
+                    const errData = await res.json();
+                    alert(errData.error || 'Ocurrió un problema al guardar la información.');
+                    return;
+                }
+                
                 // Limpiar formulario y cerrar modal
                 formEl.reset();
                 
