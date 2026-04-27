@@ -161,18 +161,28 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Lógica específica al abrir "Reportes" o "Auditoría"
             if (section === 'reports' || section === 'logs') {
-                const dateInput = document.getElementById(section === 'reports' ? 'report-date' : 'log-date');
-                if (!dateInput.value) {
-                    const today = new Date();
-                    const yyyy = today.getFullYear();
-                    const mm = String(today.getMonth() + 1).padStart(2, '0');
-                    const dd = String(today.getDate()).padStart(2, '0');
-                    dateInput.value = `${yyyy}-${mm}-${dd}`;
-                }
-                
                 if (section === 'reports') {
+                    const dateStart = document.getElementById('report-date-start');
+                    const dateEnd = document.getElementById('report-date-end');
+                    if (!dateStart.value || !dateEnd.value) {
+                        const today = new Date();
+                        const yyyy = today.getFullYear();
+                        const mm = String(today.getMonth() + 1).padStart(2, '0');
+                        const dd = String(today.getDate()).padStart(2, '0');
+                        const todayStr = `${yyyy}-${mm}-${dd}`;
+                        if (!dateStart.value) dateStart.value = todayStr;
+                        if (!dateEnd.value) dateEnd.value = todayStr;
+                    }
                     renderReports();
                 } else if (section === 'logs') {
+                    const dateInput = document.getElementById('log-date');
+                    if (!dateInput.value) {
+                        const today = new Date();
+                        const yyyy = today.getFullYear();
+                        const mm = String(today.getMonth() + 1).padStart(2, '0');
+                        const dd = String(today.getDate()).padStart(2, '0');
+                        dateInput.value = `${yyyy}-${mm}-${dd}`;
+                    }
                     if (typeof fetchAndRenderLogs === 'function') {
                         fetchAndRenderLogs();
                     }

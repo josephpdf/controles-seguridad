@@ -44,14 +44,23 @@ function renderReports() {
         return;
     }
 
-    const dateInput = document.getElementById('report-date')?.value;
-    if (!dateInput) return;
+    const dateStartInput = document.getElementById('report-date-start')?.value;
+    const dateEndInput = document.getElementById('report-date-end')?.value;
+    if (!dateStartInput || !dateEndInput) return;
 
-    const [year, month, day] = dateInput.split('-');
-    const selectedDateStr = new Date(year, month - 1, day).toLocaleDateString();
+    const startParts = dateStartInput.split('-');
+    const start = new Date(startParts[0], startParts[1] - 1, startParts[2]);
+    start.setHours(0, 0, 0, 0);
+
+    const endParts = dateEndInput.split('-');
+    const end = new Date(endParts[0], endParts[1] - 1, endParts[2]);
+    end.setHours(23, 59, 59, 999);
 
     const allAccess = dataCache.member_access || [];
-    const dayAccess = allAccess.filter(a => new Date(a.dateIn).toLocaleDateString() === selectedDateStr);
+    const dayAccess = allAccess.filter(a => {
+        const d = new Date(a.dateIn);
+        return d >= start && d <= end;
+    });
 
     let totalIn = dayAccess.length;
     let noOut = 0;
@@ -71,14 +80,14 @@ function renderReports() {
         hourlyData[dIn.getHours()]++;
 
         let statusText = isInside ? 'Salida no registrada' : 'Salió';
-        if (isInside && selectedDateStr === new Date().toLocaleDateString()) {
+        if (isInside && dIn.toLocaleDateString() === new Date().toLocaleDateString()) {
             statusText = 'Dentro';
         }
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${dIn.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
-            <td>${a.dateOut ? new Date(a.dateOut).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '-'}</td>
+            <td>${dIn.toLocaleString([], {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit'})}</td>
+            <td>${a.dateOut ? new Date(a.dateOut).toLocaleString([], {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit'}) : '-'}</td>
             <td>${a.memberNumber}</td>
             <td>${a.memberName}</td>
             <td>${a.officerIn}</td>
@@ -148,14 +157,23 @@ function renderReports() {
  * y grafica los picos de uso por hora.
  */
 function renderEquipmentReports() {
-    const dateInput = document.getElementById('report-date')?.value;
-    if (!dateInput) return;
+    const dateStartInput = document.getElementById('report-date-start')?.value;
+    const dateEndInput = document.getElementById('report-date-end')?.value;
+    if (!dateStartInput || !dateEndInput) return;
 
-    const [year, month, day] = dateInput.split('-');
-    const selectedDateStr = new Date(year, month - 1, day).toLocaleDateString();
+    const startParts = dateStartInput.split('-');
+    const start = new Date(startParts[0], startParts[1] - 1, startParts[2]);
+    start.setHours(0, 0, 0, 0);
+
+    const endParts = dateEndInput.split('-');
+    const end = new Date(endParts[0], endParts[1] - 1, endParts[2]);
+    end.setHours(23, 59, 59, 999);
 
     const allTx = dataCache.transactions || [];
-    const dayTx = allTx.filter(t => new Date(t.dateOut).toLocaleDateString() === selectedDateStr);
+    const dayTx = allTx.filter(t => {
+        const d = new Date(t.dateOut);
+        return d >= start && d <= end;
+    });
 
     let totalLoans = dayTx.length;
     let noOut = 0;
@@ -178,7 +196,7 @@ function renderEquipmentReports() {
         hourlyData[dOut.getHours()]++;
 
         let statusText = isNotReturned ? 'No devuelto' : 'Devuelto';
-        if (isNotReturned && selectedDateStr === new Date().toLocaleDateString()) {
+        if (isNotReturned && dOut.toLocaleDateString() === new Date().toLocaleDateString()) {
             statusText = 'En Uso';
         }
 
@@ -188,8 +206,8 @@ function renderEquipmentReports() {
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${dOut.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
-            <td>${t.dateIn ? new Date(t.dateIn).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '-'}</td>
+            <td>${dOut.toLocaleString([], {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit'})}</td>
+            <td>${t.dateIn ? new Date(t.dateIn).toLocaleString([], {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit'}) : '-'}</td>
             <td>${t.type.toUpperCase()}</td>
             <td>${eqInfo}</td>
             <td>${collabName}</td>
@@ -260,8 +278,11 @@ function renderEquipmentReports() {
  * métricas principales y la tabla de datos renderizada.
  */
 function exportReportsPDF() {
-    const dateInput = document.getElementById('report-date')?.value;
-    if (!dateInput) return showCustomAlert('Seleccione una fecha primero.');
+    const dateStartInput = document.getElementById('report-date-start')?.value;
+    const dateEndInput = document.getElementById('report-date-end')?.value;
+    if (!dateStartInput || !dateEndInput) return showCustomAlert('Seleccione un rango de fechas primero.');
+
+    const dateStr = dateStartInput === dateEndInput ? dateStartInput : `${dateStartInput} al ${dateEndInput}`;
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -274,7 +295,7 @@ function exportReportsPDF() {
         
         doc.setFontSize(12);
         doc.setFont("helvetica", "normal");
-        doc.text(`Fecha: ${dateInput}`, 14, 28);
+        doc.text(`Fechas: ${dateStr}`, 14, 28);
         
         const totalIn = document.getElementById('rep-total-in').innerText;
         const noOut = document.getElementById('rep-no-out').innerText;
@@ -295,18 +316,18 @@ function exportReportsPDF() {
 
         doc.autoTable({
             startY: 64,
-            head: [['Hora Ingreso', 'Hora Salida', 'Nº Socio', 'Nombre', 'Oficial Ing.', 'Oficial Sal.', 'Estado']],
+            head: [['Ingreso', 'Salida', 'Nº Socio', 'Nombre', 'Oficial Ing.', 'Oficial Sal.', 'Estado']],
             body: rows,
             theme: 'striped',
             headStyles: { fillColor: [44, 62, 80] }
         });
-        doc.save(`Reporte_Socios_${dateInput}.pdf`);
+        doc.save(`Reporte_Socios_${dateStartInput}_al_${dateEndInput}.pdf`);
     } else {
         doc.text("Reporte de Préstamos de Equipos", 14, 20);
         
         doc.setFontSize(12);
         doc.setFont("helvetica", "normal");
-        doc.text(`Fecha: ${dateInput}`, 14, 28);
+        doc.text(`Fechas: ${dateStr}`, 14, 28);
         
         const total = document.getElementById('rep-eq-total').innerText;
         const noOut = document.getElementById('rep-eq-no-out').innerText;
@@ -327,12 +348,12 @@ function exportReportsPDF() {
 
         doc.autoTable({
             startY: 64,
-            head: [['Hora Préstamo', 'Hora Devol.', 'Tipo', 'Equipo', 'Colaborador', 'Ofic. Ent.', 'Ofic. Rec.', 'Estado']],
+            head: [['Préstamo', 'Devol.', 'Tipo', 'Equipo', 'Colaborador', 'Ofic. Ent.', 'Ofic. Rec.', 'Estado']],
             body: rows,
             theme: 'striped',
             headStyles: { fillColor: [44, 62, 80] }
         });
-        doc.save(`Reporte_Equipos_${dateInput}.pdf`);
+        doc.save(`Reporte_Equipos_${dateStartInput}_al_${dateEndInput}.pdf`);
     }
 }
 
@@ -342,8 +363,11 @@ function exportReportsPDF() {
  * y luego exporta la tabla HTML tal cual se está mostrando.
  */
 function exportReportsExcel() {
-    const dateInput = document.getElementById('report-date')?.value;
-    if (!dateInput) return showCustomAlert('Seleccione una fecha primero.');
+    const dateStartInput = document.getElementById('report-date-start')?.value;
+    const dateEndInput = document.getElementById('report-date-end')?.value;
+    if (!dateStartInput || !dateEndInput) return showCustomAlert('Seleccione un rango de fechas primero.');
+
+    const dateStr = dateStartInput === dateEndInput ? dateStartInput : `${dateStartInput} al ${dateEndInput}`;
 
     let tableId = '';
     let title = '';
@@ -353,7 +377,7 @@ function exportReportsExcel() {
     if (currentReportTab === 'socios') {
         tableId = 'reportsTable';
         title = "Reporte de Ingreso de Socios";
-        filename = `Reporte_Socios_${dateInput}.xlsx`;
+        filename = `Reporte_Socios_${dateStartInput}_al_${dateEndInput}.xlsx`;
         metricsData = [
             ["Métricas"],
             ["Total de Ingresos:", document.getElementById('rep-total-in').innerText],
@@ -364,7 +388,7 @@ function exportReportsExcel() {
     } else {
         tableId = 'equipmentReportsTable';
         title = "Reporte de Préstamos de Equipos";
-        filename = `Reporte_Equipos_${dateInput}.xlsx`;
+        filename = `Reporte_Equipos_${dateStartInput}_al_${dateEndInput}.xlsx`;
         metricsData = [
             ["Métricas"],
             ["Total de Préstamos:", document.getElementById('rep-eq-total').innerText],
@@ -378,7 +402,7 @@ function exportReportsExcel() {
     
     const data = [
         [title],
-        [`Fecha: ${dateInput}`],
+        [`Fechas: ${dateStr}`],
         [],
         ...metricsData
     ];
