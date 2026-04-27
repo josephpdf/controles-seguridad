@@ -199,6 +199,16 @@ const server = http.createServer((req, res) => {
                     const itemToDelete = data.find(item => item.id === id);
                     const newData = data.filter(item => item.id !== id);
                     
+                    // Si es radio o llave, archivar en lugar de borrar permanentemente
+                    if (itemToDelete && (entityName === 'radios' || entityName === 'keys')) {
+                        const historyFilename = `archived_${entityName}.json`;
+                        const historyData = readData(historyFilename);
+                        itemToDelete.archivedAt = new Date().toISOString();
+                        itemToDelete.archivedBy = reqUser;
+                        historyData.push(itemToDelete);
+                        writeData(historyFilename, historyData);
+                    }
+
                     writeData(filename, newData);
                     logAction(reqUser, 'DELETE', entityName, itemToDelete || id);
                     res.writeHead(200);
@@ -286,6 +296,8 @@ const server = http.createServer((req, res) => {
             if (req.url.startsWith('/api/collaborators')) return handleCRUD('collaborators', 'collaborators.json');
             if (req.url.startsWith('/api/radios')) return handleCRUD('radios', 'radios.json');
             if (req.url.startsWith('/api/keys')) return handleCRUD('keys', 'keys.json');
+            if (req.url.startsWith('/api/archived_radios')) return handleCRUD('archived_radios', 'archived_radios.json');
+            if (req.url.startsWith('/api/archived_keys')) return handleCRUD('archived_keys', 'archived_keys.json');
             if (req.url.startsWith('/api/transactions')) return handleCRUD('transactions', 'transactions.json');
             if (req.url.startsWith('/api/areas')) return handleCRUD('areas', 'areas.json');
             if (req.url.startsWith('/api/member_access')) return handleCRUD('member_access', 'member_access.json');

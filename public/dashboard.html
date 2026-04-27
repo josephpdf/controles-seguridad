@@ -162,7 +162,12 @@
                             Radio</button>
                     </div>
                 </div>
-                <div class="card">
+                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                    <button id="tab-active-radios" class="btn-primary w-auto" onclick="switchRadioTab('active')">Activos</button>
+                    <button id="tab-archived-radios" class="btn-secondary w-auto" onclick="switchRadioTab('archived')" style="display: none;">Historial</button>
+                </div>
+
+                <div id="radios-active-view" class="card">
                     <div class="table-responsive">
                         <table id="radiosTable">
                             <thead>
@@ -178,6 +183,23 @@
                                         Asignado <span></span></th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="radios-archived-view" class="card" style="display: none;">
+                    <div class="table-responsive">
+                        <table id="archivedRadiosTable">
+                            <thead>
+                                <tr>
+                                    <th>Fecha Eliminación</th>
+                                    <th>Eliminado Por</th>
+                                    <th>Etiqueta / Asignación</th>
+                                    <th>Detalle</th>
+                                    <th>Área Anterior</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -203,7 +225,12 @@
                             Llave</button>
                     </div>
                 </div>
-                <div class="card">
+                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                    <button id="tab-active-keys" class="btn-primary w-auto" onclick="switchKeyTab('active')">Activas</button>
+                    <button id="tab-archived-keys" class="btn-secondary w-auto" onclick="switchKeyTab('archived')" style="display: none;">Historial</button>
+                </div>
+
+                <div id="keys-active-view" class="card">
                     <div class="table-responsive">
                         <table id="keysTable">
                             <thead>
@@ -218,6 +245,22 @@
                                         Asignado <span></span></th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="keys-archived-view" class="card" style="display: none;">
+                    <div class="table-responsive">
+                        <table id="archivedKeysTable">
+                            <thead>
+                                <tr>
+                                    <th>Fecha Eliminación</th>
+                                    <th>Eliminado Por</th>
+                                    <th>Número/ID</th>
+                                    <th>Detalle</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

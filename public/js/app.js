@@ -49,6 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
         document.getElementById('navAreas').style.display = 'block';
         document.getElementById('navUsers').style.display = 'block';
+        
+        const tabArchivedRadios = document.getElementById('tab-archived-radios');
+        const tabArchivedKeys = document.getElementById('tab-archived-keys');
+        if (tabArchivedRadios) tabArchivedRadios.style.display = 'block';
+        if (tabArchivedKeys) tabArchivedKeys.style.display = 'block';
     }
     
     // Solo superadmin puede ver la pestaña de Auditoría

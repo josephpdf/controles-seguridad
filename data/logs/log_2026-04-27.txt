@@ -1,0 +1,2 @@
+[13:01:40] Usuario 'superadmin' realizó POST en 'radios'. Datos: {"numero":"Talento Humano","serie":"PENDIENTE","area":"Talento Humano","colaborador":"1776795003138","detalle":"Radio Jefatura Talento Humano","id":1777316500318}
+[13:01:51] Usuario 'superadmin' ELIMINÓ registro ID 1777316500318 (Talento Humano) de 'radios'. Datos: {"numero":"Talento Humano","serie":"PENDIENTE","area":"Talento Humano","colaborador":"1776795003138","detalle":"Radio Jefatura Talento Humano","id":1777316500318,"archivedAt":"2026-04-27T19:01:51.612Z","archivedBy":"superadmin"}

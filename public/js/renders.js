@@ -23,6 +23,8 @@ function renderAll() {
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
         renderUsers();
         renderAreas();
+        renderArchivedRadios();
+        renderArchivedKeys();
     }
     
     // Llenar los selectores desplegables (dropdowns) en los modales
@@ -149,6 +151,48 @@ function renderRadios() {
     });
 }
 
+function switchRadioTab(tab) {
+    const btnActive = document.getElementById('tab-active-radios');
+    const btnArchived = document.getElementById('tab-archived-radios');
+    const viewActive = document.getElementById('radios-active-view');
+    const viewArchived = document.getElementById('radios-archived-view');
+    
+    if (tab === 'active') {
+        btnActive.className = 'btn-primary w-auto';
+        btnArchived.className = 'btn-secondary w-auto';
+        viewActive.style.display = 'block';
+        viewArchived.style.display = 'none';
+        renderRadios();
+    } else {
+        btnActive.className = 'btn-secondary w-auto';
+        btnArchived.className = 'btn-primary w-auto';
+        viewActive.style.display = 'none';
+        viewArchived.style.display = 'block';
+        renderArchivedRadios();
+    }
+}
+
+function renderArchivedRadios() {
+    const tbody = document.querySelector('#archivedRadiosTable tbody');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    
+    let list = getFilteredAndSorted('archived_radios', dataCache.archived_radios || [], ['numero', 'detalle', 'area', 'archivedBy']);
+    
+    list.forEach(r => {
+        const tr = document.createElement('tr');
+        const dateStr = r.archivedAt ? new Date(r.archivedAt).toLocaleString() : '-';
+        tr.innerHTML = `
+            <td>${dateStr}</td>
+            <td>${r.archivedBy || '-'}</td>
+            <td>${r.numero}</td>
+            <td>${r.detalle}</td>
+            <td>${r.area || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
 function renderKeys() {
     const tbody = document.querySelector('#keysTable tbody');
     if(!tbody) return;
@@ -200,6 +244,47 @@ function renderKeys() {
                   `<button class="btn-edit" onclick="editKey(${k.id})">Editar</button>
                    <button class="btn-danger" onclick="deleteItem('keys', ${k.id})">Eliminar</button>` : '-'}
             </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function switchKeyTab(tab) {
+    const btnActive = document.getElementById('tab-active-keys');
+    const btnArchived = document.getElementById('tab-archived-keys');
+    const viewActive = document.getElementById('keys-active-view');
+    const viewArchived = document.getElementById('keys-archived-view');
+    
+    if (tab === 'active') {
+        btnActive.className = 'btn-primary w-auto';
+        btnArchived.className = 'btn-secondary w-auto';
+        viewActive.style.display = 'block';
+        viewArchived.style.display = 'none';
+        renderKeys();
+    } else {
+        btnActive.className = 'btn-secondary w-auto';
+        btnArchived.className = 'btn-primary w-auto';
+        viewActive.style.display = 'none';
+        viewArchived.style.display = 'block';
+        renderArchivedKeys();
+    }
+}
+
+function renderArchivedKeys() {
+    const tbody = document.querySelector('#archivedKeysTable tbody');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    
+    let list = getFilteredAndSorted('archived_keys', dataCache.archived_keys || [], ['numero', 'detalle', 'archivedBy']);
+    
+    list.forEach(k => {
+        const tr = document.createElement('tr');
+        const dateStr = k.archivedAt ? new Date(k.archivedAt).toLocaleString() : '-';
+        tr.innerHTML = `
+            <td>${dateStr}</td>
+            <td>${k.archivedBy || '-'}</td>
+            <td>${k.numero}</td>
+            <td>${k.detalle}</td>
         `;
         tbody.appendChild(tr);
     });
