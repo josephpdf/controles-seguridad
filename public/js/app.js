@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (!dateStart.value) dateStart.value = todayStr;
                         if (!dateEnd.value) dateEnd.value = todayStr;
                     }
-                    renderReports();
+                    switchReportTab();
                 } else if (section === 'logs') {
                     const dateInput = document.getElementById('log-date');
                     if (!dateInput.value) {

@@ -360,8 +360,10 @@
                             <option value="socios">Socios</option>
                             <option value="equipos">Radios y Llaves</option>
                         </select>
-                        <label for="report-date" class="report-date-label">Fecha:</label>
-                        <input type="date" id="report-date" onchange="renderReports()" class="search-input w-auto">
+                        <label for="report-date-start" class="report-date-label">Desde:</label>
+                        <input type="date" id="report-date-start" onchange="renderReports()" class="search-input w-auto">
+                        <label for="report-date-end" class="report-date-label">Hasta:</label>
+                        <input type="date" id="report-date-end" onchange="renderReports()" class="search-input w-auto">
                         <button class="btn-secondary btn-report" onclick="exportReportsPDF()">PDF</button>
                         <button class="btn-secondary btn-report" onclick="exportReportsExcel()">Excel</button>
                     </div>
@@ -398,8 +400,8 @@
                             <table id="reportsTable">
                                 <thead>
                                     <tr>
-                                        <th>Hora Ingreso</th>
-                                        <th>Hora Salida</th>
+                                        <th>Ingreso</th>
+                                        <th>Salida</th>
                                         <th>Nº Socio</th>
                                         <th>Nombre</th>
                                         <th>Oficial Ingreso</th>
@@ -444,8 +446,8 @@
                             <table id="equipmentReportsTable">
                                 <thead>
                                     <tr>
-                                        <th>Hora Préstamo</th>
-                                        <th>Hora Devolución</th>
+                                        <th>Préstamo</th>
+                                        <th>Devolución</th>
                                         <th>Tipo</th>
                                         <th>Equipo</th>
                                         <th>Colaborador</th>
