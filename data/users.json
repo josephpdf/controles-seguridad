@@ -19,5 +19,19 @@
     "password": "72593e8e6285f58c32adb35fd6003b1b10bad076ea8ff13f01ba308f2762cc56",
     "role": "admin",
     "id": 1776870267995
+  },
+  {
+    "name": "Josué Conejo",
+    "username": "jconejo",
+    "password": "25288b69ccfd3c8b71ef234346763a84d49a9e3a9cc780e456ce76ba893129c1",
+    "role": "superadmin",
+    "id": 1777320506549
+  },
+  {
+    "name": "Orlando Avendaño",
+    "username": "oavendano",
+    "password": "c4bffd5d64829d78cb402a5ecdc0ed51169d0a67ae19a770bd626980d8162b90",
+    "role": "superadmin",
+    "id": 1777320532222
   }
 ]
