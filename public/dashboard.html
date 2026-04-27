@@ -532,7 +532,13 @@
                             Usuario</button>
                     </div>
                 </div>
-                <div class="card">
+                
+                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                    <button id="tab-active-users" class="btn-primary w-auto" onclick="switchUserTab('active')">Activos</button>
+                    <button id="tab-archived-users" class="btn-secondary w-auto" onclick="switchUserTab('archived')" style="display: none;">Historial</button>
+                </div>
+
+                <div id="users-active-view" class="card">
                     <div class="table-responsive">
                         <table id="usersTable">
                             <thead>
@@ -546,6 +552,23 @@
                                     <th onclick="toggleSort('users', 'role')" style="cursor:pointer">Rol <span></span>
                                     </th>
                                     <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="users-archived-view" class="card" style="display: none;">
+                    <div class="table-responsive">
+                        <table id="archivedUsersTable">
+                            <thead>
+                                <tr>
+                                    <th>Fecha Eliminación</th>
+                                    <th>Eliminado Por</th>
+                                    <th>Nombre</th>
+                                    <th>Usuario</th>
+                                    <th>Rol Anterior</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

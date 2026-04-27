@@ -20,7 +20,8 @@ let dataCache = {
     member_access: [],
     logs: [],
     archived_radios: [],
-    archived_keys: []
+    archived_keys: [],
+    archived_users: []
 };
 
 // Estado actual del ordenamiento para cada tabla (campo por el cual se ordena y dirección)
@@ -34,7 +35,8 @@ let sortState = {
     member_access: { field: 'dateIn', dir: 'desc' },
     logs: { field: 'time', dir: 'desc' },
     archived_radios: { field: 'archivedAt', dir: 'desc' },
-    archived_keys: { field: 'archivedAt', dir: 'desc' }
+    archived_keys: { field: 'archivedAt', dir: 'desc' },
+    archived_users: { field: 'archivedAt', dir: 'desc' }
 };
 
 /**
@@ -65,6 +67,7 @@ function toggleSort(endpoint, field) {
     else if(endpoint === 'logs') renderLogs();
     else if(endpoint === 'archived_radios') renderArchivedRadios();
     else if(endpoint === 'archived_keys') renderArchivedKeys();
+    else if(endpoint === 'archived_users') renderArchivedUsers();
 }
 
 /**
@@ -176,8 +179,9 @@ async function loadAllData() {
         // Restricción de seguridad básica: cargar áreas y usuarios solo si es admin/superadmin
         (currentUser.role === 'superadmin' || currentUser.role === 'admin') ? fetchData('areas') : Promise.resolve(),
         (currentUser.role === 'superadmin' || currentUser.role === 'admin') ? fetchData('users') : Promise.resolve(),
-        (currentUser.role === 'superadmin' || currentUser.role === 'admin') ? fetchData('archived_radios') : Promise.resolve(),
-        (currentUser.role === 'superadmin' || currentUser.role === 'admin') ? fetchData('archived_keys') : Promise.resolve()
+        (currentUser.role === 'superadmin') ? fetchData('archived_radios') : Promise.resolve(),
+        (currentUser.role === 'superadmin') ? fetchData('archived_keys') : Promise.resolve(),
+        (currentUser.role === 'superadmin') ? fetchData('archived_users') : Promise.resolve()
     ]);
     
     // Una vez cargados todos los datos, proceder a renderizar la interfaz

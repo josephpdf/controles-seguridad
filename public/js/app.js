@@ -49,16 +49,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
         document.getElementById('navAreas').style.display = 'block';
         document.getElementById('navUsers').style.display = 'block';
+    }
+    
+    // Solo superadmin puede ver la pestaña de Auditoría y los Historiales de Equipos/Usuarios
+    if (currentUser.role === 'superadmin') {
+        document.getElementById('navLogs').style.display = 'block';
         
         const tabArchivedRadios = document.getElementById('tab-archived-radios');
         const tabArchivedKeys = document.getElementById('tab-archived-keys');
+        const tabArchivedUsers = document.getElementById('tab-archived-users');
         if (tabArchivedRadios) tabArchivedRadios.style.display = 'block';
         if (tabArchivedKeys) tabArchivedKeys.style.display = 'block';
-    }
-    
-    // Solo superadmin puede ver la pestaña de Auditoría
-    if (currentUser.role === 'superadmin') {
-        document.getElementById('navLogs').style.display = 'block';
+        if (tabArchivedUsers) tabArchivedUsers.style.display = 'block';
     }
     
     // Restringir que los admins no puedan crear nuevos superadmins

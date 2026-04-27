@@ -23,8 +23,13 @@ function renderAll() {
     if (currentUser.role === 'superadmin' || currentUser.role === 'admin') {
         renderUsers();
         renderAreas();
+    }
+    
+    // Historiales restringidos a superadmin
+    if (currentUser.role === 'superadmin') {
         renderArchivedRadios();
         renderArchivedKeys();
+        renderArchivedUsers();
     }
     
     // Llenar los selectores desplegables (dropdowns) en los modales
@@ -331,6 +336,48 @@ function renderUsers() {
                 ${(u.id !== currentUser.id && (u.role !== 'superadmin' || currentUser.role === 'superadmin')) ? 
                   `<button class="btn-danger" onclick="deleteItem('users', ${u.id})">Eliminar</button>` : '-'}
             </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function switchUserTab(tab) {
+    const btnActive = document.getElementById('tab-active-users');
+    const btnArchived = document.getElementById('tab-archived-users');
+    const viewActive = document.getElementById('users-active-view');
+    const viewArchived = document.getElementById('users-archived-view');
+    
+    if (tab === 'active') {
+        btnActive.className = 'btn-primary w-auto';
+        btnArchived.className = 'btn-secondary w-auto';
+        viewActive.style.display = 'block';
+        viewArchived.style.display = 'none';
+        renderUsers();
+    } else {
+        btnActive.className = 'btn-secondary w-auto';
+        btnArchived.className = 'btn-primary w-auto';
+        viewActive.style.display = 'none';
+        viewArchived.style.display = 'block';
+        renderArchivedUsers();
+    }
+}
+
+function renderArchivedUsers() {
+    const tbody = document.querySelector('#archivedUsersTable tbody');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    
+    let list = getFilteredAndSorted('archived_users', dataCache.archived_users || [], ['name', 'username', 'role', 'archivedBy']);
+    
+    list.forEach(u => {
+        const tr = document.createElement('tr');
+        const dateStr = u.archivedAt ? new Date(u.archivedAt).toLocaleString() : '-';
+        tr.innerHTML = `
+            <td>${dateStr}</td>
+            <td>${u.archivedBy || '-'}</td>
+            <td>${u.name}</td>
+            <td>${u.username}</td>
+            <td>${u.role}</td>
         `;
         tbody.appendChild(tr);
     });
