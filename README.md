@@ -44,7 +44,7 @@ Ideal para revisar el sistema rápidamente, pero **deja una ventana negra abiert
 4. Entra en tu navegador web a la dirección: `http://localhost:3000`
 
 ### Opción 2: Modo Servidor Profesional (Oculto 24/7 con PM2) - ⭐ Recomendado
-Esta es la manera correcta de montar el sistema en el servidor (ej. `192.168.1.100`). El sistema correrá de forma oculta en segundo plano y se reiniciará automáticamente si llega a haber un error.
+Esta es la manera correcta de montar el sistema en el servidor (ej. `[IP_ADDRESS]`). El sistema correrá de forma oculta en segundo plano y se reiniciará automáticamente si llega a haber un error.
 
 1. Abre la consola de Windows (`cmd`) en la carpeta donde pegaste este proyecto.
 2. Instala PM2 (el administrador de procesos) ejecutando:
@@ -53,7 +53,7 @@ Esta es la manera correcta de montar el sistema en el servidor (ej. `192.168.1.1
    ```
 3. Arranca el servidor de forma oculta poniéndole un nombre:
    ```bash
-   pm2 start server.js --name "ControlInventario"
+   pm2 start server.js --name "Controles-Seguridad"
    ```
    *(A partir de este momento, el sistema ya está en línea y puedes cerrar la consola sin miedo).*
 4. Guarda el estado actual para que PM2 lo recuerde:
@@ -63,8 +63,8 @@ Esta es la manera correcta de montar el sistema en el servidor (ej. `192.168.1.1
 
 **Comandos útiles de PM2:**
 *   `pm2 list`: Para ver si el sistema está en línea (Online).
-*   `pm2 stop ControlInventario`: Para apagar el sistema.
-*   `pm2 restart ControlInventario`: Para reiniciar el sistema.
+*   `pm2 stop Controles-Seguridad`: Para apagar el sistema.
+*   `pm2 restart Controles-Seguridad`: Para reiniciar el sistema.
 *   `pm2 logs`: Para ver si hay errores en vivo.
 
 ---
